@@ -1,0 +1,18 @@
+# COC Sync Marker — kailash-coc-claude-rs (rs lane, cc-only-legacy)
+timestamp: 2026-06-17T13:51:33Z
+source: loom/.claude
+loom_sha: c1e52a62
+variant: rs
+clis: [claude]
+visibility: public
+stats:
+  copied: 1205
+  variant_only: 165
+  overlay_applied: 142
+  verify_failures: 0
+  purged: 0
+  preserved: [CLAUDE.md, .proposals/, learning/, settings.local.json]
+  baselines_emitted:
+    cc: 0          # CLAUDE.md preserved, not emitted
+wave: sync-upflow-wave-3-todo-14
+note: FIRST real /sync-to-use of the Wave-1/2 sync-family artifacts; loom 2.45.0 unchanged (artifact wave).
