@@ -89,6 +89,8 @@ secrets/
 .session-notes.shared.md
 /workspaces/*
 !/workspaces/_template/
+# Track the active project workspace so it commits normally (no force-add needed)
+!/workspaces/before-you-sign/
 # <<< coc:gitignore_additions <<<
 
 # Never track loom-internal variant overlays or operator-local disclosure companions (PII).
