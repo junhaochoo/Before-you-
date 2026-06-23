@@ -10,6 +10,7 @@ import {
   QUESTIONS_TO_ASK,
   GLOSSARY,
 } from "@/lib/copy";
+import { priceLabel } from "@/lib/pricing";
 import {
   Disclaimer,
   NoConflictBadge,
@@ -40,6 +41,9 @@ export function ReportView({
   onSigma,
   tier = "full",
   onUpgrade,
+  entitled = false,
+  paymentsConfigured = true,
+  checkingOut = false,
 }: {
   report: Report;
   guarantee: GuaranteeInfo;
@@ -50,6 +54,12 @@ export function ReportView({
   /** Free Quick Scan shows only the compliant, no-financials lenses (W4-4). */
   tier?: "free" | "full";
   onUpgrade?: () => void;
+  /** F6 — true once the visitor has paid for the full report. */
+  entitled?: boolean;
+  /** F6 — false when this deployment has no Stripe key (payments off). */
+  paymentsConfigured?: boolean;
+  /** F6 — true while a checkout session is being opened. */
+  checkingOut?: boolean;
 }) {
   const { feeLens, downside, riskFit, portfolio } = report;
   const full = tier === "full";
@@ -225,18 +235,40 @@ export function ReportView({
         </Lens>
       )}
 
-      {/* Free-tier upgrade prompt */}
+      {/* Free-tier upgrade prompt (F6 paywall) */}
       {!full && (
         <div className="upgrade">
           <h3>See the full picture</h3>
           <p className="muted">
             The free scan flags terms and gaps. The full report adds the fee
             breakdown, the dollar downside, your concentration &amp; buffer, and
-            the gross-vs-net chart.
+            the gross-vs-net chart — a one-time {priceLabel()}.
           </p>
-          <button type="button" className="btn" onClick={() => onUpgrade?.()}>
-            Unlock the full report
+          <button
+            type="button"
+            className="btn"
+            disabled={checkingOut}
+            onClick={() => onUpgrade?.()}
+          >
+            {checkingOut
+              ? "Opening secure checkout…"
+              : entitled
+                ? "Show my full report"
+                : `Unlock the full report — ${priceLabel()}`}
           </button>
+          {paymentsConfigured ? (
+            <p className="muted upgrade-note">
+              Test mode — pay with Stripe&apos;s test card 4242 4242 4242 4242
+              (any future date, any CVC). We never see your card details and
+              earn nothing from your decision.
+            </p>
+          ) : (
+            <p className="muted upgrade-note">
+              Secure payments aren&apos;t configured on this deployment yet. Add
+              Stripe test keys and the full report unlocks automatically after a
+              test payment.
+            </p>
+          )}
         </div>
       )}
 

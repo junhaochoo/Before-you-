@@ -13,6 +13,12 @@ import {
   emptyExtraction,
   type ExtractionResult,
 } from "./schema";
+import {
+  validateFundExtraction,
+  emptyFundExtraction,
+  anyFundFieldFound,
+  type FundExtractionResult,
+} from "./fundSchema";
 import { parseJsonLoose } from "./json";
 
 const SYSTEM_PROMPT = `You are a careful data-extraction tool for Singapore insurance
@@ -44,9 +50,39 @@ Return ONLY JSON matching this shape (every value field carries a confidence of
 }
 Percentages are decimals where obvious (1.5% -> 1.5, i.e. percent units, not 0.015).`;
 
+const FUND_SYSTEM_PROMPT = `You are a careful data-extraction tool for investment FUND
+factsheets / KIIDs / prospectus fee tables (unit trusts, mutual funds, ETFs).
+
+Your ONLY job is to read the supplied text and extract the fund name and its CHARGES into JSON.
+You MUST NOT give advice, opinions, recommendations, or any "good/bad/suitable" judgement.
+You MUST NOT extract or infer any forward "expected return" or performance figure — those are
+the user's own assumptions, NOT facts to lift from the document.
+You MUST NOT compute, infer, or estimate any number that is not explicitly in the text —
+if a value is absent, return it with "confidence":"not_found" and "value":null. Never guess.
+
+Return ONLY JSON matching this shape (every value field carries a confidence of
+"high" | "medium" | "low" | "not_found", and an optional short "source" hint):
+{
+ "name": {"value": string|null, "confidence": ...},
+ "sales_charge_pct": {"value": number|null, "confidence": ...},
+ "ongoing_charge_pct": {"value": number|null, "confidence": ...},
+ "platform_fee_pct": {"value": number|null, "confidence": ...}
+}
+Map common synonyms: sales_charge_pct <- "sales charge" / "subscription fee" / "entry charge" /
+"initial charge"; ongoing_charge_pct <- "ongoing charge" / "TER" / "total expense ratio" /
+"management fee" / "annual fund charge"; platform_fee_pct <- "platform fee" / "wrap fee" /
+"distribution fee". Percentages are in percent units (1.5% -> 1.5, not 0.015).`;
+
 export interface ExtractionOutcome {
   result: ExtractionResult;
   /** True if the model produced any field above not_found. */
+  anyFound: boolean;
+  model: string;
+  error?: string;
+}
+
+export interface FundExtractionOutcome {
+  result: FundExtractionResult;
   anyFound: boolean;
   model: string;
   error?: string;
@@ -110,6 +146,48 @@ export async function extractFields(
     // Do NOT log document content or the key — only the error class.
     return {
       result: emptyExtraction(),
+      anyFound: false,
+      model,
+      error: e instanceof Error ? e.message : "extraction_failed",
+    };
+  }
+}
+
+export async function extractFundFields(
+  redactedText: string,
+): Promise<FundExtractionOutcome> {
+  const { apiKey, baseURL, model } = providerConfig();
+
+  if (!apiKey) {
+    return {
+      result: emptyFundExtraction(),
+      anyFound: false,
+      model,
+      error: "no_api_key",
+    };
+  }
+
+  const client = new OpenAI({ apiKey, baseURL });
+  try {
+    const completion = await client.chat.completions.create({
+      model,
+      temperature: 0,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: FUND_SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: `Extract the fund name and charges from this factsheet text:\n\n${redactedText.slice(0, 12000)}`,
+        },
+      ],
+    });
+    const content = completion.choices[0]?.message?.content ?? "{}";
+    const parsed = parseJsonLoose(content);
+    const result = validateFundExtraction(parsed);
+    return { result, anyFound: anyFundFieldFound(result), model };
+  } catch (e) {
+    return {
+      result: emptyFundExtraction(),
       anyFound: false,
       model,
       error: e instanceof Error ? e.message : "extraction_failed",

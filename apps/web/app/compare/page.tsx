@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   computeFundComparison,
   type FundInput,
@@ -9,6 +9,11 @@ import {
 import { sgd, pct } from "@/lib/format";
 import { Disclaimer, NoConflictBadge, NumberStat } from "../components/ui";
 import { Icon } from "../components/icons";
+import {
+  FundIntake,
+  type FundExtractionResponse,
+} from "../components/FundIntake";
+import { hasConsent, setConsent } from "@/lib/storage";
 
 /**
  * Funds comparison — put several funds side by side on the SAME amount + horizon,
@@ -61,6 +66,11 @@ export default function ComparePage() {
   const [principal, setPrincipal] = useState(100_000);
   const [horizonYears, setHorizon] = useState(10);
   const [funds, setFunds] = useState<FundInput[]>(DEFAULT_FUNDS);
+  const [consent, setConsentState] = useState(false);
+
+  useEffect(() => {
+    setConsentState(hasConsent());
+  }, []);
 
   const globals: FundGlobals = { principal, horizonYears };
   const cmp = useMemo(
@@ -93,6 +103,28 @@ export default function ComparePage() {
     setFunds((fs) => fs.filter((f) => f.id !== id));
   }
 
+  /** Add a fund card from an uploaded factsheet — charges only; missing charges
+   *  default to 0 (honest "not found, please check"), returns/risk stay assumptions. */
+  function applyFundExtraction(resp: FundExtractionResponse) {
+    const f = resp.fields;
+    const dec = (v: number | null) => (v == null ? 0 : v / 100);
+    setFunds((fs) => {
+      const name =
+        f.name.value?.trim() || `Fund ${String.fromCharCode(65 + fs.length)}`;
+      const imported: FundInput = {
+        id: newId(),
+        name,
+        expectedReturn: 0.05,
+        volatility: 0.13,
+        salesCharge: dec(f.sales_charge_pct.value),
+        ter: dec(f.ongoing_charge_pct.value),
+        platformFee: dec(f.platform_fee_pct.value),
+      };
+      // Append when there's room; otherwise replace the last card.
+      return fs.length >= 4 ? [...fs.slice(0, 3), imported] : [...fs, imported];
+    });
+  }
+
   return (
     <main className="wide">
       <a href="/" className="back">
@@ -105,6 +137,14 @@ export default function ComparePage() {
           Same money, same horizon — see what each fund really costs and how its
           outcomes could differ.
         </p>
+        <p className="page-scope">
+          For <strong>investment funds &amp; unit trusts</strong> — sales
+          charge, ongoing charge (TER) and platform fee. Reviewing an insurance
+          or investment-linked product instead?{" "}
+          <a href="/analyze" className="link">
+            Analyze a product →
+          </a>
+        </p>
       </section>
 
       <header className="report-head">
@@ -112,6 +152,32 @@ export default function ComparePage() {
         <NoConflictBadge />
       </header>
       <Disclaimer />
+
+      {/* Fund factsheet upload (Q2) — PDPA-gated, same as the analyzer */}
+      {consent ? (
+        <FundIntake onExtracted={applyFundExtraction} />
+      ) : (
+        <div className="form-card consent-card">
+          <h3>Before you upload — your privacy</h3>
+          <p className="muted">
+            We remove any personal details <strong>before</strong> a factsheet
+            is read, and we don&apos;t keep your uploads. We never sell your
+            data or earn from your decision. Entering the charges by hand needs
+            no upload.
+          </p>
+          <label className="consent-check">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                setConsent(e.target.checked);
+                setConsentState(e.target.checked);
+              }}
+            />
+            I understand and consent to my document being processed this way
+            (PDPA).
+          </label>
+        </div>
+      )}
 
       {/* Shared assumptions */}
       <details className="form-card" open>

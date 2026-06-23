@@ -893,6 +893,145 @@ h2 {
   margin: 0.7rem 0;
 }
 
+/* ---- Header account badge (F6 visibility) ------------------------------- */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.account-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--pill);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: var(--sh-sm);
+}
+.account-badge:hover {
+  border-color: var(--accent);
+  color: var(--ink-2);
+}
+.account-badge svg {
+  flex: none;
+  color: var(--muted-2);
+}
+.account-badge.on {
+  color: var(--good);
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+.account-badge.on svg {
+  color: var(--good);
+}
+.account-signout {
+  margin-left: 0.2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media (max-width: 560px) {
+  .account-badge-text {
+    display: none;
+  }
+}
+
+/* ---- Home product groups + page scope note ------------------------------ */
+.mode-group {
+  margin: 1.6rem 0 0.4rem;
+}
+.mode-group-head h2 {
+  margin: 0 0 0.2rem;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.mode-group-head p {
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+}
+.page-scope {
+  margin: 0.4rem 0 1.2rem;
+  padding: 0.6rem 0.9rem;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  color: var(--ink-2);
+}
+
+/* ---- Account strip + checkout (F6 freemium) ----------------------------- */
+.account-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.2rem 0 1rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card-soft);
+  font-size: 0.9rem;
+}
+.account-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+.account-state svg {
+  color: var(--muted-2);
+  flex: none;
+}
+.account-state.on {
+  color: var(--good);
+  font-weight: 600;
+}
+.account-state.on svg {
+  color: var(--good);
+}
+
+.checkout-banner {
+  margin: 0 0 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--r-sm);
+  font-size: 0.92rem;
+  border: 1px solid var(--line);
+}
+.checkout-banner.unlocked {
+  background: var(--good-soft);
+  border-color: var(--good);
+  color: var(--good);
+}
+.checkout-banner.cancelled,
+.checkout-banner.not_configured {
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+  color: var(--warn);
+}
+.checkout-banner.failed {
+  background: #fdeaea;
+  border-color: #f0bcbc;
+  color: var(--danger);
+}
+.upgrade-note {
+  margin-top: 0.7rem;
+  font-size: 0.83rem;
+}
+
 /* ---- Needs matching (goals → checklist) --------------------------------- */
 .goal-picker {
   display: flex;

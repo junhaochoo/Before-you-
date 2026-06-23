@@ -13,7 +13,7 @@
 import { NextResponse } from "next/server";
 import { extractText, getDocumentProxy } from "unpdf";
 import { redactPII } from "@/lib/extract/redact";
-import { extractFields } from "@/lib/extract/llm";
+import { extractFields, extractFundFields } from "@/lib/extract/llm";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -21,11 +21,13 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   try {
     let rawText = "";
+    let mode = "insurance"; // "insurance" (ILP analyzer) | "fund" (fund factsheet)
     const contentType = req.headers.get("content-type") ?? "";
 
     if (contentType.includes("multipart/form-data")) {
       const form = await req.formData();
       const file = form.get("file");
+      if (typeof form.get("mode") === "string") mode = String(form.get("mode"));
       if (!(file instanceof File)) {
         return NextResponse.json({ error: "no_file" }, { status: 400 });
       }
@@ -36,6 +38,7 @@ export async function POST(req: Request) {
     } else {
       const body = await req.json().catch(() => ({}));
       rawText = typeof body.text === "string" ? body.text : "";
+      if (typeof body.mode === "string") mode = body.mode;
     }
 
     if (!rawText.trim()) {
@@ -45,10 +48,15 @@ export async function POST(req: Request) {
     // Step 2 — PII redaction BEFORE the model sees anything.
     const redaction = redactPII(rawText);
 
-    // Step 3 — LLM extraction on the redacted text only.
-    const outcome = await extractFields(redaction.redacted);
+    // Step 3 — LLM extraction on the redacted text only. The fund mode extracts
+    // only charges + name (never a forward return); insurance mode is the ILP schema.
+    const outcome =
+      mode === "fund"
+        ? await extractFundFields(redaction.redacted)
+        : await extractFields(redaction.redacted);
 
     console.info("extract.ok", {
+      mode,
       chars: rawText.length,
       redactions: redaction.total,
       anyFound: outcome.anyFound,

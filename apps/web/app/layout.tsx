@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Icon } from "./components/icons";
+import { AccountBadge } from "./components/AccountBadge";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,10 +34,13 @@ export default function RootLayout({
               </span>
               <span className="brand-text">Before You Sign</span>
             </Link>
-            <span className="badge">
-              <Icon name="check" size={15} />
-              We earn nothing from your decision
-            </span>
+            <div className="header-right">
+              <span className="badge">
+                <Icon name="check" size={15} />
+                We earn nothing from your decision
+              </span>
+              <AccountBadge />
+            </div>
           </div>
         </header>
         {children}

@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { computeReport, type ReportInputs } from "@/lib/engine";
+import { priceLabel } from "@/lib/pricing";
+import type { EntitlementState } from "@/lib/entitlement";
 import { NumberField } from "../components/ui";
 import { Icon } from "../components/icons";
 import { ReportView, type GuaranteeInfo } from "../components/Report";
@@ -48,14 +50,80 @@ export default function AnalyzePage() {
   // Wave 3 confirm gate + Wave 4 tier / consent / saved reports.
   const [confirmed, setConfirmed] = useState(true);
   const [toVerify, setToVerify] = useState<string[]>([]);
-  const [tier, setTier] = useState<"free" | "full">("full");
+  const [tier, setTier] = useState<"free" | "full">("free");
   const [consent, setConsentState] = useState(false);
   const [saved, setSaved] = useState<SavedReport[]>([]);
+
+  // F6 — paid entitlement ("account") + checkout state.
+  const [entitled, setEntitled] = useState(false);
+  const [paymentsConfigured, setPaymentsConfigured] = useState(true);
+  const [accountEmail, setAccountEmail] = useState<string | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutMsg, setCheckoutMsg] = useState<CheckoutMsg>(null);
 
   useEffect(() => {
     setConsentState(hasConsent());
     setSaved(listSaved());
+
+    // Surface the Stripe return status, then strip it from the URL.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("unlocked") === "1") setCheckoutMsg("unlocked");
+    else if (params.get("checkout") === "cancelled")
+      setCheckoutMsg("cancelled");
+    else if (params.get("checkout") === "failed") setCheckoutMsg("failed");
+    if (params.has("unlocked") || params.has("checkout")) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
+    // Resolve entitlement (the paid full-report account).
+    fetch("/api/entitlement")
+      .then((r) => r.json() as Promise<EntitlementState>)
+      .then((d) => {
+        setEntitled(Boolean(d.entitled));
+        setPaymentsConfigured(d.configured !== false);
+        setAccountEmail(d.email ?? null);
+        if (d.entitled) setTier("full");
+      })
+      .catch(() => {
+        /* entitlement check failed — stay on the free scan */
+      });
   }, []);
+
+  /** Begin Stripe Checkout (or reveal the full report if already entitled). */
+  async function handleUpgrade() {
+    if (entitled) {
+      setTier("full");
+      return;
+    }
+    setCheckingOut(true);
+    setCheckoutMsg(null);
+    try {
+      const res = await fetch("/api/checkout", { method: "POST" });
+      if (res.status === 501) {
+        setCheckoutMsg("not_configured");
+        return;
+      }
+      const data = (await res.json()) as { url?: string };
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setCheckoutMsg("failed");
+    } catch {
+      setCheckoutMsg("failed");
+    } finally {
+      setCheckingOut(false);
+    }
+  }
+
+  /** Clear the entitlement cookie ("sign out" of the paid account). */
+  async function handleSignOut() {
+    await fetch("/api/signout", { method: "POST" }).catch(() => {});
+    setEntitled(false);
+    setAccountEmail(null);
+    setTier("free");
+    setCheckoutMsg(null);
+  }
 
   const report = useMemo(() => {
     const inputs: ReportInputs = {
@@ -188,6 +256,47 @@ export default function AnalyzePage() {
         <Icon name="arrow-left" size={16} /> Back
       </a>
       <h1>Analyze a product</h1>
+      <p className="page-scope">
+        For <strong>insurance &amp; investment-linked products</strong> — fees,
+        a surrender period, a guarantee, or a free-look window. Comparing plain
+        funds instead?{" "}
+        <a href="/compare" className="link">
+          Compare funds →
+        </a>
+      </p>
+
+      {/* F6 — account / entitlement strip */}
+      <div className="account-strip">
+        {entitled ? (
+          <>
+            <span className="account-state on">
+              <Icon name="check" size={15} /> Full access unlocked
+              {accountEmail ? ` · ${accountEmail}` : ""}
+            </span>
+            <button type="button" className="link" onClick={handleSignOut}>
+              Sign out
+            </button>
+          </>
+        ) : (
+          <span className="account-state">
+            <Icon name="info" size={15} /> Free scan — unlock the full report
+            for {priceLabel()}
+          </span>
+        )}
+      </div>
+
+      {checkoutMsg && (
+        <div className={`checkout-banner ${checkoutMsg}`} role="status">
+          {checkoutMsg === "unlocked" &&
+            "Payment received — your full report is unlocked. Thank you."}
+          {checkoutMsg === "cancelled" &&
+            "Checkout cancelled — no payment was made."}
+          {checkoutMsg === "failed" &&
+            "We couldn't confirm a payment. You have not been charged — please try again."}
+          {checkoutMsg === "not_configured" &&
+            "Payments aren't set up on this deployment yet. Add Stripe test keys to enable checkout."}
+        </div>
+      )}
 
       {consent ? (
         <DocumentIntake onExtracted={applyExtraction} />
@@ -324,9 +433,11 @@ export default function AnalyzePage() {
               <button
                 type="button"
                 className={tier === "full" ? "on" : ""}
-                onClick={() => setTier("full")}
+                onClick={() => (entitled ? setTier("full") : handleUpgrade())}
               >
-                Full Report
+                {entitled
+                  ? "Full Report"
+                  : `Unlock Full Report — ${priceLabel()}`}
               </button>
             </div>
             <div className="report-actions">
@@ -351,7 +462,10 @@ export default function AnalyzePage() {
             onMu={setMu}
             onSigma={setSigma}
             tier={tier}
-            onUpgrade={() => setTier("full")}
+            onUpgrade={handleUpgrade}
+            entitled={entitled}
+            paymentsConfigured={paymentsConfigured}
+            checkingOut={checkingOut}
           />
 
           {saved.length > 0 && (
@@ -416,3 +530,11 @@ export default function AnalyzePage() {
 }
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
+
+/** Stripe return / checkout status surfaced as a one-line banner. */
+type CheckoutMsg =
+  | "unlocked"
+  | "cancelled"
+  | "failed"
+  | "not_configured"
+  | null;
