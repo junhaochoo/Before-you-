@@ -19,8 +19,14 @@ Authority on the quantitative engine. Full derivations in
 - Params seeded by asset class; user-adjustable; labelled "scenarios, not forecasts".
 
 ## Engine 3 — RiskFit Lens (compliant context)
-- Out: concentration = A/(L+A); liquidity buffer months = (L−A)/C; stress dollar
-  impact = A×P5 drawdown; lock-in-vs-horizon flag. **Context only, no verdict.**
+- Out: concentration = A/L (product as a share of the user's liquid savings L,
+  pre-purchase); liquidity buffer months = (L−A)/C; stress dollar impact =
+  A×P5 drawdown; lock-in-vs-horizon flag. **Context only, no verdict.**
+  - Note (2026-06-22): implemented as **A/L**, not the earlier A/(L+A). The pitch's
+    Person-A insight and the worked example both compute "S$100k product = 80% of
+    S$125k liquid savings" = A/L. A/(L+A) would yield 44%, contradicting the
+    wireframe, pitch, and worked example. L is total liquid savings pre-purchase;
+    `exceedsLiquidSavings` flags the A>L case factually.
 
 ## Engine 4 — Portfolio Mirror (simplified for MVP)
 - Out: HHI before/after, liquidity ratio shift. (v2: covariance risk-contribution.)

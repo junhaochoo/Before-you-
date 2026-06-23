@@ -1,0 +1,37 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files (the real secrets — never commit)
+.env
+.env*.local
+
+# vitest / coverage
+/coverage
+
+# typescript
+*.tsbuildinfo
+
+# The repo-root .gitignore ignores `lib/` (a Python build-dir convention). This app's
+# lib/ is hand-written TypeScript source (the finance engine, extraction, etc.) and
+# MUST be tracked. Re-include it here (a deeper .gitignore overrides the parent).
+!/lib/
+!/lib/**
