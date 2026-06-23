@@ -34,6 +34,14 @@ export interface FundInput {
   ter: number;
   /** Annual platform / wrap / distribution fee, decimal per year. */
   platformFee: number;
+  /**
+   * Display-only descriptive labels read VERBATIM from a factsheet (F14). They
+   * never enter the cost/return computation — the engine ignores them — and are
+   * surfaced only to decode terminology for the user. Absent when entered by hand.
+   */
+  assetClass?: string;
+  creditQuality?: string;
+  esg?: string;
 }
 
 /** Inputs held constant across every fund so the comparison is apples-to-apples. */

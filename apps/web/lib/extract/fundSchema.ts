@@ -21,6 +21,12 @@ export interface FundExtractionResult {
   ongoing_charge_pct: ExtractedField<number>;
   /** Platform / wrap / distribution fee, percent per year. */
   platform_fee_pct: ExtractedField<number>;
+  /** What the fund mainly holds, verbatim (e.g. "Global Equities", "Asian Bonds"). */
+  asset_class: ExtractedField<string>;
+  /** Credit-quality wording for bond/income funds (e.g. "Investment Grade", "BBB"). */
+  credit_quality: ExtractedField<string>;
+  /** ESG / sustainability label or rating, verbatim (e.g. "ESG", "Article 8"). */
+  esg_rating: ExtractedField<string>;
 }
 
 const field = <T>(): ExtractedField<T> => ({
@@ -34,6 +40,9 @@ export function emptyFundExtraction(): FundExtractionResult {
     sales_charge_pct: field<number>(),
     ongoing_charge_pct: field<number>(),
     platform_fee_pct: field<number>(),
+    asset_class: field<string>(),
+    credit_quality: field<string>(),
+    esg_rating: field<string>(),
   };
 }
 
@@ -74,6 +83,9 @@ export function validateFundExtraction(raw: unknown): FundExtractionResult {
     sales_charge_pct: fld(r.sales_charge_pct, asNum),
     ongoing_charge_pct: fld(r.ongoing_charge_pct, asNum),
     platform_fee_pct: fld(r.platform_fee_pct, asNum),
+    asset_class: fld(r.asset_class, asStr),
+    credit_quality: fld(r.credit_quality, asStr),
+    esg_rating: fld(r.esg_rating, asStr),
   };
 }
 
@@ -83,5 +95,8 @@ export function anyFundFieldFound(r: FundExtractionResult): boolean {
     r.sales_charge_pct,
     r.ongoing_charge_pct,
     r.platform_fee_pct,
+    r.asset_class,
+    r.credit_quality,
+    r.esg_rating,
   ].some((f) => f.confidence !== "not_found");
 }

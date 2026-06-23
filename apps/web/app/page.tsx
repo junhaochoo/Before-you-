@@ -29,14 +29,19 @@ export default function Home() {
       </section>
 
       {/* Group 1 — insurance / investment-linked products (ILPs) */}
-      <section className="mode-group">
+      <section className="mode-group ins">
         <div className="mode-group-head">
-          <h2>Insurance or investment-linked product?</h2>
-          <p className="muted">
-            Policies and ILPs with fees, a surrender or lock-in period, a
-            capital guarantee, or a free-look window. We read the benefit
-            illustration.
-          </p>
+          <span className="mode-group-icon" aria-hidden>
+            <Icon name="file" size={20} />
+          </span>
+          <div className="mode-group-text">
+            <h2>Insurance or investment-linked product?</h2>
+            <p className="muted">
+              Policies and ILPs with fees, a surrender or lock-in period, a
+              capital guarantee, or a free-look window. We read the benefit
+              illustration.
+            </p>
+          </div>
         </div>
         <div className="modes">
           <Link href="/analyze" className="mode">
@@ -64,13 +69,18 @@ export default function Home() {
       </section>
 
       {/* Group 2 — plain investment funds / unit trusts */}
-      <section className="mode-group">
+      <section className="mode-group funds">
         <div className="mode-group-head">
-          <h2>Comparing investment funds or unit trusts?</h2>
-          <p className="muted">
-            Plain funds with a sales charge, an ongoing charge (TER) and maybe a
-            platform fee — no insurance, no surrender period.
-          </p>
+          <span className="mode-group-icon" aria-hidden>
+            <Icon name="mirror" size={20} />
+          </span>
+          <div className="mode-group-text">
+            <h2>Comparing investment funds or unit trusts?</h2>
+            <p className="muted">
+              Plain funds with a sales charge, an ongoing charge (TER) and maybe
+              a platform fee — no insurance, no surrender period.
+            </p>
+          </div>
         </div>
         <div className="modes">
           <Link href="/compare" className="mode">
@@ -87,13 +97,18 @@ export default function Home() {
       </section>
 
       {/* Group 3 — product-agnostic goals tool */}
-      <section className="mode-group">
+      <section className="mode-group goals">
         <div className="mode-group-head">
-          <h2>Not sure, or starting from your goals?</h2>
-          <p className="muted">
-            Works for any product — turn what you want this money to do into a
-            checklist of what to look for and what to ask.
-          </p>
+          <span className="mode-group-icon" aria-hidden>
+            <Icon name="fit" size={20} />
+          </span>
+          <div className="mode-group-text">
+            <h2>Not sure, or starting from your goals?</h2>
+            <p className="muted">
+              Works for any product — turn what you want this money to do into a
+              checklist of what to look for and what to ask.
+            </p>
+          </div>
         </div>
         <div className="modes">
           <Link href="/needs" className="mode">

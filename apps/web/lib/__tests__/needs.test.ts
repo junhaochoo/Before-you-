@@ -8,7 +8,7 @@
  * order, de-duplicated questions, unknown ids ignored).
  */
 import { describe, it, expect } from "vitest";
-import { NEEDS, matchNeeds, type Need } from "../needs";
+import { NEEDS, matchNeeds, matchFreeText, type Need } from "../needs";
 
 /** Every user-facing string the needs surface can render. */
 function allNeedsCopy(): string {
@@ -113,5 +113,73 @@ describe("matchNeeds — behaviour", () => {
     const expected = new Set([...sel[0].questions, ...sel[1].questions]);
     const { questions } = matchNeeds(sel.map((n) => n.id));
     expect(new Set(questions)).toEqual(expected);
+  });
+});
+
+describe("matchFreeText — deterministic chat matching (F15)", () => {
+  it("maps capital-preservation wording to preserve", () => {
+    expect(matchFreeText("I don't want to lose my money")).toContain(
+      "preserve",
+    );
+    expect(matchFreeText("keep my capital safe")).toContain("preserve");
+  });
+
+  it("maps income wording to income", () => {
+    expect(matchFreeText("I want regular monthly income")).toContain("income");
+  });
+
+  it("maps growth and retirement wording to growth", () => {
+    expect(matchFreeText("grow my savings for retirement")).toContain("growth");
+  });
+
+  it("maps inflation wording to inflation", () => {
+    expect(matchFreeText("keep up with the cost of living")).toContain(
+      "inflation",
+    );
+  });
+
+  it("maps accessibility wording to access", () => {
+    expect(matchFreeText("I might need to withdraw at short notice")).toContain(
+      "access",
+    );
+  });
+
+  it("maps insurance wording to protection", () => {
+    expect(matchFreeText("I want insurance cover for my family")).toContain(
+      "protection",
+    );
+  });
+
+  it("maps inheritance wording to legacy", () => {
+    expect(matchFreeText("leave money to my children")).toContain("legacy");
+  });
+
+  it("returns multiple goals when several are expressed", () => {
+    const ids = matchFreeText(
+      "steady income in retirement but I can't afford to lose what I put in",
+    );
+    expect(ids).toContain("income");
+    expect(ids).toContain("preserve");
+  });
+
+  it("returns matches in NEEDS order, de-duplicated", () => {
+    const ids = matchFreeText("grow my money but keep my capital safe");
+    expect(ids).toEqual(
+      NEEDS.filter((n) => ids.includes(n.id)).map((n) => n.id),
+    );
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("returns only valid need ids", () => {
+    const valid = new Set(NEEDS.map((n) => n.id));
+    for (const id of matchFreeText("income growth inflation access")) {
+      expect(valid.has(id)).toBe(true);
+    }
+  });
+
+  it("returns an empty array for empty or unrecognised text", () => {
+    expect(matchFreeText("")).toEqual([]);
+    expect(matchFreeText("   ")).toEqual([]);
+    expect(matchFreeText("xyzzy plugh")).toEqual([]);
   });
 });

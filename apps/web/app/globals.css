@@ -893,6 +893,68 @@ h2 {
   margin: 0.7rem 0;
 }
 
+/* ---- Fund education + decoded factsheet labels (F14) -------------------- */
+.fund-profile {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.7rem;
+}
+.fund-profile li {
+  display: grid;
+  gap: 0.15rem;
+}
+.fund-profile-label {
+  align-self: start;
+  justify-self: start;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--pill);
+  padding: 0.18rem 0.6rem;
+}
+.fund-profile-plain {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.edu-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 1.1rem 0 0.5rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.edu-head svg {
+  color: var(--accent);
+  flex: none;
+}
+.edu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+.edu-list li {
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  background: var(--card-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+.edu-list li span {
+  font-weight: 650;
+  color: var(--ink);
+}
+
 /* ---- Header account badge (F6 visibility) ------------------------------- */
 .header-right {
   display: flex;
@@ -949,18 +1011,77 @@ h2 {
 }
 
 /* ---- Home product groups + page scope note ------------------------------ */
+/* Each product group is colour-coded so the three sections read as distinct
+   blocks: a tinted banner with a coloured left bar + icon chip, and cards that
+   inherit the group accent. Group accents are scoped via custom properties so
+   the shared .mode / .mode-icon rules pick them up without per-group overrides. */
 .mode-group {
-  margin: 1.6rem 0 0.4rem;
+  --ga: var(--accent);
+  --gs: var(--accent-soft);
+  --gl: #c7d8fb;
+  margin: 1.75rem 0 0.4rem;
+}
+.mode-group.ins {
+  --ga: #1d4ed8;
+  --gs: #eaf0fe;
+  --gl: #c7d8fb;
+}
+.mode-group.funds {
+  --ga: #0f8a5f;
+  --gs: #e7f5ee;
+  --gl: #b6e1cc;
+}
+.mode-group.goals {
+  --ga: #7c3aed;
+  --gs: #f2ebfe;
+  --gl: #dcc9fb;
+}
+.mode-group-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  background: var(--gs);
+  border: 1px solid var(--gl);
+  border-left: 4px solid var(--ga);
+  border-radius: var(--r);
+  padding: 0.85rem 1.1rem;
+}
+.mode-group-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 11px;
+  background: var(--ga);
+  color: #fff;
+  box-shadow: var(--sh-sm);
+}
+.mode-group-text {
+  min-width: 0;
 }
 .mode-group-head h2 {
   margin: 0 0 0.2rem;
   font-size: 1.12rem;
   letter-spacing: -0.01em;
-  color: var(--ink);
+  color: var(--ga);
 }
 .mode-group-head p {
-  margin: 0 0 0.7rem;
+  margin: 0;
   font-size: 0.9rem;
+}
+/* Cards in a group take that group's accent for icon + hover affordances. */
+.mode-group .modes {
+  margin: 0.85rem 0 0;
+}
+.mode-group .mode-icon {
+  background: var(--ga);
+}
+.mode-group .mode:hover {
+  border-color: var(--ga);
+}
+.mode-group .mode:hover::after {
+  color: var(--ga);
 }
 .page-scope {
   margin: 0.4rem 0 1.2rem;
@@ -1033,6 +1154,63 @@ h2 {
 }
 
 /* ---- Needs matching (goals → checklist) --------------------------------- */
+/* Chat-first goal entry (F15) — free text, deterministically matched, no AI key. */
+.goal-chat {
+  margin: 0.6rem 0 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow: var(--sh-sm);
+}
+.goal-chat-label {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.goal-chat-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.goal-chat-input {
+  flex: 1 1 320px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  resize: vertical;
+  background: var(--card-soft);
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.goal-chat-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+.goal-chat-row .btn {
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+.goal-chat-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  color: var(--good);
+}
+.goal-chat-feedback.muted {
+  color: var(--muted);
+}
+.goal-chat-feedback svg {
+  flex: none;
+  margin-top: 2px;
+}
 .goal-picker {
   display: flex;
   flex-wrap: wrap;

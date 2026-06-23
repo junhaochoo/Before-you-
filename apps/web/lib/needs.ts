@@ -170,6 +170,118 @@ export const NEEDS: Need[] = [
   },
 ];
 
+/**
+ * Free-text keywords per goal — the deterministic dictionary behind the chat-first
+ * interface (F15). The user types their goal in their own words; we match those
+ * words to goals with NO AI call, so it works on every deployment regardless of
+ * whether an LLM key is configured. Keywords are substrings, matched lowercased.
+ */
+const NEED_KEYWORDS: Record<string, string[]> = {
+  preserve: [
+    "protect my capital",
+    "protect capital",
+    "preserve",
+    "lose",
+    "losing",
+    "no loss",
+    "safe",
+    "security",
+    "secure",
+    "principal",
+    "guarantee",
+    "guaranteed",
+    "capital",
+  ],
+  income: [
+    "income",
+    "payout",
+    "pay out",
+    "dividend",
+    "regular",
+    "monthly",
+    "cash flow",
+    "yield",
+    "distribution",
+    "passive",
+  ],
+  growth: [
+    "grow",
+    "growth",
+    "long term",
+    "long-term",
+    "compound",
+    "build wealth",
+    "wealth",
+    "retire",
+    "retirement",
+    "appreciate",
+    "maximise",
+    "maximize",
+    "highest return",
+  ],
+  inflation: [
+    "inflation",
+    "real return",
+    "purchasing power",
+    "spending power",
+    "rising prices",
+    "cost of living",
+    "keep up",
+  ],
+  access: [
+    "access",
+    "accessible",
+    "liquid",
+    "liquidity",
+    "withdraw",
+    "flexible",
+    "flexibility",
+    "emergency",
+    "short notice",
+    "anytime",
+    "any time",
+    "rainy day",
+  ],
+  protection: [
+    "insurance",
+    "protection",
+    "protect my family",
+    "cover",
+    "coverage",
+    "death",
+    "critical illness",
+    "sum assured",
+    "premium",
+  ],
+  legacy: [
+    "legacy",
+    "inherit",
+    "inheritance",
+    "estate",
+    "leave money",
+    "leave to",
+    "beneficiary",
+    "bequest",
+    "pass on",
+    "children",
+    "loved ones",
+    "next generation",
+  ],
+};
+
+/**
+ * matchFreeText — given free text the user typed, return the goal ids whose
+ * keywords appear in it, in NEEDS order, de-duplicated. Empty / no-match returns
+ * []. Pure + deterministic (no AI), so the chat works on every deployment.
+ */
+export function matchFreeText(text: string): string[] {
+  const t = (text || "").toLowerCase();
+  if (!t.trim()) return [];
+  return NEEDS.filter((n) =>
+    (NEED_KEYWORDS[n.id] || []).some((kw) => t.includes(kw)),
+  ).map((n) => n.id);
+}
+
 export interface NeedMatch {
   /** The full Need objects the user selected, in NEEDS order. */
   needs: Need[];

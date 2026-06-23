@@ -7,12 +7,27 @@ import {
   type FundGlobals,
 } from "@/lib/engine/funds";
 import { sgd, pct } from "@/lib/format";
-import { Disclaimer, NoConflictBadge, NumberStat } from "../components/ui";
+import {
+  Disclaimer,
+  NoConflictBadge,
+  NumberStat,
+  TapToExplain,
+} from "../components/ui";
 import { Icon } from "../components/icons";
 import {
   FundIntake,
   type FundExtractionResponse,
 } from "../components/FundIntake";
+import {
+  FUND_GLOSSARY,
+  ASSET_CLASSES,
+  CREDIT_TIERS,
+  CREDIT_QUALITY_NOTE,
+  ESG_NOTE,
+  decodeAssetClass,
+  decodeCreditQuality,
+  decodeEsg,
+} from "@/lib/fundEducation";
 import { hasConsent, setConsent } from "@/lib/storage";
 
 /**
@@ -111,6 +126,10 @@ export default function ComparePage() {
     setFunds((fs) => {
       const name =
         f.name.value?.trim() || `Fund ${String.fromCharCode(65 + fs.length)}`;
+      const label = (x: { value: string | null; confidence: string }) =>
+        x.confidence !== "not_found" && x.value?.trim()
+          ? x.value.trim()
+          : undefined;
       const imported: FundInput = {
         id: newId(),
         name,
@@ -119,6 +138,9 @@ export default function ComparePage() {
         salesCharge: dec(f.sales_charge_pct.value),
         ter: dec(f.ongoing_charge_pct.value),
         platformFee: dec(f.platform_fee_pct.value),
+        assetClass: label(f.asset_class),
+        creditQuality: label(f.credit_quality),
+        esg: label(f.esg_rating),
       };
       // Append when there's room; otherwise replace the last card.
       return fs.length >= 4 ? [...fs.slice(0, 3), imported] : [...fs, imported];
@@ -263,6 +285,9 @@ export default function ComparePage() {
                 )}
               </ul>
 
+              {/* Decoded descriptive labels read from the factsheet (F14) */}
+              <FundProfile fund={f} />
+
               {/* Compact editable inputs from the factsheet */}
               <details className="fund-edit">
                 <summary>Edit this fund</summary>
@@ -326,12 +351,91 @@ export default function ComparePage() {
         </button>
       )}
 
+      {/* F14 — fund education: decode the terms a factsheet uses but rarely explains */}
+      <details className="form-card">
+        <summary>What these terms mean</summary>
+        <p className="muted">
+          Plain-English explanations — neutral facts to help you read a
+          factsheet. None of this says whether a fund is right for you.
+        </p>
+
+        <h4 className="edu-head">
+          <Icon name="fee" size={15} /> The charges
+        </h4>
+        <p className="glossary">
+          {FUND_GLOSSARY.map((g) => (
+            <TapToExplain
+              key={g.term}
+              term={g.term}
+              plainEnglish={g.plainEnglish}
+            />
+          ))}
+        </p>
+
+        <h4 className="edu-head">
+          <Icon name="mirror" size={15} /> What a fund holds (asset class)
+        </h4>
+        <ul className="edu-list">
+          {ASSET_CLASSES.map((a) => (
+            <li key={a.key}>
+              <span>{a.label}</span> — {a.plain}
+            </li>
+          ))}
+        </ul>
+
+        <h4 className="edu-head">
+          <Icon name="downside" size={15} /> Credit quality (for bond funds)
+        </h4>
+        <p className="muted">{CREDIT_QUALITY_NOTE}</p>
+        <ul className="edu-list">
+          {CREDIT_TIERS.map((c) => (
+            <li key={c.key}>
+              <span>{c.label}</span> — {c.plain}
+            </li>
+          ))}
+        </ul>
+
+        <h4 className="edu-head">
+          <Icon name="fit" size={15} /> ESG / sustainability labels
+        </h4>
+        <p className="muted">{ESG_NOTE}</p>
+      </details>
+
       <p className="muted" style={{ marginTop: "1.25rem" }}>
         Returns and risk levels are assumptions you can change. Charges should
         come from each fund&apos;s factsheet (look for the sales charge, the
         ongoing charge or TER, and any platform fee).
       </p>
     </main>
+  );
+}
+
+/**
+ * FundProfile — decodes the descriptive labels (asset class, credit quality,
+ * ESG) read from a factsheet into plain English. Renders nothing when a fund was
+ * entered by hand (no labels present). Neutral facts only — never a verdict.
+ */
+function FundProfile({ fund }: { fund: FundInput }) {
+  const rows = [
+    { detected: fund.assetClass, decoded: decodeAssetClass(fund.assetClass) },
+    {
+      detected: fund.creditQuality,
+      decoded: decodeCreditQuality(fund.creditQuality),
+    },
+    { detected: fund.esg, decoded: decodeEsg(fund.esg) },
+  ].filter((r) => r.detected && r.decoded);
+
+  if (rows.length === 0) return null;
+
+  return (
+    <ul className="fund-profile">
+      {rows.map((r, i) => (
+        <li key={i}>
+          <span className="fund-profile-label">{r.detected}</span>
+          <span className="fund-profile-plain">{r.decoded!.plain}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 

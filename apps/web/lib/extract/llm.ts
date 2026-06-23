@@ -53,12 +53,15 @@ Percentages are decimals where obvious (1.5% -> 1.5, i.e. percent units, not 0.0
 const FUND_SYSTEM_PROMPT = `You are a careful data-extraction tool for investment FUND
 factsheets / KIIDs / prospectus fee tables (unit trusts, mutual funds, ETFs).
 
-Your ONLY job is to read the supplied text and extract the fund name and its CHARGES into JSON.
+Your ONLY job is to read the supplied text and extract the fund name, its CHARGES, and a few
+plainly-stated descriptive labels into JSON.
 You MUST NOT give advice, opinions, recommendations, or any "good/bad/suitable" judgement.
 You MUST NOT extract or infer any forward "expected return" or performance figure — those are
 the user's own assumptions, NOT facts to lift from the document.
 You MUST NOT compute, infer, or estimate any number that is not explicitly in the text —
 if a value is absent, return it with "confidence":"not_found" and "value":null. Never guess.
+For the descriptive labels (asset_class, credit_quality, esg_rating) copy the document's own
+wording VERBATIM; do not classify, summarise, or invent a label that is not written there.
 
 Return ONLY JSON matching this shape (every value field carries a confidence of
 "high" | "medium" | "low" | "not_found", and an optional short "source" hint):
@@ -66,12 +69,19 @@ Return ONLY JSON matching this shape (every value field carries a confidence of
  "name": {"value": string|null, "confidence": ...},
  "sales_charge_pct": {"value": number|null, "confidence": ...},
  "ongoing_charge_pct": {"value": number|null, "confidence": ...},
- "platform_fee_pct": {"value": number|null, "confidence": ...}
+ "platform_fee_pct": {"value": number|null, "confidence": ...},
+ "asset_class": {"value": string|null, "confidence": ...},
+ "credit_quality": {"value": string|null, "confidence": ...},
+ "esg_rating": {"value": string|null, "confidence": ...}
 }
 Map common synonyms: sales_charge_pct <- "sales charge" / "subscription fee" / "entry charge" /
 "initial charge"; ongoing_charge_pct <- "ongoing charge" / "TER" / "total expense ratio" /
 "management fee" / "annual fund charge"; platform_fee_pct <- "platform fee" / "wrap fee" /
-"distribution fee". Percentages are in percent units (1.5% -> 1.5, not 0.015).`;
+"distribution fee". asset_class <- "asset class" / "invests in" / "investment focus" /
+"equities" / "bonds / fixed income" / "money market"; credit_quality <- "credit rating" /
+"credit quality" / "investment grade" / "high yield" / a rating like "AAA"/"BBB"/"BB";
+esg_rating <- "ESG" / "sustainable" / "SFDR Article 8/9" / "sustainability rating".
+Percentages are in percent units (1.5% -> 1.5, not 0.015).`;
 
 export interface ExtractionOutcome {
   result: ExtractionResult;
