@@ -893,6 +893,114 @@ h2 {
   margin: 0.7rem 0;
 }
 
+/* ---- Needs matching (goals → checklist) --------------------------------- */
+.goal-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.4rem 0 0.5rem;
+}
+.goal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--pill);
+  background: var(--card);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--sh-sm);
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.goal-chip svg {
+  color: var(--muted-2);
+  flex: none;
+}
+.goal-chip:hover {
+  border-color: var(--accent);
+}
+.goal-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+.goal-chip.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.goal-chip.on svg {
+  color: #fff;
+}
+
+.need-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+.need-col h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+.need-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.need-list li {
+  position: relative;
+  padding: 0.55rem 0.75rem 0.55rem 1.6rem;
+  border-radius: var(--r-sm);
+  background: var(--card-soft);
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.need-list li::before {
+  position: absolute;
+  left: 0.65rem;
+  top: 0.5rem;
+  font-weight: 700;
+}
+.need-list.look li {
+  border-left: 3px solid var(--accent);
+}
+.need-list.look li::before {
+  content: "›";
+  color: var(--accent);
+}
+.need-list.watch li {
+  border-left: 3px solid var(--warn);
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+}
+.need-list.watch li::before {
+  content: "!";
+  color: var(--warn);
+}
+.need-list.ask li {
+  border-left: 3px solid var(--good);
+}
+.need-list.ask li::before {
+  content: "?";
+  color: var(--good);
+}
+
 /* ---- Motion preferences ------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   * {

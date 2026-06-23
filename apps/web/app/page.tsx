@@ -59,6 +59,15 @@ export default function Home() {
             Put funds side by side on cost and risk.
           </span>
         </Link>
+        <Link href="/needs" className="mode">
+          <span className="mode-icon">
+            <Icon name="fit" size={22} />
+          </span>
+          <span className="mode-title">Match my goals</span>
+          <span className="mode-sub">
+            Turn your goals into what to check and ask.
+          </span>
+        </Link>
       </div>
 
       <p className="disclaimer">
