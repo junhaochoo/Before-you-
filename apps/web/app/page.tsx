@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { STANDARD_DISCLAIMER, NO_CONFLICT_BADGE, FREE_LOOK_COPY } from "@/lib/copy";
+import {
+  STANDARD_DISCLAIMER,
+  NO_CONFLICT_BADGE,
+  FREE_LOOK_COPY,
+} from "@/lib/copy";
+import { Icon } from "./components/icons";
 
 /**
  * Entry screen — three modes (13-product-design-ux.md Screen 1). For the MVP, all
@@ -10,32 +15,47 @@ import { STANDARD_DISCLAIMER, NO_CONFLICT_BADGE, FREE_LOOK_COPY } from "@/lib/co
 export default function Home() {
   return (
     <main>
-      <h1>Before You Sign</h1>
-      <p className="lede">Understand the real cost and consequence before you commit.</p>
-      <p>
-        <span className="badge">✓ {NO_CONFLICT_BADGE}</span>
-      </p>
+      <section className="hero">
+        <h1>Know the real cost.</h1>
+        <p className="lede">
+          See what a product truly costs you — before you sign.
+        </p>
+        <p>
+          <span className="badge">
+            <Icon name="check" size={15} />
+            {NO_CONFLICT_BADGE}
+          </span>
+        </p>
+      </section>
 
       <div className="modes">
         <Link href="/analyze" className="mode">
-          <span className="mode-icon">📄</span>
-          <span className="mode-title">Upload my Product Summary / Benefit Illustration</span>
-          <span className="mode-sub">We read the fees and structure for you. (Upload arrives in the next build; for now, enter details.)</span>
+          <span className="mode-icon">
+            <Icon name="file" size={22} />
+          </span>
+          <span className="mode-title">Upload my document</span>
+          <span className="mode-sub">We read the fees for you.</span>
         </Link>
         <Link href="/analyze" className="mode">
-          <span className="mode-icon">💬</span>
-          <span className="mode-title">I only have what the agent told me</span>
-          <span className="mode-sub">Enter the details yourself — zero upload needed.</span>
+          <span className="mode-icon">
+            <Icon name="chat" size={22} />
+          </span>
+          <span className="mode-title">Enter details myself</span>
+          <span className="mode-sub">No upload needed.</span>
         </Link>
         <Link href="/analyze" className="mode">
-          <span className="mode-icon">⏳</span>
-          <span className="mode-title">I've signed — check before free-look ends</span>
+          <span className="mode-icon">
+            <Icon name="clock" size={22} />
+          </span>
+          <span className="mode-title">I&apos;ve already signed</span>
           <span className="mode-sub">{FREE_LOOK_COPY}</span>
         </Link>
       </div>
 
-      <p className="muted">We don't sell anything. We don't tell you what to buy.</p>
-      <p className="disclaimer">⚠ {STANDARD_DISCLAIMER}</p>
+      <p className="disclaimer">
+        <Icon name="alert" size={18} />
+        <span>{STANDARD_DISCLAIMER}</span>
+      </p>
     </main>
   );
 }

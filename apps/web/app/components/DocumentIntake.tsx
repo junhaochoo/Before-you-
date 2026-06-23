@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ExtractionResult } from "@/lib/extract/schema";
+import { Icon } from "./icons";
 
 export interface ExtractionResponse {
   fields: ExtractionResult;
@@ -92,7 +93,7 @@ export function DocumentIntake({
       </p>
       <div className="intake">
         <label className="upload-btn">
-          📄 Choose a PDF
+          <Icon name="file" size={17} /> Choose a PDF
           <input
             type="file"
             accept="application/pdf"

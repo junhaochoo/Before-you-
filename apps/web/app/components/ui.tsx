@@ -2,18 +2,25 @@
 
 import { useState, type ReactNode } from "react";
 import { STANDARD_DISCLAIMER, NO_CONFLICT_BADGE } from "@/lib/copy";
+import { Icon } from "./icons";
 
 /** The standard disclaimer — single-source, carried on every report. */
 export function Disclaimer() {
   return (
     <p className="disclaimer" role="note">
-      ⚠ {STANDARD_DISCLAIMER}
+      <Icon name="alert" size={18} />
+      <span>{STANDARD_DISCLAIMER}</span>
     </p>
   );
 }
 
 export function NoConflictBadge() {
-  return <span className="badge">✓ {NO_CONFLICT_BADGE}</span>;
+  return (
+    <span className="badge">
+      <Icon name="check" size={15} />
+      {NO_CONFLICT_BADGE}
+    </span>
+  );
 }
 
 /** Large, legible number — the dollar figures are the hero (13-product-design-ux.md). */
@@ -44,7 +51,7 @@ export function Lens({
   note,
   children,
 }: {
-  icon: string;
+  icon: ReactNode;
   title: string;
   note?: string;
   children: ReactNode;
@@ -61,12 +68,22 @@ export function Lens({
 }
 
 /** Jargon term with tap-to-explain (accessibility: plain language, no jargon un-explained). */
-export function TapToExplain({ term, plainEnglish }: { term: string; plainEnglish: string }) {
+export function TapToExplain({
+  term,
+  plainEnglish,
+}: {
+  term: string;
+  plainEnglish: string;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <span className="explain">
-      <button type="button" className="explain-term" onClick={() => setOpen((o) => !o)}>
-        {term} <span aria-hidden>ⓘ</span>
+      <button
+        type="button"
+        className="explain-term"
+        onClick={() => setOpen((o) => !o)}
+      >
+        {term} <Icon name="info" size={14} />
       </button>
       {open && <span className="explain-body">{plainEnglish}</span>}
     </span>
