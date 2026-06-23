@@ -10,16 +10,37 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { retrieveCheckoutSession, stripeConfigured } from "@/lib/stripe";
-import { ENTITLEMENT_COOKIE, type EntitlementState } from "@/lib/entitlement";
+import {
+  ENTITLEMENT_COOKIE,
+  DEMO_ENTITLEMENT_VALUE,
+  demoUnlockEnabled,
+  type EntitlementState,
+} from "@/lib/entitlement";
 
 export const runtime = "nodejs";
 
 export async function GET() {
   const configured = stripeConfigured();
+  const demoAvailable = demoUnlockEnabled();
   const sid = (await cookies()).get(ENTITLEMENT_COOKIE)?.value;
 
+  // Demo unlock: a no-payment full-report grant, honoured only when DEMO_UNLOCK=1.
+  if (demoAvailable && sid === DEMO_ENTITLEMENT_VALUE) {
+    const body: EntitlementState = {
+      entitled: true,
+      configured,
+      demoAvailable,
+      demo: true,
+    };
+    return NextResponse.json(body);
+  }
+
   if (!configured || !sid) {
-    const body: EntitlementState = { entitled: false, configured };
+    const body: EntitlementState = {
+      entitled: false,
+      configured,
+      demoAvailable,
+    };
     return NextResponse.json(body);
   }
 
@@ -29,6 +50,7 @@ export async function GET() {
     const body: EntitlementState = {
       entitled,
       configured,
+      demoAvailable,
       email: session?.customer_details?.email ?? null,
     };
     return NextResponse.json(body);
@@ -36,7 +58,11 @@ export async function GET() {
     console.error("entitlement.check.error", {
       error: e instanceof Error ? e.message : "unknown",
     });
-    const body: EntitlementState = { entitled: false, configured };
+    const body: EntitlementState = {
+      entitled: false,
+      configured,
+      demoAvailable,
+    };
     return NextResponse.json(body);
   }
 }

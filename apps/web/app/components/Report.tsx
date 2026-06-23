@@ -43,6 +43,7 @@ export function ReportView({
   onUpgrade,
   entitled = false,
   paymentsConfigured = true,
+  demoAvailable = false,
   checkingOut = false,
 }: {
   report: Report;
@@ -58,6 +59,8 @@ export function ReportView({
   entitled?: boolean;
   /** F6 — false when this deployment has no Stripe key (payments off). */
   paymentsConfigured?: boolean;
+  /** Demo unlock available (DEMO_UNLOCK=1) — reveal the full report without payment. */
+  demoAvailable?: boolean;
   /** F6 — true while a checkout session is being opened. */
   checkingOut?: boolean;
 }) {
@@ -251,16 +254,24 @@ export function ReportView({
             onClick={() => onUpgrade?.()}
           >
             {checkingOut
-              ? "Opening secure checkout…"
+              ? "Opening…"
               : entitled
                 ? "Show my full report"
-                : `Unlock the full report — ${priceLabel()}`}
+                : demoAvailable && !paymentsConfigured
+                  ? "Preview the full report (demo)"
+                  : `Unlock the full report — ${priceLabel()}`}
           </button>
           {paymentsConfigured ? (
             <p className="muted upgrade-note">
               Test mode — pay with Stripe&apos;s test card 4242 4242 4242 4242
               (any future date, any CVC). We never see your card details and
               earn nothing from your decision.
+            </p>
+          ) : demoAvailable ? (
+            <p className="muted upgrade-note">
+              Demonstration mode — this reveals the full paid report{" "}
+              <strong>without taking any payment</strong>, so you can see
+              exactly what the paid version includes.
             </p>
           ) : (
             <p className="muted upgrade-note">

@@ -60,14 +60,18 @@ export default function AnalyzePage() {
   const [accountEmail, setAccountEmail] = useState<string | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
   const [checkoutMsg, setCheckoutMsg] = useState<CheckoutMsg>(null);
+  // Demo unlock (no-payment full report; only when the deployment sets DEMO_UNLOCK=1).
+  const [demoAvailable, setDemoAvailable] = useState(false);
+  const [demoEntitled, setDemoEntitled] = useState(false);
 
   useEffect(() => {
     setConsentState(hasConsent());
     setSaved(listSaved());
 
-    // Surface the Stripe return status, then strip it from the URL.
+    // Surface the Stripe / demo return status, then strip it from the URL.
     const params = new URLSearchParams(window.location.search);
-    if (params.get("unlocked") === "1") setCheckoutMsg("unlocked");
+    if (params.get("unlocked") === "1")
+      setCheckoutMsg(params.get("demo") === "1" ? "demo_unlocked" : "unlocked");
     else if (params.get("checkout") === "cancelled")
       setCheckoutMsg("cancelled");
     else if (params.get("checkout") === "failed") setCheckoutMsg("failed");
@@ -75,12 +79,14 @@ export default function AnalyzePage() {
       window.history.replaceState(null, "", window.location.pathname);
     }
 
-    // Resolve entitlement (the paid full-report account).
+    // Resolve entitlement (the paid full-report account, or the demo unlock).
     fetch("/api/entitlement")
       .then((r) => r.json() as Promise<EntitlementState>)
       .then((d) => {
         setEntitled(Boolean(d.entitled));
         setPaymentsConfigured(d.configured !== false);
+        setDemoAvailable(Boolean(d.demoAvailable));
+        setDemoEntitled(Boolean(d.demo));
         setAccountEmail(d.email ?? null);
         if (d.entitled) setTier("full");
       })
@@ -120,6 +126,7 @@ export default function AnalyzePage() {
   async function handleSignOut() {
     await fetch("/api/signout", { method: "POST" }).catch(() => {});
     setEntitled(false);
+    setDemoEntitled(false);
     setAccountEmail(null);
     setTier("free");
     setCheckoutMsg(null);
@@ -270,17 +277,22 @@ export default function AnalyzePage() {
         {entitled ? (
           <>
             <span className="account-state on">
-              <Icon name="check" size={15} /> Full access unlocked
-              {accountEmail ? ` · ${accountEmail}` : ""}
+              <Icon name="check" size={15} />{" "}
+              {demoEntitled
+                ? "Full report unlocked · demo"
+                : "Full access unlocked"}
+              {!demoEntitled && accountEmail ? ` · ${accountEmail}` : ""}
             </span>
             <button type="button" className="link" onClick={handleSignOut}>
-              Sign out
+              {demoEntitled ? "Exit demo" : "Sign out"}
             </button>
           </>
         ) : (
           <span className="account-state">
-            <Icon name="info" size={15} /> Free scan — unlock the full report
-            for {priceLabel()}
+            <Icon name="info" size={15} />{" "}
+            {demoAvailable && !paymentsConfigured
+              ? "Free scan — preview the full report (demo, no payment)"
+              : `Free scan — unlock the full report for ${priceLabel()}`}
           </span>
         )}
       </div>
@@ -289,6 +301,8 @@ export default function AnalyzePage() {
         <div className={`checkout-banner ${checkoutMsg}`} role="status">
           {checkoutMsg === "unlocked" &&
             "Payment received — your full report is unlocked. Thank you."}
+          {checkoutMsg === "demo_unlocked" &&
+            "Demo mode — the full report is unlocked without any payment, for demonstration only."}
           {checkoutMsg === "cancelled" &&
             "Checkout cancelled — no payment was made."}
           {checkoutMsg === "failed" &&
@@ -437,7 +451,9 @@ export default function AnalyzePage() {
               >
                 {entitled
                   ? "Full Report"
-                  : `Unlock Full Report — ${priceLabel()}`}
+                  : demoAvailable && !paymentsConfigured
+                    ? "Preview Full Report (demo)"
+                    : `Unlock Full Report — ${priceLabel()}`}
               </button>
             </div>
             <div className="report-actions">
@@ -465,6 +481,7 @@ export default function AnalyzePage() {
             onUpgrade={handleUpgrade}
             entitled={entitled}
             paymentsConfigured={paymentsConfigured}
+            demoAvailable={demoAvailable}
             checkingOut={checkingOut}
           />
 
@@ -534,6 +551,7 @@ const round2 = (n: number) => Math.round(n * 100) / 100;
 /** Stripe return / checkout status surfaced as a one-line banner. */
 type CheckoutMsg =
   | "unlocked"
+  | "demo_unlocked"
   | "cancelled"
   | "failed"
   | "not_configured"

@@ -46,17 +46,13 @@ export default function Home() {
         <div className="modes">
           <Link href="/analyze" className="mode">
             <span className="mode-icon">
-              <Icon name="file" size={22} />
+              <Icon name="scan" size={22} />
             </span>
-            <span className="mode-title">Upload my document</span>
-            <span className="mode-sub">We read the fees for you.</span>
-          </Link>
-          <Link href="/analyze" className="mode">
-            <span className="mode-icon">
-              <Icon name="chat" size={22} />
+            <span className="mode-title">Check a policy or ILP</span>
+            <span className="mode-sub">
+              Upload the benefit illustration or just enter the details yourself
+              — we read the fees either way.
             </span>
-            <span className="mode-title">Enter details myself</span>
-            <span className="mode-sub">No upload needed.</span>
           </Link>
           <Link href="/analyze" className="mode">
             <span className="mode-icon">

@@ -1019,7 +1019,14 @@ h2 {
   --ga: var(--accent);
   --gs: var(--accent-soft);
   --gl: #c7d8fb;
-  margin: 1.75rem 0 0.4rem;
+  margin: 1.25rem 0;
+  /* Each product group is its own coloured-outline box for unmistakable
+     separation: a 2px accent border, a tinted header strip, a white body. */
+  border: 2px solid var(--ga);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow: var(--sh-md);
+  overflow: hidden;
 }
 .mode-group.ins {
   --ga: #1d4ed8;
@@ -1041,9 +1048,7 @@ h2 {
   align-items: flex-start;
   gap: 0.8rem;
   background: var(--gs);
-  border: 1px solid var(--gl);
-  border-left: 4px solid var(--ga);
-  border-radius: var(--r);
+  border-bottom: 1px solid var(--gl);
   padding: 0.85rem 1.1rem;
 }
 .mode-group-icon {
@@ -1072,7 +1077,8 @@ h2 {
 }
 /* Cards in a group take that group's accent for icon + hover affordances. */
 .mode-group .modes {
-  margin: 0.85rem 0 0;
+  margin: 0;
+  padding: 1rem 1.1rem 1.1rem;
 }
 .mode-group .mode-icon {
   background: var(--ga);
@@ -1136,6 +1142,11 @@ h2 {
   background: var(--good-soft);
   border-color: var(--good);
   color: var(--good);
+}
+.checkout-banner.demo_unlocked {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .checkout-banner.cancelled,
 .checkout-banner.not_configured {

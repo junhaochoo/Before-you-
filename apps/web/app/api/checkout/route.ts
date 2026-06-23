@@ -11,6 +11,11 @@
 import { NextResponse } from "next/server";
 import { createCheckoutSession, stripeConfigured } from "@/lib/stripe";
 import { FULL_REPORT_PRICE } from "@/lib/pricing";
+import {
+  ENTITLEMENT_COOKIE,
+  DEMO_ENTITLEMENT_VALUE,
+  demoUnlockEnabled,
+} from "@/lib/entitlement";
 
 export const runtime = "nodejs";
 
@@ -22,6 +27,23 @@ function originOf(req: Request): string {
 
 export async function POST(req: Request) {
   if (!stripeConfigured()) {
+    // Demo mode: no Stripe, but DEMO_UNLOCK=1 lets us reveal the full report
+    // WITHOUT a payment. Clearly flagged as a demo to the user (?demo=1).
+    if (demoUnlockEnabled()) {
+      console.info("checkout.create.demo_unlock");
+      const res = NextResponse.json({
+        url: `${originOf(req)}/analyze?unlocked=1&demo=1`,
+        demo: true,
+      });
+      res.cookies.set(ENTITLEMENT_COOKIE, DEMO_ENTITLEMENT_VALUE, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+      });
+      return res;
+    }
     console.info("checkout.create.skipped", { reason: "not_configured" });
     return NextResponse.json({ error: "not_configured" }, { status: 501 });
   }
