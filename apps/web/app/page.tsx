@@ -50,6 +50,15 @@ export default function Home() {
           <span className="mode-title">I&apos;ve already signed</span>
           <span className="mode-sub">{FREE_LOOK_COPY}</span>
         </Link>
+        <Link href="/compare" className="mode">
+          <span className="mode-icon">
+            <Icon name="mirror" size={22} />
+          </span>
+          <span className="mode-title">Compare several funds</span>
+          <span className="mode-sub">
+            Put funds side by side on cost and risk.
+          </span>
+        </Link>
       </div>
 
       <p className="disclaimer">
