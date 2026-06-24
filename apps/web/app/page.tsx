@@ -1,16 +1,15 @@
 import Link from "next/link";
-import {
-  STANDARD_DISCLAIMER,
-  NO_CONFLICT_BADGE,
-  FREE_LOOK_COPY,
-} from "@/lib/copy";
+import { STANDARD_DISCLAIMER, NO_CONFLICT_BADGE } from "@/lib/copy";
 import { Icon } from "./components/icons";
+import { StartIntake } from "./components/StartIntake";
 
 /**
- * Entry screen — three modes (13-product-design-ux.md Screen 1). For the MVP, all
- * three lead to the manual-entry analyzer; document upload (mode 1) is wired in
- * Wave 3. The free-look copy carries the market-value-adjustment qualifier
- * (red-team H1) — it never says "walk away free".
+ * Entry screen — upload-first. The user never has to know whether they hold an
+ * insurance/ILP or an investment fund: they upload (or paste) the document and we
+ * work out what it is, explain it in plain English, and take them to the matching
+ * tool. The two product paths (/analyze, /compare) and the goals tool (/needs)
+ * stay reachable as quiet fallbacks for people who already know what they have or
+ * don't have a document yet.
  */
 export default function Home() {
   return (
@@ -28,92 +27,52 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Group 1 — insurance / investment-linked products (ILPs) */}
-      <section className="mode-group ins">
-        <div className="mode-group-head">
-          <span className="mode-group-icon" aria-hidden>
-            <Icon name="file" size={20} />
-          </span>
-          <div className="mode-group-text">
-            <h2>Insurance or investment-linked product?</h2>
-            <p className="muted">
-              Policies and ILPs with fees, a surrender or lock-in period, a
-              capital guarantee, or a free-look window. We read the benefit
-              illustration.
-            </p>
-          </div>
+      <section className="start">
+        <div className="start-head">
+          <h2>Not sure what you&apos;re being sold?</h2>
+          <p className="muted">
+            Upload the document or paste the text — we&apos;ll tell you what it
+            is and what it means for you. No jargon, and no need to know the
+            product type first.
+          </p>
         </div>
-        <div className="modes">
-          <Link href="/analyze" className="mode">
-            <span className="mode-icon">
-              <Icon name="scan" size={22} />
-            </span>
-            <span className="mode-title">Check a policy or ILP</span>
-            <span className="mode-sub">
-              Upload the benefit illustration or just enter the details yourself
-              — we read the fees either way.
-            </span>
-          </Link>
-          <Link href="/analyze" className="mode">
-            <span className="mode-icon">
-              <Icon name="clock" size={22} />
-            </span>
-            <span className="mode-title">I&apos;ve already signed</span>
-            <span className="mode-sub">{FREE_LOOK_COPY}</span>
-          </Link>
-        </div>
+        <StartIntake />
       </section>
 
-      {/* Group 2 — plain investment funds / unit trusts */}
-      <section className="mode-group funds">
-        <div className="mode-group-head">
-          <span className="mode-group-icon" aria-hidden>
-            <Icon name="mirror" size={20} />
-          </span>
-          <div className="mode-group-text">
-            <h2>Comparing investment funds or unit trusts?</h2>
-            <p className="muted">
-              Plain funds with a sales charge, an ongoing charge (TER) and maybe
-              a platform fee — no insurance, no surrender period.
-            </p>
-          </div>
-        </div>
-        <div className="modes">
-          <Link href="/compare" className="mode">
-            <span className="mode-icon">
-              <Icon name="mirror" size={22} />
+      {/* Manual entry — a first-class path, never gated behind an upload. An
+          informed user can go straight to a tool and key in the details. */}
+      <section className="manual">
+        <p className="manual-lead">
+          <strong>No document, or prefer to type it in?</strong> You don&apos;t
+          need to upload anything — go straight to a tool and enter the details
+          yourself.
+        </p>
+        <div className="manual-options">
+          <Link href="/analyze" className="manual-option">
+            <span className="manual-option-icon">
+              <Icon name="file" size={20} />
             </span>
-            <span className="mode-title">Compare several funds</span>
-            <span className="mode-sub">
-              Put funds side by side on cost and risk. Upload a factsheet or
-              enter the charges.
+            <span className="manual-option-title">Check a policy or ILP</span>
+            <span className="manual-option-sub">
+              Enter the fees, surrender period and any guarantee by hand.
             </span>
           </Link>
-        </div>
-      </section>
-
-      {/* Group 3 — product-agnostic goals tool */}
-      <section className="mode-group goals">
-        <div className="mode-group-head">
-          <span className="mode-group-icon" aria-hidden>
-            <Icon name="fit" size={20} />
-          </span>
-          <div className="mode-group-text">
-            <h2>Not sure, or starting from your goals?</h2>
-            <p className="muted">
-              Works for any product — turn what you want this money to do into a
-              checklist of what to look for and what to ask.
-            </p>
-          </div>
-        </div>
-        <div className="modes">
-          <Link href="/needs" className="mode">
-            <span className="mode-icon">
-              <Icon name="fit" size={22} />
+          <Link href="/compare" className="manual-option">
+            <span className="manual-option-icon">
+              <Icon name="mirror" size={20} />
             </span>
-            <span className="mode-title">Match my goals</span>
-            <span className="mode-sub">
-              Turn your goals into what to check and ask.
+            <span className="manual-option-title">Compare funds</span>
+            <span className="manual-option-sub">
+              Type each fund&apos;s charges and put them side by side.
+            </span>
+          </Link>
+          <Link href="/needs" className="manual-option">
+            <span className="manual-option-icon">
+              <Icon name="fit" size={20} />
+            </span>
+            <span className="manual-option-title">Start from your goals</span>
+            <span className="manual-option-sub">
+              No product yet — turn what you want into what to check and ask.
             </span>
           </Link>
         </div>

@@ -13,7 +13,12 @@
 import { NextResponse } from "next/server";
 import { extractText, getDocumentProxy } from "unpdf";
 import { redactPII } from "@/lib/extract/redact";
-import { extractFields, extractFundFields } from "@/lib/extract/llm";
+import {
+  extractFields,
+  extractFundFields,
+  classifyProductLLM,
+} from "@/lib/extract/llm";
+import { classifyProduct, isConfident } from "@/lib/classify";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -48,6 +53,71 @@ export async function POST(req: Request) {
     // Step 2 — PII redaction BEFORE the model sees anything.
     const redaction = redactPII(rawText);
 
+    // Step 2b — Auto-detect the product family so the user never has to identify
+    // it themselves. Deterministic keyword classifier first (free, instant); the
+    // LLM is consulted ONLY when the keywords are ambiguous AND a key is present.
+    // Classification is routing, not advice — it picks which neutral explainer to
+    // show, never whether the product is good or worth buying.
+    if (mode === "auto") {
+      let cls = classifyProduct(redaction.redacted);
+      let classifier = "keyword";
+      if (!isConfident(cls)) {
+        const llm = await classifyProductLLM(redaction.redacted);
+        if (llm.kind !== "unknown" && !llm.error) {
+          cls = { ...cls, kind: llm.kind, confidence: llm.confidence };
+          classifier = "llm";
+        }
+      }
+
+      // Unknown — return the signals only; the client shows BOTH explainers and
+      // lets the user pick. No extraction is run (nothing to route to yet).
+      if (cls.kind === "unknown") {
+        console.info("extract.classify", {
+          kind: "unknown",
+          classifier,
+          chars: rawText.length,
+          redactions: redaction.total,
+        });
+        return NextResponse.json({
+          kind: "unknown",
+          classification: cls,
+          fields: null,
+          anyFound: false,
+          redactions: redaction.total,
+          model: null,
+          error: null,
+        });
+      }
+
+      // Confident — extract with the matching schema and tag the detected kind so
+      // the client can route to the right path and show the right explainer.
+      const detected =
+        cls.kind === "fund"
+          ? await extractFundFields(redaction.redacted)
+          : await extractFields(redaction.redacted);
+
+      console.info("extract.classify", {
+        kind: cls.kind,
+        classifier,
+        confidence: cls.confidence,
+        chars: rawText.length,
+        redactions: redaction.total,
+        anyFound: detected.anyFound,
+        model: detected.model,
+        error: detected.error ?? null,
+      });
+
+      return NextResponse.json({
+        kind: cls.kind,
+        classification: cls,
+        fields: detected.result,
+        anyFound: detected.anyFound,
+        redactions: redaction.total,
+        model: detected.model,
+        error: detected.error ?? null,
+      });
+    }
+
     // Step 3 — LLM extraction on the redacted text only. The fund mode extracts
     // only charges + name (never a forward return); insurance mode is the ILP schema.
     const outcome =
@@ -65,6 +135,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({
+      kind: mode === "fund" ? "fund" : "ilp",
       fields: outcome.result,
       anyFound: outcome.anyFound,
       redactions: redaction.total,

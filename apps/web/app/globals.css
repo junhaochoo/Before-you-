@@ -668,6 +668,147 @@ h2 {
   margin-top: 0.7rem;
 }
 
+/* ---- Upload-first entry (home) ------------------------------------------ */
+.start {
+  margin: 1.5rem 0 0.5rem;
+}
+.start-head h2 {
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+}
+.start-head p {
+  margin-bottom: 0.25rem;
+}
+.start-card {
+  /* the intake card is the focal action — a touch more presence than a form */
+  border-color: var(--line-strong);
+  box-shadow: var(--sh-md);
+  padding: 1.2rem;
+}
+
+/* "We couldn't tell — which is yours?" two-up chooser */
+.detect-choice {
+  margin-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.detect-choice h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+.detect-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-top: 0.9rem;
+}
+.detect-option {
+  display: grid;
+  gap: 0.3rem;
+  text-align: left;
+  background: var(--card-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.detect-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--sh-md);
+}
+.detect-option-title {
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--ink);
+}
+.detect-option-sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.detect-option-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-weight: 650;
+  font-size: 0.88rem;
+  color: var(--accent);
+}
+
+/* ---- Manual entry (home) — never gated behind an upload ------------------ */
+.manual {
+  margin: 1.75rem 0;
+}
+.manual-lead {
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+.manual-lead strong {
+  color: var(--ink);
+}
+.manual-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+.manual-option {
+  display: grid;
+  gap: 0.25rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.1rem;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--sh-sm);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.manual-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--sh-md);
+}
+.manual-option-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.manual-option-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.manual-option-sub {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* ---- Product explainer ("what this is") --------------------------------- */
+.explainer {
+  border-color: #cfe0f5;
+  background: var(--accent-soft);
+}
+.explainer-headline {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.explainer-foot {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+}
+
 /* ---- Confirm gate ------------------------------------------------------- */
 .confirm-gate {
   background: var(--warn-soft);
@@ -1007,6 +1148,10 @@ h2 {
 @media (max-width: 560px) {
   .account-badge-text {
     display: none;
+  }
+  .detect-options,
+  .manual-options {
+    grid-template-columns: 1fr;
   }
 }
 

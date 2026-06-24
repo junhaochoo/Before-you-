@@ -11,12 +11,14 @@ import {
   DocumentIntake,
   type ExtractionResponse,
 } from "../components/DocumentIntake";
+import { ProductExplainer } from "../components/ProductExplainer";
 import {
   listSaved,
   saveReport,
   deleteSaved,
   hasConsent,
   setConsent,
+  takeIntakeHandoff,
   type SavedReport,
 } from "@/lib/storage";
 
@@ -93,6 +95,24 @@ export default function AnalyzePage() {
       .catch(() => {
         /* entitlement check failed — stay on the free scan */
       });
+  }, []);
+
+  // Upload-first handoff — when the user arrived from the home-page detector, the
+  // figures it read are pre-filled here and the confirm gate engages (no math
+  // until they check the numbers). Routed-on-classification-only (no fields) just
+  // shows the explainer and leaves manual entry below.
+  useEffect(() => {
+    const h = takeIntakeHandoff();
+    if (h?.kind === "ilp" && h.detected && h.fields) {
+      applyExtraction({
+        fields: h.fields as ExtractionResponse["fields"],
+        anyFound: true,
+        redactions: 0,
+        model: "",
+      });
+    }
+    // applyExtraction is a stable in-component function; run once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Begin Stripe Checkout (or reveal the full report if already entitled). */
@@ -271,6 +291,9 @@ export default function AnalyzePage() {
           Compare funds →
         </a>
       </p>
+
+      {/* Plain-English "what this is" — leads the result before any numbers. */}
+      <ProductExplainer kind="ilp" />
 
       {/* F6 — account / entitlement strip */}
       <div className="account-strip">

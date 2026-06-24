@@ -83,6 +83,76 @@ Map common synonyms: sales_charge_pct <- "sales charge" / "subscription fee" / "
 esg_rating <- "ESG" / "sustainable" / "SFDR Article 8/9" / "sustainability rating".
 Percentages are in percent units (1.5% -> 1.5, not 0.015).`;
 
+const CLASSIFY_SYSTEM_PROMPT = `You are a careful document-CLASSIFICATION tool for Singapore
+retail financial documents. Your ONLY job is to decide which ONE family a document belongs to.
+
+You MUST NOT give advice, opinions, or any "good/bad/suitable" judgement, and you MUST NOT
+extract figures. Decide ONLY the family, from these three values:
+ - "ilp": an insurance or investment-linked policy — benefit illustration, product summary,
+   surrender value, free-look period, sum assured, cost of insurance, premiums.
+ - "fund": a plain investment fund / unit trust / ETF — factsheet, KIID, ongoing charge / TER,
+   net asset value (NAV), sales charge, prospectus. No insurance, no surrender period.
+ - "unknown": the text does not clearly match either family.
+
+Return ONLY JSON: {"kind": "ilp"|"fund"|"unknown", "confidence": "high"|"medium"|"low"}.`;
+
+export type LlmProductKind = "ilp" | "fund" | "unknown";
+
+export interface ClassifyOutcome {
+  kind: LlmProductKind;
+  confidence: "high" | "medium" | "low";
+  model: string;
+  error?: string;
+}
+
+/**
+ * classifyProductLLM — model-based product-family classification, used by the API
+ * route ONLY when the deterministic keyword classifier (lib/classify.ts) is unsure.
+ * Classification only: it never advises and never reads a figure. Falls back to
+ * "unknown" on any error or missing key so the caller can show both explainers.
+ */
+export async function classifyProductLLM(
+  redactedText: string,
+): Promise<ClassifyOutcome> {
+  const { apiKey, baseURL, model } = providerConfig();
+  if (!apiKey) {
+    return { kind: "unknown", confidence: "low", model, error: "no_api_key" };
+  }
+  const client = new OpenAI({ apiKey, baseURL });
+  try {
+    const completion = await client.chat.completions.create({
+      model,
+      temperature: 0,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: CLASSIFY_SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: `Classify this document text:\n\n${redactedText.slice(0, 6000)}`,
+        },
+      ],
+    });
+    const content = completion.choices[0]?.message?.content ?? "{}";
+    const parsed = parseJsonLoose(content) as Record<string, unknown>;
+    const kind: LlmProductKind =
+      parsed.kind === "ilp" || parsed.kind === "fund" ? parsed.kind : "unknown";
+    const confidence =
+      parsed.confidence === "high" ||
+      parsed.confidence === "medium" ||
+      parsed.confidence === "low"
+        ? (parsed.confidence as "high" | "medium" | "low")
+        : "low";
+    return { kind, confidence, model };
+  } catch (e) {
+    return {
+      kind: "unknown",
+      confidence: "low",
+      model,
+      error: e instanceof Error ? e.message : "classify_failed",
+    };
+  }
+}
+
 export interface ExtractionOutcome {
   result: ExtractionResult;
   /** True if the model produced any field above not_found. */

@@ -18,6 +18,7 @@ import {
   FundIntake,
   type FundExtractionResponse,
 } from "../components/FundIntake";
+import { ProductExplainer } from "../components/ProductExplainer";
 import {
   FUND_GLOSSARY,
   ASSET_CLASSES,
@@ -28,7 +29,7 @@ import {
   decodeCreditQuality,
   decodeEsg,
 } from "@/lib/fundEducation";
-import { hasConsent, setConsent } from "@/lib/storage";
+import { hasConsent, setConsent, takeIntakeHandoff } from "@/lib/storage";
 
 /**
  * Funds comparison — put several funds side by side on the SAME amount + horizon,
@@ -85,6 +86,23 @@ export default function ComparePage() {
 
   useEffect(() => {
     setConsentState(hasConsent());
+  }, []);
+
+  // Upload-first handoff — apply any fund charges the home-page detector read.
+  // Routed-on-classification-only (no fields) just shows the explainer; the
+  // editable fund cards below work with or without an upload.
+  useEffect(() => {
+    const h = takeIntakeHandoff();
+    if (h?.kind === "fund" && h.detected && h.fields) {
+      applyFundExtraction({
+        fields: h.fields as FundExtractionResponse["fields"],
+        anyFound: true,
+        redactions: 0,
+        model: "",
+      });
+    }
+    // applyFundExtraction is a stable in-component function; run once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const globals: FundGlobals = { principal, horizonYears };
@@ -174,6 +192,9 @@ export default function ComparePage() {
         <NoConflictBadge />
       </header>
       <Disclaimer />
+
+      {/* Plain-English "what this is" — leads the result before any numbers. */}
+      <ProductExplainer kind="fund" />
 
       {/* Fund factsheet upload (Q2) — PDPA-gated, same as the analyzer */}
       {consent ? (
