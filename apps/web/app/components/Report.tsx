@@ -7,7 +7,7 @@ import {
   btirCopy,
   guaranteeCheckCopy,
   CONCENTRATION_CONTEXT,
-  QUESTIONS_TO_ASK,
+  questionsFor,
   GLOSSARY,
 } from "@/lib/copy";
 import { priceLabel } from "@/lib/pricing";
@@ -45,6 +45,8 @@ export function ReportView({
   paymentsConfigured = true,
   demoAvailable = false,
   checkingOut = false,
+  contextProvided = false,
+  productKind = "ilp",
 }: {
   report: Report;
   guarantee: GuaranteeInfo;
@@ -55,6 +57,11 @@ export function ReportView({
   /** Free Quick Scan shows only the compliant, no-financials lenses (W4-4). */
   tier?: "free" | "full";
   onUpgrade?: () => void;
+  /** True once the user has entered their own savings/expenses — gates the
+   *  RiskFit & Portfolio sections so they never compute on placeholder numbers. */
+  contextProvided?: boolean;
+  /** Product family, used to tailor the adviser questions. */
+  productKind?: "ilp" | "fund";
   /** F6 — true once the visitor has paid for the full report. */
   entitled?: boolean;
   /** F6 — false when this deployment has no Stripe key (payments off). */
@@ -110,12 +117,12 @@ export function ReportView({
       {full && (
         <Lens
           icon={<Icon name="downside" />}
-          title="What if? — downside scenarios"
-          note="These are scenarios from the assumptions below, not forecasts. Move the sliders to test other assumptions."
+          title="What if? — how outcomes could vary"
+          note="These are illustrations from the two settings below, not predictions. Change them to test other assumptions."
         >
           <div className="sliders">
             <Slider
-              label="Assumed average return"
+              label="Assumed yearly return"
               min={0}
               max={0.12}
               step={0.005}
@@ -123,23 +130,30 @@ export function ReportView({
               onChange={onMu}
               format={(v) => pct(v, 1)}
             />
-            <Slider
-              label="Assumed volatility"
-              min={0.05}
-              max={0.3}
-              step={0.01}
-              value={sigma}
-              onChange={onSigma}
-              format={(v) => pct(v, 0)}
-            />
+            <label className="field">
+              <span>
+                How bumpy the ride is (risk level){" "}
+                <TapToExplain
+                  term="?"
+                  plainEnglish="Higher-risk holdings (like shares) can grow more but also fall further; lower-risk ones (like cash or bonds) move less. This sets how wide the good and bad cases below spread out."
+                />
+              </span>
+              <span className="field-input">
+                <select
+                  value={sigma}
+                  onChange={(e) => onSigma(Number(e.target.value))}
+                >
+                  <option value={0.08}>Lower</option>
+                  <option value={0.13}>Medium</option>
+                  <option value={0.18}>Higher</option>
+                </select>
+              </span>
+            </label>
           </div>
           <div className="stat-row">
+            <NumberStat label="Typical outcome" value={sgd(downside.p50)} />
             <NumberStat
-              label="Typical (median) outcome"
-              value={sgd(downside.p50)}
-            />
-            <NumberStat
-              label="1-in-20 bad case (P5)"
+              label="1-in-20 bad case"
               value={sgd(downside.p5)}
               tone="warn"
             />
@@ -150,17 +164,30 @@ export function ReportView({
             />
           </div>
           <p className="muted">
-            Across {downside.paths.toLocaleString()} {downside.model} scenarios.
-            In the worst 5%, the average outcome is about{" "}
-            <strong>{sgd(downside.expectedShortfall)}</strong>. A single bad
-            year on this amount is roughly{" "}
+            In plain terms: most of the time the result lands near the typical
+            figure, but a 1-in-20 bad stretch would leave you with about{" "}
+            <strong>{sgd(downside.p5)}</strong>. In the worst years, a single
+            bad year on this amount is roughly{" "}
             <strong>{sgd(downside.singleYearStressDollar)}</strong>.
           </p>
         </Lens>
       )}
 
-      {/* 03b — RISKFIT (context, not a verdict) — full report only */}
-      {full && (
+      {/* 03b — RISKFIT (context, not a verdict) — full report, real numbers only */}
+      {full && !contextProvided && (
+        <Lens
+          icon={<Icon name="fit" />}
+          title="RiskFit — your context (not advice)"
+        >
+          <p className="muted">
+            Tell us your savings and monthly expenses (in{" "}
+            <strong>Your context</strong> above) and this shows how big this
+            purchase is for you. We don&apos;t guess your numbers — so there is
+            nothing to show until you enter them.
+          </p>
+        </Lens>
+      )}
+      {full && contextProvided && (
         <Lens
           icon={<Icon name="fit" />}
           title="RiskFit — your context (not advice)"
@@ -216,25 +243,25 @@ export function ReportView({
         </p>
       </Lens>
 
-      {/* 05 — PORTFOLIO MIRROR — full report only */}
-      {full && (
+      {/* 05 — PORTFOLIO MIRROR — full report, real numbers only */}
+      {full && contextProvided && (
         <Lens
           icon={<Icon name="mirror" />}
-          title="Portfolio Mirror"
-          note="How this purchase changes your overall mix."
+          title="Easy-to-reach money"
+          note="How much of your savings stays within easy reach after this purchase."
         >
           <div className="mirror">
             <MirrorBar
-              label="Concentration (HHI)"
-              before={portfolio.hhiBefore}
-              after={portfolio.hhiAfter}
-            />
-            <MirrorBar
-              label="Liquid share of wealth"
+              label="Savings you can reach quickly"
               before={portfolio.liquidityRatioBefore}
               after={portfolio.liquidityRatioAfter}
             />
           </div>
+          <p className="muted">
+            Money in this product is usually locked in for years, so it no
+            longer counts as savings you can reach quickly if something comes
+            up.
+          </p>
         </Lens>
       )}
 
@@ -289,7 +316,11 @@ export function ReportView({
         title="Decision Gaps — questions to ask your adviser"
       >
         <ul className="questions">
-          {QUESTIONS_TO_ASK.map((q) => (
+          {questionsFor({
+            kind: productKind,
+            hasLockIn: riskFit.lockInEndYear != null,
+            guaranteeStated: guarantee.stated,
+          }).map((q) => (
             <li key={q}>{q}</li>
           ))}
         </ul>

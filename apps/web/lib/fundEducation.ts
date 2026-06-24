@@ -206,3 +206,39 @@ function byKey(list: Explainer[], key: string): Explainer {
   // Every key passed here is a literal from this module, so this is always defined.
   return found as Explainer;
 }
+
+/**
+ * The three risk levels the compare page offers, as decimal volatilities. Kept in
+ * sync with compare/page.tsx RISK_OPTIONS (Lower / Medium / Higher).
+ */
+export const RISK_LEVEL = {
+  lower: 0.08,
+  medium: 0.13,
+  higher: 0.18,
+} as const;
+
+/**
+ * Seed a sensible RISK LEVEL (not a forecast) from what a factsheet says the fund
+ * holds — so the downside scenarios populate themselves and a user who has never
+ * heard the word "volatility" never has to pick a number. Equities swing widest,
+ * bonds/cash are steadier, a mix sits in between. This is the asset class's
+ * GENERAL behaviour, not a claim about this specific fund; the user can still
+ * change it. Returns the Medium default when the holding can't be decoded.
+ */
+export function riskLevelForAssetClass(
+  assetClassText: string | null | undefined,
+): number {
+  const decoded = decodeAssetClass(assetClassText);
+  switch (decoded?.key) {
+    case "equities":
+      return RISK_LEVEL.higher;
+    case "bonds":
+    case "cash":
+      return RISK_LEVEL.lower;
+    case "property":
+    case "mixed":
+      return RISK_LEVEL.medium;
+    default:
+      return RISK_LEVEL.medium;
+  }
+}

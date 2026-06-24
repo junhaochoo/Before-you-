@@ -808,6 +808,12 @@ h2 {
   margin-top: 0.8rem;
   font-size: 0.85rem;
 }
+.explainer-cue {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
 
 /* ---- Confirm gate ------------------------------------------------------- */
 .confirm-gate {

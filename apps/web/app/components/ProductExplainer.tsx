@@ -12,7 +12,7 @@ import { Icon } from "./icons";
  */
 export function ProductExplainer({
   kind,
-  open = true,
+  open = false,
 }: {
   kind: ProductKind | null | undefined;
   open?: boolean;
@@ -23,10 +23,10 @@ export function ProductExplainer({
   return (
     <details className="form-card explainer" open={open}>
       <summary>
-        <Icon name="info" size={16} /> What this is — {e.label}
+        <Icon name="info" size={16} /> {e.headline}{" "}
+        <span className="explainer-cue">Tap to learn what this means</span>
       </summary>
 
-      <p className="explainer-headline">{e.headline}</p>
       <p>{e.whatItIs}</p>
 
       <h4 className="edu-head">

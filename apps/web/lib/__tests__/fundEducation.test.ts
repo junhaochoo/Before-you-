@@ -16,6 +16,8 @@ import {
   decodeAssetClass,
   decodeCreditQuality,
   decodeEsg,
+  riskLevelForAssetClass,
+  RISK_LEVEL,
 } from "../fundEducation";
 
 /** Every user-facing string the fund-education surface can render. */
@@ -140,5 +142,38 @@ describe("decodeEsg — any ESG wording -> the neutral ESG note", () => {
     expect(decodeEsg("Global Equities")).toBeNull();
     expect(decodeEsg("")).toBeNull();
     expect(decodeEsg(null)).toBeNull();
+  });
+});
+
+describe("riskLevelForAssetClass — seed risk level from what the fund holds", () => {
+  it("equities -> Higher", () => {
+    expect(riskLevelForAssetClass("Global Equities")).toBe(RISK_LEVEL.higher);
+  });
+  it("bonds and cash -> Lower (the steadier classes)", () => {
+    expect(riskLevelForAssetClass("Asian Bonds")).toBe(RISK_LEVEL.lower);
+    expect(riskLevelForAssetClass("Money Market")).toBe(RISK_LEVEL.lower);
+  });
+  it("mixed and property -> Medium", () => {
+    expect(riskLevelForAssetClass("Multi-Asset")).toBe(RISK_LEVEL.medium);
+    expect(riskLevelForAssetClass("Property / REITs")).toBe(RISK_LEVEL.medium);
+  });
+  it("defaults to Medium when the holding can't be decoded or is absent", () => {
+    expect(riskLevelForAssetClass("unicorn tokens")).toBe(RISK_LEVEL.medium);
+    expect(riskLevelForAssetClass(null)).toBe(RISK_LEVEL.medium);
+    expect(riskLevelForAssetClass(undefined)).toBe(RISK_LEVEL.medium);
+  });
+  it("only ever returns one of the three picker values", () => {
+    const allowed = [RISK_LEVEL.lower, RISK_LEVEL.medium, RISK_LEVEL.higher];
+    for (const text of [
+      "equity",
+      "bond",
+      "cash",
+      "balanced",
+      "reit",
+      "??",
+      "",
+    ]) {
+      expect(allowed).toContain(riskLevelForAssetClass(text));
+    }
   });
 });

@@ -28,6 +28,7 @@ import {
   decodeAssetClass,
   decodeCreditQuality,
   decodeEsg,
+  riskLevelForAssetClass,
 } from "@/lib/fundEducation";
 import { hasConsent, setConsent, takeIntakeHandoff } from "@/lib/storage";
 
@@ -148,15 +149,18 @@ export default function ComparePage() {
         x.confidence !== "not_found" && x.value?.trim()
           ? x.value.trim()
           : undefined;
+      const assetClass = label(f.asset_class);
       const imported: FundInput = {
         id: newId(),
         name,
         expectedReturn: 0.05,
-        volatility: 0.13,
+        // Risk level seeded from what the factsheet says the fund holds, so the
+        // downside scenarios populate without the user picking a volatility number.
+        volatility: riskLevelForAssetClass(assetClass),
         salesCharge: dec(f.sales_charge_pct.value),
         ter: dec(f.ongoing_charge_pct.value),
         platformFee: dec(f.platform_fee_pct.value),
-        assetClass: label(f.asset_class),
+        assetClass,
         creditQuality: label(f.credit_quality),
         esg: label(f.esg_rating),
       };

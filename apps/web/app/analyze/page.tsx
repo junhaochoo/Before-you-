@@ -47,7 +47,12 @@ export default function AnalyzePage() {
 
   // Assumptions.
   const [mu, setMu] = useState(0.06);
-  const [sigma, setSigma] = useState(0.15);
+  // Risk level — one of the three picker values (Lower/Medium/Higher); Medium default.
+  const [sigma, setSigma] = useState(0.13);
+
+  // True once the user has entered their OWN savings/expenses — gates the RiskFit
+  // & easy-to-reach-money sections so they never compute on placeholder numbers.
+  const [contextProvided, setContextProvided] = useState(false);
 
   // Wave 3 confirm gate + Wave 4 tier / consent / saved reports.
   const [confirmed, setConfirmed] = useState(true);
@@ -230,8 +235,9 @@ export default function AnalyzePage() {
       setObjective(s.objective);
     }
     setMu(n("mu", 0.06));
-    setSigma(n("sigma", 0.15));
+    setSigma(n("sigma", 0.13));
     setConfirmed(true);
+    setContextProvided(true);
   }
 
   function applyExtraction(resp: ExtractionResponse) {
@@ -429,14 +435,20 @@ export default function AnalyzePage() {
             prefix="S$"
             value={liquidSavings}
             step={1000}
-            onChange={setLiquid}
+            onChange={(v) => {
+              setLiquid(v);
+              setContextProvided(true);
+            }}
           />
           <NumberField
             label="Monthly expenses"
             prefix="S$"
             value={monthlyExpenses}
             step={100}
-            onChange={setExpenses}
+            onChange={(v) => {
+              setExpenses(v);
+              setContextProvided(true);
+            }}
           />
           <label className="field">
             <span>What's this money for?</span>
@@ -506,6 +518,8 @@ export default function AnalyzePage() {
             paymentsConfigured={paymentsConfigured}
             demoAvailable={demoAvailable}
             checkingOut={checkingOut}
+            contextProvided={contextProvided}
+            productKind="ilp"
           />
 
           {saved.length > 0 && (
