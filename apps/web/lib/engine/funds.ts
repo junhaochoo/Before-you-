@@ -71,8 +71,24 @@ export interface FundResult {
   p50: number;
   /** 1-in-20 bad case (5th percentile), S$. */
   p5: number;
+  /** 1-in-20 GOOD case (95th percentile), S$ — the top of the likely range. */
+  p95: number;
   /** Probability the terminal value is below the amount invested. */
   probabilityOfLoss: number;
+  /** Typical worst peak-to-trough dip along the way, decimal (0.30 = down 30%). */
+  medianMaxDrawdown: number;
+  /** One-off entry charge in dollars (sales charge × amount invested), S$. */
+  oneOffEntryCost: number;
+  /** Yearly running cost rate (ongoing charge/TER + platform fee), decimal/yr. */
+  yearlyCostRate: number;
+  /** Yearly running cost in dollars on the starting amount, S$/yr (a plain-English approximation). */
+  yearlyCostApprox: number;
+  /**
+   * Fee hurdle: the annual return the fund must earn JUST to cover its costs
+   * before the investor makes anything — the ongoing cost plus the one-off entry
+   * charge spread over the horizon. A neutral fact, decimal/yr.
+   */
+  feeHurdleRate: number;
   /** Extra fees this fund costs versus the cheapest fund in the set, S$ (0 for the cheapest). */
   extraFeeVsCheapest: number;
 }
@@ -138,18 +154,30 @@ export function computeFundComparison(
       netCurve: fee.netCurve,
       p50: down.p50,
       p5: down.p5,
+      p95: down.p95,
       probabilityOfLoss: down.probabilityOfLoss,
+      medianMaxDrawdown: down.medianMaxDrawdown,
     };
   });
 
   const fees = partials.map((p) => p.totalFeesPaid);
   const minFee = fees.length ? Math.min(...fees) : 0;
   const maxFee = fees.length ? Math.max(...fees) : 0;
+  const horizon = Math.max(1, globals.horizonYears);
 
-  const results: FundResult[] = partials.map((p) => ({
-    ...p,
-    extraFeeVsCheapest: p.totalFeesPaid - minFee,
-  }));
+  const results: FundResult[] = partials.map((p) => {
+    const yearlyCostRate = p.input.ter + p.input.platformFee;
+    return {
+      ...p,
+      oneOffEntryCost: globals.principal * p.input.salesCharge,
+      yearlyCostRate,
+      yearlyCostApprox: globals.principal * yearlyCostRate,
+      // Ongoing cost + the entry charge amortised across the holding period:
+      // what the fund must out-earn each year before the investor is ahead.
+      feeHurdleRate: yearlyCostRate + p.input.salesCharge / horizon,
+      extraFeeVsCheapest: p.totalFeesPaid - minFee,
+    };
+  });
 
   // Factual cost extremes (only meaningful with ≥2 funds).
   let highestFeeFundId: string | null = null;

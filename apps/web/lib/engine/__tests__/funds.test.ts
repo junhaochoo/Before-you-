@@ -108,4 +108,41 @@ describe("computeFundComparison", () => {
     expect(one.feeSpread).toBe(0);
     expect(one.funds[0].extraFeeVsCheapest).toBeCloseTo(0, 6);
   });
+
+  it("exposes a likely range (p5 < p50 < p95) and a drawdown for each fund", () => {
+    for (const r of cmp.funds) {
+      expect(r.p5).toBeLessThanOrEqual(r.p50);
+      expect(r.p50).toBeLessThanOrEqual(r.p95);
+      expect(r.medianMaxDrawdown).toBeGreaterThanOrEqual(0);
+      expect(r.probabilityOfLoss).toBeGreaterThanOrEqual(0);
+      expect(r.probabilityOfLoss).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("breaks the cost down: one-off entry, yearly running cost, and a fee hurdle", () => {
+    const a = cmp.funds[0]; // sales 3%, TER 1.4%, platform 0.5%
+    expect(a.oneOffEntryCost).toBeCloseTo(100_000 * 0.03, 6);
+    expect(a.yearlyCostRate).toBeCloseTo(0.014 + 0.005, 6);
+    expect(a.yearlyCostApprox).toBeCloseTo(100_000 * (0.014 + 0.005), 6);
+    // Hurdle = ongoing cost + entry charge amortised over the 10y horizon.
+    expect(a.feeHurdleRate).toBeCloseTo(0.014 + 0.005 + 0.03 / 10, 6);
+  });
+
+  it("the zero-charge fund has zero cost facts (clean blank-card state)", () => {
+    const blank: FundInput = {
+      id: "z",
+      name: "",
+      expectedReturn: 0.05,
+      volatility: 0.13,
+      salesCharge: 0,
+      ter: 0,
+      platformFee: 0,
+    };
+    const r = computeFundComparison(globals, [blank]).funds[0];
+    expect(r.oneOffEntryCost).toBe(0);
+    expect(r.yearlyCostRate).toBe(0);
+    expect(r.yearlyCostApprox).toBe(0);
+    expect(r.feeHurdleRate).toBe(0);
+    expect(r.totalFeesPaid).toBeCloseTo(0, 6);
+  });
 });

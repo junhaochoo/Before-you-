@@ -9,6 +9,8 @@
 import { describe, it, expect } from "vitest";
 import {
   FUND_GLOSSARY,
+  FUND_BASICS,
+  FUND_OUTCOME_GLOSSARY,
   ASSET_CLASSES,
   CREDIT_TIERS,
   CREDIT_QUALITY_NOTE,
@@ -24,7 +26,8 @@ import {
 function allFundEducationCopy(): string {
   const parts: string[] = [CREDIT_QUALITY_NOTE, ESG_NOTE];
   for (const g of FUND_GLOSSARY) parts.push(g.term, g.plainEnglish);
-  for (const e of [...ASSET_CLASSES, ...CREDIT_TIERS])
+  for (const g of FUND_OUTCOME_GLOSSARY) parts.push(g.term, g.plainEnglish);
+  for (const e of [...ASSET_CLASSES, ...CREDIT_TIERS, ...FUND_BASICS])
     parts.push(e.label, e.plain);
   return parts.join(" \n ").toLowerCase();
 }
@@ -76,6 +79,20 @@ describe("Fund education — every explainer is well-formed", () => {
   it("asset-class keys are unique", () => {
     const keys = ASSET_CLASSES.map((e) => e.key);
     expect(new Set(keys).size).toBe(keys.length);
+  });
+  it("the novice primer and outcome glossary are well-formed", () => {
+    for (const b of FUND_BASICS) {
+      expect(b.key.length).toBeGreaterThan(0);
+      expect(b.label.length).toBeGreaterThan(0);
+      expect(b.plain.length).toBeGreaterThan(0);
+    }
+    expect(new Set(FUND_BASICS.map((b) => b.key)).size).toBe(
+      FUND_BASICS.length,
+    );
+    for (const g of FUND_OUTCOME_GLOSSARY) {
+      expect(g.term.length).toBeGreaterThan(0);
+      expect(g.plainEnglish.length).toBeGreaterThan(0);
+    }
   });
 });
 

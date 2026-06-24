@@ -21,6 +21,8 @@ import {
 import { ProductExplainer } from "../components/ProductExplainer";
 import {
   FUND_GLOSSARY,
+  FUND_BASICS,
+  FUND_OUTCOME_GLOSSARY,
   ASSET_CLASSES,
   CREDIT_TIERS,
   CREDIT_QUALITY_NOTE,
@@ -48,41 +50,30 @@ const RISK_OPTIONS: { label: string; value: number }[] = [
 let nextId = 100;
 const newId = () => `f${nextId++}`;
 
-/** Editable defaults — generic placeholders; rename + retype from your factsheets. */
-const DEFAULT_FUNDS: FundInput[] = [
-  {
-    id: "f1",
-    name: "Fund A",
-    expectedReturn: 0.04,
-    volatility: 0.08,
-    salesCharge: 0.03,
-    ter: 0.014,
-    platformFee: 0.005,
-  },
-  {
-    id: "f2",
-    name: "Fund B",
-    expectedReturn: 0.065,
-    volatility: 0.18,
-    salesCharge: 0.02,
-    ter: 0.011,
-    platformFee: 0.0,
-  },
-  {
-    id: "f3",
-    name: "Fund C",
+/**
+ * A blank fund card — nothing pre-filled about a real product. Charges start at
+ * zero (the user types them from the factsheet, or uploads it); return and risk
+ * are clearly-labelled ASSUMPTIONS the user sets, not data, so the scenario math
+ * has something to work with. Honours "show nothing until the user keys it in".
+ */
+function blankFund(): FundInput {
+  return {
+    id: newId(),
+    name: "",
     expectedReturn: 0.05,
-    volatility: 0.13,
-    salesCharge: 0.015,
-    ter: 0.01,
-    platformFee: 0.0,
-  },
-];
+    volatility: RISK_OPTIONS[1].value, // Medium — an assumption, not a fact
+    salesCharge: 0,
+    ter: 0,
+    platformFee: 0,
+  };
+}
 
 export default function ComparePage() {
   const [principal, setPrincipal] = useState(100_000);
   const [horizonYears, setHorizon] = useState(10);
-  const [funds, setFunds] = useState<FundInput[]>(DEFAULT_FUNDS);
+  // Starts EMPTY — no pre-populated funds. Cards appear only when the user
+  // uploads a factsheet or adds one by hand.
+  const [funds, setFunds] = useState<FundInput[]>([]);
   const [consent, setConsentState] = useState(false);
 
   useEffect(() => {
@@ -119,21 +110,9 @@ export default function ComparePage() {
   }
   function addFund() {
     if (funds.length >= 4) return;
-    setFunds((fs) => [
-      ...fs,
-      {
-        id: newId(),
-        name: `Fund ${String.fromCharCode(65 + fs.length)}`,
-        expectedReturn: 0.05,
-        volatility: 0.13,
-        salesCharge: 0.02,
-        ter: 0.011,
-        platformFee: 0.0,
-      },
-    ]);
+    setFunds((fs) => [...fs, blankFund()]);
   }
   function removeFund(id: string) {
-    if (funds.length <= 2) return;
     setFunds((fs) => fs.filter((f) => f.id !== id));
   }
 
@@ -200,6 +179,25 @@ export default function ComparePage() {
       {/* Plain-English "what this is" — leads the result before any numbers. */}
       <ProductExplainer kind="fund" />
 
+      {/* Novice primer — the few neutral facts that decide how a fund turns out. */}
+      <details className="form-card fund-primer">
+        <summary>
+          New to funds? The 5 things that actually decide the outcome
+        </summary>
+        <p className="muted">
+          You don&apos;t need to know the jargon. These are the questions that
+          matter for any fund — neutral facts, not advice, and none of them say
+          whether a fund is right for you.
+        </p>
+        <ol className="edu-list edu-list-num">
+          {FUND_BASICS.map((b) => (
+            <li key={b.key}>
+              <span>{b.label}</span> — {b.plain}
+            </li>
+          ))}
+        </ol>
+      </details>
+
       {/* Fund factsheet upload (Q2) — PDPA-gated, same as the analyzer */}
       {consent ? (
         <FundIntake onExtracted={applyFundExtraction} />
@@ -255,6 +253,22 @@ export default function ComparePage() {
         </div>
       </details>
 
+      {/* Empty state — nothing is pre-populated; the user uploads or adds a fund. */}
+      {funds.length === 0 && (
+        <div className="form-card fund-empty">
+          <Icon name="file" size={26} />
+          <h3>No funds added yet</h3>
+          <p className="muted">
+            Upload a fund factsheet above, or add one by hand, to see what it
+            really costs and how its outcomes could differ. Add a second fund to
+            compare them side by side. Nothing here is filled in for you.
+          </p>
+          <button type="button" className="btn" onClick={addFund}>
+            <Icon name="file" size={16} /> Add a fund manually
+          </button>
+        </div>
+      )}
+
       {/* Headline fact: the cost spread */}
       {cmp.funds.length >= 2 && cmp.feeSpread > 0 && (
         <p className="compare">
@@ -267,95 +281,150 @@ export default function ComparePage() {
       )}
 
       {/* Side-by-side fund cards */}
-      <div className="fund-grid">
-        {cmp.funds.map((r) => {
-          const f = r.input;
-          const isLow = r.id === cmp.lowestFeeFundId;
-          const isHigh = r.id === cmp.highestFeeFundId;
-          return (
-            <section className="fund-card" key={r.id}>
-              <div className="fund-card-head">
-                <input
-                  className="fund-name"
-                  value={f.name}
-                  aria-label="Fund name"
-                  onChange={(e) => patch(r.id, "name", e.target.value)}
-                />
-                {isLow && <span className="cost-chip low">Lowest fees</span>}
-                {isHigh && <span className="cost-chip high">Highest fees</span>}
-              </div>
-
-              {/* The big, clear results */}
-              <div className="fund-results">
-                <NumberStat
-                  label="Total fees"
-                  value={sgd(r.totalFeesPaid)}
-                  tone="warn"
-                />
-                <NumberStat label="What you keep" value={sgd(r.finalNet)} />
-                <NumberStat label="Typical outcome" value={sgd(r.p50)} />
-              </div>
-              <ul className="fund-facts">
-                <li>
-                  <span>{pct(r.feeDrag)}</span> of growth lost to fees
-                </li>
-                <li>
-                  1-in-20 bad case: <span>{sgd(r.p5)}</span>
-                </li>
-                {r.extraFeeVsCheapest > 0 && (
-                  <li>
-                    <span>{sgd(r.extraFeeVsCheapest)}</span> more in fees than
-                    the cheapest
-                  </li>
-                )}
-              </ul>
-
-              {/* Decoded descriptive labels read from the factsheet (F14) */}
-              <FundProfile fund={f} />
-
-              {/* Compact editable inputs from the factsheet */}
-              <details className="fund-edit">
-                <summary>Edit this fund</summary>
-                <div className="fund-fields">
-                  <PctField
-                    label="Expected return / yr"
-                    value={f.expectedReturn}
-                    onChange={(v) => patch(r.id, "expectedReturn", v)}
+      {cmp.funds.length > 0 && (
+        <div className="fund-grid">
+          {cmp.funds.map((r) => {
+            const f = r.input;
+            const isLow = r.id === cmp.lowestFeeFundId;
+            const isHigh = r.id === cmp.highestFeeFundId;
+            // Nothing has been entered for this fund yet — keep the card honest.
+            const hasCharges =
+              f.salesCharge > 0 || f.ter > 0 || f.platformFee > 0;
+            return (
+              <section className="fund-card" key={r.id}>
+                <div className="fund-card-head">
+                  <input
+                    className="fund-name"
+                    value={f.name}
+                    aria-label="Fund name"
+                    placeholder="Name this fund"
+                    onChange={(e) => patch(r.id, "name", e.target.value)}
                   />
-                  <label className="field">
-                    <span>Risk level</span>
-                    <span className="field-input">
-                      <select
-                        value={f.volatility}
-                        onChange={(e) =>
-                          patch(r.id, "volatility", Number(e.target.value))
-                        }
-                      >
-                        {RISK_OPTIONS.map((o) => (
-                          <option key={o.label} value={o.value}>
-                            {o.label}
-                          </option>
-                        ))}
-                      </select>
-                    </span>
-                  </label>
-                  <PctField
-                    label="Sales charge"
-                    value={f.salesCharge}
-                    onChange={(v) => patch(r.id, "salesCharge", v)}
-                  />
-                  <PctField
-                    label="Fund fee (TER)"
-                    value={f.ter}
-                    onChange={(v) => patch(r.id, "ter", v)}
-                  />
-                  <PctField
-                    label="Platform fee / yr"
-                    value={f.platformFee}
-                    onChange={(v) => patch(r.id, "platformFee", v)}
-                  />
+                  {isLow && <span className="cost-chip low">Lowest fees</span>}
+                  {isHigh && (
+                    <span className="cost-chip high">Highest fees</span>
+                  )}
                 </div>
-                {funds.length > 2 && (
+
+                {/* The big, clear results */}
+                <div className="fund-results">
+                  <NumberStat
+                    label="Total fees"
+                    value={sgd(r.totalFeesPaid)}
+                    tone="warn"
+                  />
+                  <NumberStat label="What you keep" value={sgd(r.finalNet)} />
+                  <NumberStat label="Typical outcome" value={sgd(r.p50)} />
+                </div>
+
+                {!hasCharges && (
+                  <p className="fund-hint">
+                    Add this fund&apos;s charges below (or upload its factsheet)
+                    to see its real cost and outcomes.
+                  </p>
+                )}
+
+                {/* What it costs — the fees broken down plainly */}
+                <div className="fund-detail">
+                  <p className="fund-detail-head">What it costs</p>
+                  <ul className="fund-facts">
+                    <li>
+                      One-off entry charge:{" "}
+                      <span>{sgd(r.oneOffEntryCost)}</span> (
+                      {pct(f.salesCharge, 1)} of what you put in)
+                    </li>
+                    <li>
+                      Yearly running cost:{" "}
+                      <span>{sgd(r.yearlyCostApprox)}/yr</span> (
+                      {pct(r.yearlyCostRate, 2)} a year)
+                    </li>
+                    <li>
+                      Fee hurdle: must grow{" "}
+                      <span>{pct(r.feeHurdleRate, 1)} a year</span> just to
+                      cover its costs
+                    </li>
+                    <li>
+                      <span>{pct(r.feeDrag)}</span> of growth lost to fees
+                    </li>
+                    {r.extraFeeVsCheapest > 0 && (
+                      <li>
+                        <span>{sgd(r.extraFeeVsCheapest)}</span> more in fees
+                        than the cheapest
+                      </li>
+                    )}
+                  </ul>
+
+                  {/* What could happen — the range, the dip, the loss chance */}
+                  <p className="fund-detail-head">
+                    What could happen{" "}
+                    <span className="fund-detail-sub">
+                      (scenarios, not forecasts)
+                    </span>
+                  </p>
+                  <ul className="fund-facts">
+                    <li>
+                      Range after {horizonYears} yrs:{" "}
+                      <span>
+                        {sgd(r.p5)} – {sgd(r.p95)}
+                      </span>{" "}
+                      (1-in-20 bad to 1-in-20 good)
+                    </li>
+                    <li>
+                      Worst dip along the way: typically{" "}
+                      <span>−{pct(r.medianMaxDrawdown)}</span>
+                    </li>
+                    <li>
+                      Chance of ending below your {sgd(principal)}:{" "}
+                      <span>{pct(r.probabilityOfLoss)}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Decoded descriptive labels read from the factsheet (F14) */}
+                <FundProfile fund={f} />
+
+                {/* Compact editable inputs from the factsheet */}
+                <details className="fund-edit" open={!hasCharges}>
+                  <summary>Edit this fund</summary>
+                  <div className="fund-fields">
+                    <PctField
+                      label="Expected return / yr"
+                      value={f.expectedReturn}
+                      onChange={(v) => patch(r.id, "expectedReturn", v)}
+                    />
+                    <label className="field">
+                      <span>Risk level</span>
+                      <span className="field-input">
+                        <select
+                          value={f.volatility}
+                          onChange={(e) =>
+                            patch(r.id, "volatility", Number(e.target.value))
+                          }
+                        >
+                          {RISK_OPTIONS.map((o) => (
+                            <option key={o.label} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
+                      </span>
+                    </label>
+                    <PctField
+                      label="Sales charge"
+                      value={f.salesCharge}
+                      onChange={(v) => patch(r.id, "salesCharge", v)}
+                    />
+                    <PctField
+                      label="Fund fee (TER)"
+                      value={f.ter}
+                      onChange={(v) => patch(r.id, "ter", v)}
+                    />
+                    <PctField
+                      label="Platform fee / yr"
+                      value={f.platformFee}
+                      onChange={(v) => patch(r.id, "platformFee", v)}
+                    />
+                  </div>
                   <button
                     type="button"
                     className="link danger"
@@ -363,14 +432,14 @@ export default function ComparePage() {
                   >
                     Remove fund
                   </button>
-                )}
-              </details>
-            </section>
-          );
-        })}
-      </div>
+                </details>
+              </section>
+            );
+          })}
+        </div>
+      )}
 
-      {funds.length < 4 && (
+      {funds.length > 0 && funds.length < 4 && (
         <button type="button" className="btn ghost" onClick={addFund}>
           <Icon name="file" size={16} /> Add another fund
         </button>
@@ -389,6 +458,19 @@ export default function ComparePage() {
         </h4>
         <p className="glossary">
           {FUND_GLOSSARY.map((g) => (
+            <TapToExplain
+              key={g.term}
+              term={g.term}
+              plainEnglish={g.plainEnglish}
+            />
+          ))}
+        </p>
+
+        <h4 className="edu-head">
+          <Icon name="downside" size={15} /> Reading the result numbers
+        </h4>
+        <p className="glossary">
+          {FUND_OUTCOME_GLOSSARY.map((g) => (
             <TapToExplain
               key={g.term}
               term={g.term}

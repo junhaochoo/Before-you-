@@ -24,6 +24,76 @@ export interface Explainer {
   plain: string;
 }
 
+/**
+ * FUND_BASICS — for someone who has never bought a fund: the handful of neutral
+ * facts that actually decide how a fund turns out. NOT a checklist of "good"
+ * traits and NOT advice — each item is a question to ask, never an answer.
+ */
+export const FUND_BASICS: Explainer[] = [
+  {
+    key: "cost",
+    label: "What it costs",
+    plain:
+      "Every fund charges fees — a one-off entry charge and a yearly running cost. Fees are taken whether the fund rises or falls, and they compound, so a 1%–2% yearly cost can quietly remove a large share of your growth over many years.",
+  },
+  {
+    key: "holdings",
+    label: "What it actually holds",
+    plain:
+      "A fund is just a basket of underlying things — shares, bonds, property or a mix. What it holds drives both how much it can grow and how far it can fall. Two funds with similar fees can behave completely differently.",
+  },
+  {
+    key: "downside",
+    label: "How far it can fall",
+    plain:
+      "Past or projected 'typical' returns hide the swings. The numbers that matter are the range of outcomes, the worst dip along the way, and the chance of ending below what you put in — not a single headline figure.",
+  },
+  {
+    key: "access",
+    label: "How long your money is tied up",
+    plain:
+      "Some products lock your money in or charge to exit early; most plain funds let you sell, but the price you get still moves daily. Know whether you can reach the money when you need it, and at what cost.",
+  },
+  {
+    key: "horizon",
+    label: "How long you plan to hold",
+    plain:
+      "The same fund looks very different over 3 years versus 20. A longer horizon gives swings more time to even out, but it also means more years of fees. Match the fund to when you'll actually need the money.",
+  },
+];
+
+/**
+ * FUND_OUTCOME_GLOSSARY — plain-English meaning of the result numbers this tool
+ * shows per fund, so the figures aren't read as promises. Neutral definitions only.
+ */
+export const FUND_OUTCOME_GLOSSARY: { term: string; plainEnglish: string }[] = [
+  {
+    term: "Typical outcome",
+    plainEnglish:
+      "The middle of many simulated scenarios — half came out higher, half lower. It is a midpoint, not a forecast or a promise.",
+  },
+  {
+    term: "Range (bad to good)",
+    plainEnglish:
+      "A likely span of outcomes: the 1-in-20 bad case on the low end and the 1-in-20 good case on the high end. Real results can still land outside this span.",
+  },
+  {
+    term: "Worst dip along the way",
+    plainEnglish:
+      "How far the value typically fell from its highest point at some stage before the end. Even funds that finish up can drop sharply in between — this is the bump you'd have to sit through.",
+  },
+  {
+    term: "Chance of ending below what you put in",
+    plainEnglish:
+      "Out of many simulated scenarios, how often the final value was less than the amount you invested. A plain way to see downside risk.",
+  },
+  {
+    term: "Fee hurdle",
+    plainEnglish:
+      "The return the fund has to earn each year just to cover its own costs — before you make a single dollar. The higher the hurdle, the harder the fund has to work for you to come out ahead.",
+  },
+];
+
 /** Tap-to-explain fund charge terms (the fund-path equivalent of copy.ts GLOSSARY). */
 export const FUND_GLOSSARY: { term: string; plainEnglish: string }[] = [
   {

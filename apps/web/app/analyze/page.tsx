@@ -28,19 +28,23 @@ import {
  * full tier (W4-4), and save / PDF (W4-1/W4-3).
  */
 export default function AnalyzePage() {
-  // Product inputs.
+  // Product inputs. Charges start EMPTY — nothing about a specific product is
+  // pre-filled; the user uploads a document or types the figures from what they
+  // were told. Amount + horizon keep neutral scenario defaults so the tool has a
+  // frame to calculate in (both are plainly editable).
   const [principal, setPrincipal] = useState(100_000);
   const [horizonYears, setHorizon] = useState(20);
-  const [upfrontCharge, setUpfront] = useState(0.03);
-  const [fundTER, setFundTER] = useState(0.015);
-  const [insuranceCharge, setInsurance] = useState(0.004);
-  const [annualAdminFee, setAdmin] = useState(360);
-  const [lockInYears, setLockIn] = useState(10);
+  const [upfrontCharge, setUpfront] = useState(0);
+  const [fundTER, setFundTER] = useState(0);
+  const [insuranceCharge, setInsurance] = useState(0);
+  const [annualAdminFee, setAdmin] = useState(0);
+  const [lockInYears, setLockIn] = useState(0);
   const [guaranteeStated, setGuaranteeStated] = useState(false);
 
-  // Personal context.
-  const [liquidSavings, setLiquid] = useState(125_000);
-  const [monthlyExpenses, setExpenses] = useState(4_000);
+  // Personal context — blank until the user enters their own figures. These gate
+  // the RiskFit / easy-to-reach-money sections so nothing computes on placeholders.
+  const [liquidSavings, setLiquid] = useState(0);
+  const [monthlyExpenses, setExpenses] = useState(0);
   const [objective, setObjective] = useState<"preserve" | "income" | "grow">(
     "grow",
   );
@@ -219,14 +223,14 @@ export default function AnalyzePage() {
       typeof s[k] === "number" ? (s[k] as number) : d;
     setPrincipal(n("principal", 100_000));
     setHorizon(n("horizonYears", 20));
-    setUpfront(n("upfrontCharge", 0.03));
-    setFundTER(n("fundTER", 0.015));
-    setInsurance(n("insuranceCharge", 0.004));
-    setAdmin(n("annualAdminFee", 360));
-    setLockIn(n("lockInYears", 10));
+    setUpfront(n("upfrontCharge", 0));
+    setFundTER(n("fundTER", 0));
+    setInsurance(n("insuranceCharge", 0));
+    setAdmin(n("annualAdminFee", 0));
+    setLockIn(n("lockInYears", 0));
     setGuaranteeStated(s.guaranteeStated === true);
-    setLiquid(n("liquidSavings", 125_000));
-    setExpenses(n("monthlyExpenses", 4_000));
+    setLiquid(n("liquidSavings", 0));
+    setExpenses(n("monthlyExpenses", 0));
     if (
       s.objective === "preserve" ||
       s.objective === "income" ||

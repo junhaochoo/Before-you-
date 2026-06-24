@@ -1040,6 +1040,70 @@ h2 {
   margin: 0.7rem 0;
 }
 
+/* Empty state — nothing pre-populated until upload / manual add. */
+.fund-empty {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+}
+.fund-empty h3 {
+  margin: 0;
+  color: var(--ink);
+}
+.fund-empty p {
+  max-width: 46ch;
+  margin: 0;
+}
+.fund-empty .btn {
+  margin-top: 0.4rem;
+}
+
+/* Per-fund derived facts grouped under plain-English headings. */
+.fund-detail {
+  border-top: 1px solid var(--line);
+  padding-top: 0.7rem;
+  display: grid;
+  gap: 0.35rem;
+}
+.fund-detail-head {
+  margin: 0.5rem 0 0.1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.fund-detail-head:first-child {
+  margin-top: 0;
+}
+.fund-detail-sub {
+  font-weight: 400;
+  color: var(--muted);
+}
+.fund-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: var(--accent-soft);
+  border-radius: var(--r-sm, 8px);
+  padding: 0.5rem 0.65rem;
+}
+
+/* Numbered novice primer. */
+.edu-list-num {
+  counter-reset: edu;
+}
+.edu-list-num li {
+  counter-increment: edu;
+}
+.edu-list-num li span::before {
+  content: counter(edu) ". ";
+  color: var(--accent);
+  font-weight: 700;
+}
+
 /* ---- Fund education + decoded factsheet labels (F14) -------------------- */
 .fund-profile {
   list-style: none;
