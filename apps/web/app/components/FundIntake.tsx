@@ -10,6 +10,8 @@ export interface FundExtractionResponse {
   redactions: number;
   model: string;
   error?: string | null;
+  /** Where the charges were read from — factsheet filename or "Pasted fee table". */
+  source?: string;
 }
 
 /**
@@ -38,7 +40,7 @@ export function FundIntake({
       fd.append("file", file);
       fd.append("mode", "fund");
       const res = await fetch("/api/extract", { method: "POST", body: fd });
-      await handle(res);
+      await handle(res, file.name);
     } catch {
       setStatus("Could not read that file. Try pasting the fee table instead.");
     } finally {
@@ -56,7 +58,7 @@ export function FundIntake({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: pasted, mode: "fund" }),
       });
-      await handle(res);
+      await handle(res, "Pasted fee table");
     } catch {
       setStatus(
         "Something went wrong. You can still add the fund manually below.",
@@ -66,7 +68,7 @@ export function FundIntake({
     }
   }
 
-  async function handle(res: Response) {
+  async function handle(res: Response, source: string) {
     const data = (await res.json()) as FundExtractionResponse & {
       error?: string;
     };
@@ -81,7 +83,7 @@ export function FundIntake({
     setStatus(
       "Read it — we added a fund card below with the charges we found. Please check them; returns and risk stay your assumptions.",
     );
-    onExtracted(data);
+    onExtracted({ ...data, source });
   }
 
   return (

@@ -22,6 +22,8 @@ export type IconName =
   | "download"
   | "print"
   | "info"
+  | "bulb"
+  | "mail"
   | "arrow-left"
   | "arrow-right";
 
@@ -140,6 +142,19 @@ const PATHS: Record<IconName, ReactElement> = {
       <circle cx="12" cy="12" r="9" />
       <line x1="12" y1="11" x2="12" y2="16" />
       <line x1="12" y1="8" x2="12.01" y2="8" />
+    </>
+  ),
+  bulb: (
+    <>
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <polyline points="3 7 12 13 21 7" />
     </>
   ),
   "arrow-left": (

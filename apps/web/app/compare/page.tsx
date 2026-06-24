@@ -5,6 +5,7 @@ import {
   computeFundComparison,
   type FundInput,
   type FundGlobals,
+  type FundResult,
 } from "@/lib/engine/funds";
 import { sgd, pct } from "@/lib/format";
 import {
@@ -142,6 +143,7 @@ export default function ComparePage() {
         assetClass,
         creditQuality: label(f.credit_quality),
         esg: label(f.esg_rating),
+        source: resp.source?.trim() || "Your uploaded factsheet",
       };
       // Append when there's room; otherwise replace the last card.
       return fs.length >= 4 ? [...fs.slice(0, 3), imported] : [...fs, imported];
@@ -271,14 +273,22 @@ export default function ComparePage() {
 
       {/* Headline fact: the cost spread */}
       {cmp.funds.length >= 2 && cmp.feeSpread > 0 && (
-        <p className="compare">
-          Over {horizonYears} years on {sgd(principal)}, the highest-fee fund
-          takes about <strong>{sgd(cmp.feeSpread)}</strong> more in fees than
-          the lowest-fee one. More fees is not automatically worse — a fund may
-          charge more while holding different assets or aiming for higher
-          returns. This is a factual comparison, not a recommendation.
-        </p>
+        <div className="compare">
+          <p className="key-insight-label">
+            <Icon name="bulb" size={15} /> Key insight
+          </p>
+          <p className="key-insight-body">
+            Over {horizonYears} years on {sgd(principal)}, the highest-fee fund
+            takes about <strong>{sgd(cmp.feeSpread)}</strong> more in fees than
+            the lowest-fee one. More fees is not automatically worse — a fund
+            may charge more while holding different assets or aiming for higher
+            returns. This is a factual comparison, not a recommendation.
+          </p>
+        </div>
       )}
+
+      {/* Side-by-side comparison table — the funds on one screen (deeper comparison) */}
+      {cmp.funds.length >= 2 && <CompareTable funds={cmp.funds} />}
 
       {/* Side-by-side fund cards */}
       {cmp.funds.length > 0 && (
@@ -354,21 +364,47 @@ export default function ComparePage() {
                     )}
                   </ul>
 
-                  {/* What could happen — the range, the dip, the loss chance */}
+                  {/* Where the figures came from — reliability / traceability */}
+                  <p className="fund-source">
+                    <Icon name="info" size={13} /> Charges{" "}
+                    {f.source ? (
+                      <>
+                        read from <strong>{f.source}</strong>
+                      </>
+                    ) : (
+                      <>entered by you from the factsheet</>
+                    )}
+                    . Expected return{" "}
+                    <strong>{pct(f.expectedReturn, 1)} a year</strong> and risk
+                    are assumptions you set — change them under “Edit this
+                    fund”.
+                  </p>
+
+                  {/* What could happen — three named scenarios (Trang C4) */}
                   <p className="fund-detail-head">
                     What could happen{" "}
                     <span className="fund-detail-sub">
                       (scenarios, not forecasts)
                     </span>
                   </p>
+                  <div className="scenario-row">
+                    <div className="scenario scenario-bad">
+                      <span className="scenario-name">Conservative</span>
+                      <span className="scenario-value">{sgd(r.p5)}</span>
+                      <span className="scenario-note">1-in-20 bad case</span>
+                    </div>
+                    <div className="scenario scenario-mid">
+                      <span className="scenario-name">Neutral</span>
+                      <span className="scenario-value">{sgd(r.p50)}</span>
+                      <span className="scenario-note">typical outcome</span>
+                    </div>
+                    <div className="scenario scenario-good">
+                      <span className="scenario-name">Best case</span>
+                      <span className="scenario-value">{sgd(r.p95)}</span>
+                      <span className="scenario-note">1-in-20 good case</span>
+                    </div>
+                  </div>
                   <ul className="fund-facts">
-                    <li>
-                      Range after {horizonYears} yrs:{" "}
-                      <span>
-                        {sgd(r.p5)} – {sgd(r.p95)}
-                      </span>{" "}
-                      (1-in-20 bad to 1-in-20 good)
-                    </li>
                     <li>
                       Worst dip along the way: typically{" "}
                       <span>−{pct(r.medianMaxDrawdown)}</span>
@@ -538,11 +574,74 @@ function FundProfile({ fund }: { fund: FundInput }) {
     <ul className="fund-profile">
       {rows.map((r, i) => (
         <li key={i}>
-          <span className="fund-profile-label">{r.detected}</span>
+          {/* Use the canonical decoded label so casing is consistent across
+              funds — a factsheet saying "equities" and another saying "Equity"
+              both render the same badge (Trang C5). */}
+          <span className="fund-profile-label">{r.decoded!.label}</span>
           <span className="fund-profile-plain">{r.decoded!.plain}</span>
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Plain-English risk label from a volatility decimal (matches RISK_OPTIONS). */
+function riskLabel(volatility: number): string {
+  const match = RISK_OPTIONS.reduce((best, o) =>
+    Math.abs(o.value - volatility) < Math.abs(best.value - volatility)
+      ? o
+      : best,
+  );
+  return match.label;
+}
+
+/**
+ * CompareTable — every fund on one screen, row by row, so the differences read
+ * at a glance (Trang: "deeper comparison"). Neutral facts only; the "Lowest /
+ * Highest fees" chips are factual extremes, never a verdict on which to pick.
+ */
+function CompareTable({ funds }: { funds: FundResult[] }) {
+  const rows: { label: string; cell: (r: FundResult) => string }[] = [
+    {
+      label: "Expected return / yr",
+      cell: (r) => pct(r.input.expectedReturn, 1),
+    },
+    { label: "Risk level", cell: (r) => riskLabel(r.input.volatility) },
+    { label: "Total fees", cell: (r) => sgd(r.totalFeesPaid) },
+    { label: "Growth lost to fees", cell: (r) => pct(r.feeDrag) },
+    { label: "What you keep", cell: (r) => sgd(r.finalNet) },
+    { label: "Typical outcome", cell: (r) => sgd(r.p50) },
+    { label: "Chance of a loss", cell: (r) => pct(r.probabilityOfLoss) },
+  ];
+  return (
+    <div className="compare-table-wrap">
+      <table className="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Side by side</th>
+            {funds.map((r) => (
+              <th scope="col" key={r.id}>
+                {r.input.name?.trim() || "Unnamed fund"}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label}>
+              <th scope="row">{row.label}</th>
+              {funds.map((r) => (
+                <td key={r.id}>{row.cell(r)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="muted compare-table-note">
+        A factual side-by-side, not a recommendation. Returns and risk are the
+        assumptions you set; charges come from each fund&apos;s factsheet.
+      </p>
+    </div>
   );
 }
 

@@ -45,9 +45,20 @@ export default function RootLayout({
         </header>
         {children}
         <footer className="site-footer">
-          We don&apos;t sell anything. We don&apos;t tell you what to buy. This
-          tool provides factual information and education — not financial
-          advice.
+          <p>
+            We don&apos;t sell anything. We don&apos;t tell you what to buy.
+            This tool provides factual information and education — not financial
+            advice.
+          </p>
+          <p className="footer-contact">
+            <a href="mailto:hello@beforeyousign.sg" className="link">
+              <Icon name="mail" size={14} /> Contact us
+            </a>
+            <span aria-hidden>·</span>
+            <span>
+              © {new Date().getFullYear()} Before You Sign. All rights reserved.
+            </span>
+          </p>
         </footer>
       </body>
     </html>

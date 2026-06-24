@@ -124,6 +124,22 @@ body {
   border-top: 1px solid var(--line);
   text-align: center;
 }
+.site-footer p {
+  margin: 0;
+}
+.footer-contact {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-contact .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
 
 main {
   max-width: 760px;
@@ -413,6 +429,114 @@ h2 {
   border-radius: var(--r-sm);
   font-size: 0.92rem;
   color: var(--ink-2);
+}
+.key-insight-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.key-insight-label svg {
+  color: #d97706;
+}
+.key-insight-body {
+  margin: 0;
+}
+
+/* Side-by-side comparison table */
+.compare-table-wrap {
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.compare-table th,
+.compare-table td {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.compare-table thead th {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 2px solid var(--line);
+}
+.compare-table tbody th {
+  font-weight: 500;
+  color: var(--muted);
+}
+.compare-table tbody td {
+  font-weight: 600;
+  color: var(--ink);
+}
+.compare-table-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+}
+
+/* Three named outcome scenarios (Conservative / Neutral / Best) */
+.scenario-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 0.2rem 0 0.4rem;
+}
+.scenario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--r-sm, 8px);
+  border: 1px solid var(--line);
+  background: var(--card-soft);
+}
+.scenario-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.scenario-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.scenario-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.scenario-bad {
+  border-left: 3px solid #dc2626;
+}
+.scenario-mid {
+  border-left: 3px solid var(--accent);
+}
+.scenario-good {
+  border-left: 3px solid #16a34a;
+}
+
+/* Provenance / source-of-figures footnote on each fund card */
+.fund-source {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin: 0.2rem 0 0.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.fund-source svg {
+  flex: none;
+  margin-top: 0.15rem;
 }
 
 /* ---- Big-number stats --------------------------------------------------- */
@@ -1221,6 +1345,9 @@ h2 {
   }
   .detect-options,
   .manual-options {
+    grid-template-columns: 1fr;
+  }
+  .scenario-row {
     grid-template-columns: 1fr;
   }
 }

@@ -42,6 +42,12 @@ export interface FundInput {
   assetClass?: string;
   creditQuality?: string;
   esg?: string;
+  /**
+   * Where the charges came from (display-only provenance, never computed on):
+   * a factsheet filename, "Pasted fee table", or undefined when typed by hand.
+   * Lets the card cite the source of each figure (reliability).
+   */
+  source?: string;
 }
 
 /** Inputs held constant across every fund so the comparison is apples-to-apples. */
