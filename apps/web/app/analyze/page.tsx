@@ -74,6 +74,10 @@ export default function AnalyzePage() {
   // Demo unlock (no-payment full report; only when the deployment sets DEMO_UNLOCK=1).
   const [demoAvailable, setDemoAvailable] = useState(false);
   const [demoEntitled, setDemoEntitled] = useState(false);
+  // Activation tier — the free FIRST full report (claimed with an email).
+  const [activationAvailable, setActivationAvailable] = useState(false);
+  const [activationEntitled, setActivationEntitled] = useState(false);
+  const [activating, setActivating] = useState(false);
 
   useEffect(() => {
     setConsentState(hasConsent());
@@ -98,6 +102,8 @@ export default function AnalyzePage() {
         setPaymentsConfigured(d.configured !== false);
         setDemoAvailable(Boolean(d.demoAvailable));
         setDemoEntitled(Boolean(d.demo));
+        setActivationAvailable(Boolean(d.activationAvailable));
+        setActivationEntitled(Boolean(d.activation));
         setAccountEmail(d.email ?? null);
         if (d.entitled) setTier("full");
       })
@@ -151,11 +157,43 @@ export default function AnalyzePage() {
     }
   }
 
+  /** Claim the free FIRST full report (activation tier) with an email. */
+  async function handleActivate(email: string) {
+    setActivating(true);
+    setCheckoutMsg(null);
+    try {
+      const res = await fetch("/api/activate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) {
+        // 409 = already claimed on this browser; anything else = plain failure.
+        setActivationAvailable(false);
+        setCheckoutMsg("activation_failed");
+        return;
+      }
+      setEntitled(true);
+      setActivationEntitled(true);
+      setActivationAvailable(false);
+      setAccountEmail(email);
+      setTier("full");
+      setCheckoutMsg("activated");
+    } catch {
+      setCheckoutMsg("activation_failed");
+    } finally {
+      setActivating(false);
+    }
+  }
+
   /** Clear the entitlement cookie ("sign out" of the paid account). */
   async function handleSignOut() {
     await fetch("/api/signout", { method: "POST" }).catch(() => {});
     setEntitled(false);
     setDemoEntitled(false);
+    setActivationEntitled(false);
+    // The activation "used" marker survives sign-out by design — one free
+    // report per person; activationAvailable stays false.
     setAccountEmail(null);
     setTier("free");
     setCheckoutMsg(null);
@@ -313,7 +351,9 @@ export default function AnalyzePage() {
               <Icon name="check" size={15} />{" "}
               {demoEntitled
                 ? "Full report unlocked · demo"
-                : "Full access unlocked"}
+                : activationEntitled
+                  ? "First report unlocked free"
+                  : "Full access unlocked"}
               {!demoEntitled && accountEmail ? ` · ${accountEmail}` : ""}
             </span>
             <button type="button" className="link" onClick={handleSignOut}>
@@ -323,9 +363,11 @@ export default function AnalyzePage() {
         ) : (
           <span className="account-state">
             <Icon name="info" size={15} />{" "}
-            {demoAvailable && !paymentsConfigured
-              ? "Free scan — preview the full report (demo, no payment)"
-              : `Free scan — unlock the full report for ${priceLabel()}`}
+            {activationAvailable
+              ? "Free scan — your first full report is free"
+              : demoAvailable && !paymentsConfigured
+                ? "Free scan — preview the full report (demo, no payment)"
+                : `Free scan — unlock the full report for ${priceLabel()}`}
           </span>
         )}
       </div>
@@ -336,6 +378,11 @@ export default function AnalyzePage() {
             "Payment received — your full report is unlocked. Thank you."}
           {checkoutMsg === "demo_unlocked" &&
             "Demo mode — the full report is unlocked without any payment, for demonstration only."}
+          {checkoutMsg === "activated" &&
+            "Your first full report is unlocked — free, no card needed. Further reports are " +
+              `a one-time ${priceLabel()} each.`}
+          {checkoutMsg === "activation_failed" &&
+            "We couldn't unlock the free report on this browser. You can still unlock the full report below."}
           {checkoutMsg === "cancelled" &&
             "Checkout cancelled — no payment was made."}
           {checkoutMsg === "failed" &&
@@ -522,6 +569,9 @@ export default function AnalyzePage() {
             paymentsConfigured={paymentsConfigured}
             demoAvailable={demoAvailable}
             checkingOut={checkingOut}
+            activationAvailable={activationAvailable}
+            onActivate={handleActivate}
+            activating={activating}
             contextProvided={contextProvided}
             productKind="ilp"
           />
@@ -593,6 +643,8 @@ const round2 = (n: number) => Math.round(n * 100) / 100;
 type CheckoutMsg =
   | "unlocked"
   | "demo_unlocked"
+  | "activated"
+  | "activation_failed"
   | "cancelled"
   | "failed"
   | "not_configured"

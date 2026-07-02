@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Report } from "@/lib/engine";
 import { sgd, pct, months } from "@/lib/format";
 import {
@@ -45,6 +46,9 @@ export function ReportView({
   paymentsConfigured = true,
   demoAvailable = false,
   checkingOut = false,
+  activationAvailable = false,
+  onActivate,
+  activating = false,
   contextProvided = false,
   productKind = "ilp",
 }: {
@@ -70,9 +74,20 @@ export function ReportView({
   demoAvailable?: boolean;
   /** F6 — true while a checkout session is being opened. */
   checkingOut?: boolean;
+  /** Activation tier — true while this visitor can still claim the free first report. */
+  activationAvailable?: boolean;
+  /** Claim the free first full report with the given email. */
+  onActivate?: (email: string) => void;
+  /** True while the activation claim is in flight. */
+  activating?: boolean;
 }) {
   const { feeLens, downside, riskFit, portfolio } = report;
   const full = tier === "full";
+  const [activationEmail, setActivationEmail] = useState("");
+  // Ergonomic gate only — the server re-validates (ui-backend-defense).
+  const emailLooksOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(
+    activationEmail.trim(),
+  );
 
   return (
     <div className="report">
@@ -265,8 +280,40 @@ export function ReportView({
         </Lens>
       )}
 
-      {/* Free-tier upgrade prompt (F6 paywall) */}
-      {!full && (
+      {/* Free-tier upgrade prompt (F6 paywall + activation tier) */}
+      {!full && activationAvailable && !entitled ? (
+        <div className="upgrade">
+          <h3>Your first full report is free</h3>
+          <p className="muted">
+            The free scan flags terms and gaps. The full report adds the fee
+            breakdown, the dollar downside, your concentration &amp; buffer, and
+            the gross-vs-net chart. See the complete picture on this product
+            free — after that, reports are a one-time {priceLabel()} each.
+          </p>
+          <div className="activate-form">
+            <input
+              type="email"
+              className="activate-email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              value={activationEmail}
+              onChange={(e) => setActivationEmail(e.target.value)}
+            />
+            <button
+              type="button"
+              className="btn"
+              disabled={activating || !emailLooksOk}
+              onClick={() => onActivate?.(activationEmail.trim())}
+            >
+              {activating ? "Unlocking…" : "Get my first report free"}
+            </button>
+          </div>
+          <p className="muted upgrade-note">
+            No card needed — one free report per person. We use your email only
+            to tie the free report to you, never to sell you anything.
+          </p>
+        </div>
+      ) : !full ? (
         <div className="upgrade">
           <h3>See the full picture</h3>
           <p className="muted">
@@ -308,7 +355,7 @@ export function ReportView({
             </p>
           )}
         </div>
-      )}
+      ) : null}
 
       {/* 04 — DECISION GAP (free + full) */}
       <Lens

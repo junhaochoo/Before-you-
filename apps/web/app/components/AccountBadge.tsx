@@ -36,7 +36,8 @@ export function AccountBadge() {
       <span className="account-badge on">
         <Icon name="check" size={14} />
         <span className="account-badge-text">
-          Full access{state.email ? ` · ${state.email}` : ""}
+          {state.activation ? "Free first report" : "Full access"}
+          {state.email ? ` · ${state.email}` : ""}
         </span>
         <button type="button" className="account-signout" onClick={signOut}>
           Sign out
@@ -53,7 +54,9 @@ export function AccountBadge() {
     >
       <Icon name="info" size={14} />
       <span className="account-badge-text">
-        Free plan · full report {priceLabel()}
+        {state.activationAvailable
+          ? "Free plan · first report free"
+          : `Free plan · full report ${priceLabel()}`}
       </span>
     </Link>
   );
