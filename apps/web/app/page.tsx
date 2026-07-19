@@ -4,31 +4,16 @@ import { Icon } from "./components/icons";
 import { StartIntake } from "./components/StartIntake";
 import { PrivacyConsent } from "./components/PrivacyConsent";
 
-const steps = [
-  {
-    num: "1",
-    title: "Upload your document",
-    desc: "Drop a PDF, paste text, or enter fund details. Takes under a minute.",
-    icon: "upload",
-  },
-  {
-    num: "2",
-    title: "We analyze the fees and terms",
-    desc: "We decode the fine print and calculate the real cost over time.",
-    icon: "search",
-  },
-  {
-    num: "3",
-    title: "You see what it really costs",
-    desc: "Get a plain-English report showing total cost, risks, and what questions to ask.",
-    icon: "check",
-  },
+const painPoints = [
+  "Salespeople earn commissions — your interests come second",
+  "Policy documents are deliberately hard to compare",
+  "The real cost hides in the fine print",
+  "You feel pressured to sign before you understand",
 ];
 
 export default function Home() {
   return (
     <main>
-      {/* Hero */}
       <section className="hero">
         <div className="hero-content">
           <p className="hero-pain">
@@ -48,7 +33,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust badges */}
       <section className="trust-badges">
         <span className="trust-badge">
           <Icon name="check" size={16} />
@@ -60,23 +44,50 @@ export default function Home() {
         </span>
       </section>
 
-      {/* How it works */}
+      <section className="pain-points">
+        <h2>Sound familiar?</h2>
+        <ul>
+          {painPoints.map((point) => (
+            <li key={point}>
+              <Icon name="alert" size={16} />
+              {point}
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="how-it-works">
         <h2>How it works</h2>
         <div className="steps">
-          {steps.map((step) => (
-            <div key={step.num} className="step">
-              <div className="step-num">{step.num}</div>
-              <div className="step-body">
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </div>
+          <div className="step">
+            <div className="step-num">1</div>
+            <div className="step-body">
+              <h3>Upload your document</h3>
+              <p>Drop a PDF or paste text. Takes under a minute.</p>
             </div>
-          ))}
+          </div>
+          <div className="step">
+            <div className="step-num">2</div>
+            <div className="step-body">
+              <h3>We analyze the fees and terms</h3>
+              <p>
+                We decode the fine print and calculate the real cost over time.
+              </p>
+            </div>
+          </div>
+          <div className="step">
+            <div className="step-num">3</div>
+            <div className="step-body">
+              <h3>You see what it really costs</h3>
+              <p>
+                Get a plain-English report with total cost, risks, and questions
+                to ask.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Upload form */}
       <section className="start">
         <p className="start-label">Get started</p>
         <StartIntake />
