@@ -116,30 +116,6 @@ export function StartIntake() {
     });
   }
 
-  if (!consent) {
-    return (
-      <div className="form-card consent-card start-card">
-        <h3>Before you upload — your privacy</h3>
-        <p className="muted">
-          We remove your name, NRIC and policy number <strong>before</strong>{" "}
-          any document is read, and we don&apos;t keep your uploads. We never
-          sell your data or earn from your decision.
-        </p>
-        <label className="consent-check">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              setConsent(e.target.checked);
-              setConsentState(e.target.checked);
-            }}
-          />
-          I understand and consent to my document being processed this way
-          (PDPA).
-        </label>
-      </div>
-    );
-  }
-
   return (
     <div className="form-card start-card">
       <div className="intake">
