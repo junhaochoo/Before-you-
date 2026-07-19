@@ -7,35 +7,35 @@
    ========================================================================== */
 
 :root {
-  /* Surfaces — reference-matched palette */
-  --bg: #fffdf5;
-  --bg-tint: #f5e6c8;
+  /* Surfaces — white base, navy primary, orange accent */
+  --bg: #ffffff;
+  --bg-tint: #f4f7fa;
   --card: #ffffff;
-  --card-soft: #fffdf5;
+  --card-soft: #f9fafc;
 
-  /* Ink — warm dark browns */
-  --ink: #2d1810;
-  --ink-2: #3d2820;
-  --muted: #8b7355;
-  --muted-2: #a89070;
+  /* Ink — deep navy (logo and primary text) */
+  --ink: #283f6d;
+  --ink-2: #344e85;
+  --muted: #6b7a8c;
+  --muted-2: #8a96a8;
 
-  /* Brand accent — deep rust orange */
-  --accent: #c75b1e;
-  --accent-hover: #a84a15;
-  --accent-soft: #fae8d0;
-  --accent-ring: rgba(199, 91, 30, 0.18);
+  /* Brand accent — orange (supporting only) */
+  --accent: #d46a1a;
+  --accent-hover: #b85a15;
+  --accent-soft: #fce8d0;
+  --accent-ring: rgba(212, 106, 26, 0.15);
 
   /* Semantic */
-  --good: #4a7c59;
-  --good-soft: #e8f0e9;
+  --good: #2e7d52;
+  --good-soft: #e8f5ee;
   --warn: #b86e1a;
   --warn-soft: #fdf3e0;
   --warn-line: #e8c880;
   --danger: #c0392b;
 
-  /* Lines — warm cream */
-  --line: #e0d0b0;
-  --line-strong: #c8b890;
+  /* Lines */
+  --line: #e0e4eb;
+  --line-strong: #c4cad6;
 
   /* Radius */
   --r-sm: 8px;
@@ -45,9 +45,9 @@
   --pill: 999px;
 
   /* Shadows */
-  --sh-sm: 0 1px 2px rgba(30, 17, 10, 0.06), 0 1px 3px rgba(30, 17, 10, 0.06);
-  --sh-md: 0 4px 16px rgba(30, 17, 10, 0.09);
-  --sh-lg: 0 16px 40px rgba(30, 17, 10, 0.12);
+  --sh-sm: 0 1px 2px rgba(40, 63, 109, 0.06), 0 1px 3px rgba(40, 63, 109, 0.06);
+  --sh-md: 0 4px 16px rgba(40, 63, 109, 0.09);
+  --sh-lg: 0 16px 40px rgba(40, 63, 109, 0.12);
 
   --font: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
@@ -67,8 +67,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   /* Clean white background */
-  background-color: var(--bg);
-  background-attachment: fixed;
+  background-color: #ffffff;
 }
 
 /* ---- How it works page ------------------------------------------------- */
