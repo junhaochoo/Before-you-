@@ -104,8 +104,8 @@ body {
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   color: var(--accent);
 }
 .brand-text {
@@ -252,6 +252,49 @@ h2 {
   flex: none;
   margin-top: 2px;
   color: var(--warn);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0 2.5rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.stat-source {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted-2);
+  text-decoration: none;
+  margin-top: 0.2rem;
+}
+.stat-source:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 .how-it-works {

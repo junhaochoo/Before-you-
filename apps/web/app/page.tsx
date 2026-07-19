@@ -4,13 +4,6 @@ import { Icon } from "./components/icons";
 import { StartIntake } from "./components/StartIntake";
 import { PrivacyConsent } from "./components/PrivacyConsent";
 
-const painPoints = [
-  "Salespeople earn commissions — your interests come second",
-  "Policy documents are deliberately hard to compare",
-  "The real cost hides in the fine print",
-  "You feel pressured to sign before you understand",
-];
-
 export default function Home() {
   return (
     <main>
@@ -44,18 +37,6 @@ export default function Home() {
         </span>
       </section>
 
-      <section className="pain-points">
-        <h2>Sound familiar?</h2>
-        <ul>
-          {painPoints.map((point) => (
-            <li key={point}>
-              <Icon name="alert" size={16} />
-              {point}
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <section className="how-it-works">
         <h2>How it works</h2>
         <div className="steps">
@@ -85,6 +66,65 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="pain-points">
+        <h2>Sound familiar?</h2>
+        <ul>
+          <li>
+            <Icon name="alert" size={16} />
+            Salespeople earn commissions — your interests come second
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            Policy documents are deliberately hard to compare
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            The real cost hides in the fine print
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            You feel pressured to sign before you understand
+          </li>
+        </ul>
+      </section>
+
+      <section className="stats">
+        <div className="stat">
+          <span className="stat-num">76%</span>
+          <span className="stat-label">
+            of Singaporeans don&apos;t fully understand their insurance policy
+          </span>
+          <a
+            href="https://www.channelnewsasia.com/watch/singaporeans-lack-confidence-about-understanding-financial-products-survey-3577446"
+            target="_blank"
+            rel="noopener"
+            className="stat-source"
+          >
+            Source: CNA / Milieu poll
+          </a>
+        </div>
+        <div className="stat">
+          <span className="stat-num">$1.2B</span>
+          <span className="stat-label">
+            in insurance commissions paid in Singapore yearly
+          </span>
+          <a
+            href="https://www.moneysense.gov.sg/articles/2023/09/understanding-bancassurance"
+            target="_blank"
+            rel="noopener"
+            className="stat-source"
+          >
+            Source: MAS MoneySense
+          </a>
+        </div>
+        <div className="stat">
+          <span className="stat-num">Free</span>
+          <span className="stat-label">
+            to know what you&apos;re actually signing
+          </span>
         </div>
       </section>
 
