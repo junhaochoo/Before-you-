@@ -29,7 +29,10 @@ export type IconName =
   | "mail"
   | "arrow-left"
   | "arrow-right"
-  | "shield";
+  | "shield"
+  | "users"
+  | "dollar-sign"
+  | "check-circle";
 
 export function Icon({
   name,
