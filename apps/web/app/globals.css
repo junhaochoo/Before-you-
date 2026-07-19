@@ -7,35 +7,35 @@
    ========================================================================== */
 
 :root {
-  /* Surfaces */
-  --bg: #f4f7fb;
-  --bg-tint: #eef3fa;
-  --card: #ffffff;
-  --card-soft: #f8fafc;
+  /* Surfaces — warm amber / sunset palette */
+  --bg: #f5e6c8;
+  --bg-tint: #ede0c4;
+  --card: #fffdf5;
+  --card-soft: #faf4e8;
 
-  /* Ink */
-  --ink: #0f1e2e;
-  --ink-2: #1a2b3c;
-  --muted: #5b6b7b;
-  --muted-2: #8595a6;
+  /* Ink — warm dark browns */
+  --ink: #1e110a;
+  --ink-2: #2d1810;
+  --muted: #8b7355;
+  --muted-2: #a89070;
 
-  /* Brand accent (trust blue) */
-  --accent: #1d4ed8;
-  --accent-hover: #1e40af;
-  --accent-soft: #eaf0fe;
-  --accent-ring: rgba(29, 78, 216, 0.18);
+  /* Brand accent — deep rust orange */
+  --accent: #c75b1e;
+  --accent-hover: #a84a15;
+  --accent-soft: #fae8d0;
+  --accent-ring: rgba(199, 91, 30, 0.18);
 
   /* Semantic */
-  --good: #0f8a5f;
-  --good-soft: #e7f5ee;
-  --warn: #b7791f;
-  --warn-soft: #fdf6e7;
-  --warn-line: #f0dca0;
-  --danger: #b91c1c;
+  --good: #4a7c59;
+  --good-soft: #e8f0e9;
+  --warn: #b86e1a;
+  --warn-soft: #fdf3e0;
+  --warn-line: #e8c880;
+  --danger: #c0392b;
 
-  /* Lines */
-  --line: #e6ebf2;
-  --line-strong: #d4dce7;
+  /* Lines — warm cream */
+  --line: #e0d0b0;
+  --line-strong: #c8b890;
 
   /* Radius */
   --r-sm: 8px;
@@ -45,9 +45,9 @@
   --pill: 999px;
 
   /* Shadows */
-  --sh-sm: 0 1px 2px rgba(15, 30, 46, 0.04), 0 1px 3px rgba(15, 30, 46, 0.04);
-  --sh-md: 0 4px 16px rgba(15, 30, 46, 0.07);
-  --sh-lg: 0 16px 40px rgba(15, 30, 46, 0.1);
+  --sh-sm: 0 1px 2px rgba(30, 17, 10, 0.06), 0 1px 3px rgba(30, 17, 10, 0.06);
+  --sh-md: 0 4px 16px rgba(30, 17, 10, 0.09);
+  --sh-lg: 0 16px 40px rgba(30, 17, 10, 0.12);
 
   --font: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
@@ -66,11 +66,11 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Soft, premium background: subtle dual radial wash on a cool base. */
+  /* Soft, premium background: subtle warm radial wash. */
   background-color: var(--bg);
   background-image:
-    radial-gradient(900px 500px at 12% -8%, rgba(29, 78, 216, 0.06), transparent 60%),
-    radial-gradient(700px 400px at 100% 0%, rgba(15, 138, 95, 0.05), transparent 55%);
+    radial-gradient(900px 500px at 12% -8%, rgba(199, 91, 30, 0.08), transparent 60%),
+    radial-gradient(700px 400px at 100% 0%, rgba(74, 124, 89, 0.06), transparent 55%);
   background-attachment: fixed;
 }
 
