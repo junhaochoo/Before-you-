@@ -68,24 +68,48 @@ export default function Home() {
 
       <section className="pain-points">
         <h2>Sound familiar?</h2>
-        <ul>
-          <li>
-            <Icon name="alert" size={16} />
-            Salespeople earn commissions
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            Policies are hard to compare
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            Real cost hides in fine print
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            Pressure to sign fast
-          </li>
-        </ul>
+        <div className="pain-point-cards">
+          <div className="pain-card">
+            <Image
+              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&q=80"
+              alt="Salesperson"
+              width={400}
+              height={260}
+              style={{ objectFit: "cover", borderRadius: "10px" }}
+            />
+            <p>Salespeople earn commissions</p>
+          </div>
+          <div className="pain-card">
+            <Image
+              src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80"
+              alt="Complex documents"
+              width={400}
+              height={260}
+              style={{ objectFit: "cover", borderRadius: "10px" }}
+            />
+            <p>Policies are hard to compare</p>
+          </div>
+          <div className="pain-card">
+            <Image
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80"
+              alt="Fine print"
+              width={400}
+              height={260}
+              style={{ objectFit: "cover", borderRadius: "10px" }}
+            />
+            <p>Real cost hides in fine print</p>
+          </div>
+          <div className="pain-card">
+            <Image
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
+              alt="Time pressure"
+              width={400}
+              height={260}
+              style={{ objectFit: "cover", borderRadius: "10px" }}
+            />
+            <p>Pressure to sign fast</p>
+          </div>
+        </div>
       </section>
 
       <section className="how-it-works">
