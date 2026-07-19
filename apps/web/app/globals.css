@@ -109,7 +109,8 @@ body {
   color: var(--accent);
 }
 .brand-text {
-  font-size: 1.02rem;
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 .site-footer {
   max-width: 960px;

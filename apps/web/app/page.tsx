@@ -113,7 +113,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="how-it-works">
+      <section className="how-it-works" id="how-it-works">
         <h2>How it works</h2>
         <div className="steps">
           <div className="step">
