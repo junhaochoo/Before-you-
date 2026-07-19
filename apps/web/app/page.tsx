@@ -27,6 +27,7 @@ export default function Home() {
       </section>
 
       <section className="start">
+        <p className="start-label">Get started</p>
         <StartIntake />
       </section>
 

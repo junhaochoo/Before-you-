@@ -946,6 +946,14 @@ h2 {
 .start {
   margin: 1.5rem 0 0.5rem;
 }
+.start-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
 .start-head h2 {
   font-size: 1.45rem;
   letter-spacing: -0.02em;
