@@ -10,7 +10,6 @@ export default function Home() {
       <section className="hero">
         <div className="hero-content">
           <p className="hero-pain">
-            <Icon name="alert" size={16} />
             Signed something you don&apos;t fully understand?
           </p>
           <h1>Don&apos;t sign until you know.</h1>
@@ -35,12 +34,12 @@ export default function Home() {
             of Singaporeans don&apos;t understand financial docs
           </span>
           <a
-            href="https://www.channelnewsasia.com/watch/singaporeans-lack-confidence-about-financial-products-3577446"
+            href="https://www.moneysense.gov.sg/articles/2023/10/are-singaporeans-confident-about-their-finances"
             target="_blank"
             rel="noopener"
             className="stat-source"
           >
-            CNA / Milieu poll →
+            MAS MoneySense survey →
           </a>
         </div>
         <div className="stat">
@@ -57,11 +56,6 @@ export default function Home() {
           >
             MAS MoneySense →
           </a>
-        </div>
-        <div className="stat">
-          <Icon name="check-circle" size={28} className="stat-icon" />
-          <span className="stat-num">Free</span>
-          <span className="stat-label">first report at no cost</span>
         </div>
       </section>
 
