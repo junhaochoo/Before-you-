@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "./components/icons";
-import { PrivacyConsent } from "./components/PrivacyConsent";
 
 export default function Home() {
   return (
@@ -159,41 +158,17 @@ export default function Home() {
       </section>
 
       <section className="start">
-        <p className="start-label">Get started</p>
-        <div
-          className="form-card start-card"
-          style={{ textAlign: "center", padding: "2rem" }}
-        >
-          <p
-            style={{
-              margin: "0 0 1.25rem",
-              fontSize: "1.05rem",
-              color: "var(--ink-2)",
-            }}
-          >
-            Create your free account to get started.
-            <br />
-            Your first report is on us.
+        <div className="start-cta">
+          <p className="start-cta-sub">Ready?</p>
+          <h2 className="start-cta-head">Sign up here</h2>
+          <p className="start-cta-body">
+            Your first report is free. No credit card needed.
           </p>
-          <div
-            style={{
-              display: "flex",
-              gap: "0.75rem",
-              justifyContent: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            <Link href="/login" className="btn">
-              Sign up free
-            </Link>
-            <Link href="/login" className="btn ghost">
-              Log in
-            </Link>
-          </div>
+          <Link href="/login" className="btn">
+            Get started
+          </Link>
         </div>
       </section>
-
-      <PrivacyConsent />
     </main>
   );
 }

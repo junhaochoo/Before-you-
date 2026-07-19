@@ -1128,13 +1128,29 @@ h2 {
 .start {
   margin: 1.5rem 0 0.5rem;
 }
-.start-label {
+.start-cta {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.start-cta-sub {
   font-size: 0.8rem;
-  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin: 0 0 0.5rem;
+  color: var(--muted);
   font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.start-cta-head {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.start-cta-body {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
 }
 .start-head h2 {
   font-size: 1.45rem;
