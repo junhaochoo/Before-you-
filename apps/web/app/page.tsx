@@ -10,6 +10,7 @@ export default function Home() {
       <section className="hero">
         <div className="hero-content">
           <p className="hero-pain">
+            <Icon name="alert" size={16} />
             Signed something you don&apos;t fully understand?
           </p>
           <h1>Don&apos;t sign until you know.</h1>
@@ -26,24 +27,62 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="stats">
+        <div className="stat">
+          <Icon name="users" size={28} className="stat-icon" />
+          <span className="stat-num">76%</span>
+          <span className="stat-label">
+            of Singaporeans don&apos;t understand financial docs
+          </span>
+          <a
+            href="https://www.channelnewsasia.com/watch/singaporeans-lack-confidence-about-financial-products-3577446"
+            target="_blank"
+            rel="noopener"
+            className="stat-source"
+          >
+            CNA / Milieu poll →
+          </a>
+        </div>
+        <div className="stat">
+          <Icon name="dollar-sign" size={28} className="stat-icon" />
+          <span className="stat-num">$1.2B</span>
+          <span className="stat-label">
+            insurance commissions paid yearly in SG
+          </span>
+          <a
+            href="https://www.moneysense.gov.sg"
+            target="_blank"
+            rel="noopener"
+            className="stat-source"
+          >
+            MAS MoneySense →
+          </a>
+        </div>
+        <div className="stat">
+          <Icon name="check-circle" size={28} className="stat-icon" />
+          <span className="stat-num">Free</span>
+          <span className="stat-label">first report at no cost</span>
+        </div>
+      </section>
+
       <section className="pain-points">
         <h2>Sound familiar?</h2>
         <ul>
           <li>
             <Icon name="alert" size={16} />
-            Salespeople earn commissions — your interests come second
+            Salespeople earn commissions
           </li>
           <li>
             <Icon name="alert" size={16} />
-            Policy documents are deliberately hard to compare
+            Policies are hard to compare
           </li>
           <li>
             <Icon name="alert" size={16} />
-            The real cost hides in the fine print
+            Real cost hides in fine print
           </li>
           <li>
             <Icon name="alert" size={16} />
-            You feel pressured to sign before you understand
+            Pressure to sign fast
           </li>
         </ul>
       </section>
@@ -54,77 +93,39 @@ export default function Home() {
           <div className="step">
             <div className="step-num">1</div>
             <div className="step-body">
-              <h3>Upload your document</h3>
-              <p>Drop a PDF or paste text. Takes under a minute.</p>
+              <h3>Upload</h3>
+              <p>Drop a PDF or paste text</p>
             </div>
           </div>
           <div className="step">
             <div className="step-num">2</div>
             <div className="step-body">
-              <h3>We analyze the fees and terms</h3>
-              <p>
-                We decode the fine print and calculate the real cost over time.
-              </p>
+              <h3>We analyze</h3>
+              <p>Decode fees and terms</p>
             </div>
           </div>
           <div className="step">
             <div className="step-num">3</div>
             <div className="step-body">
-              <h3>You see what it really costs</h3>
-              <p>
-                Get a plain-English report with total cost, risks, and questions
-                to ask.
-              </p>
+              <h3>You see costs</h3>
+              <p>Plain-English report</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="stats">
-        <div className="stat">
-          <span className="stat-num">76%</span>
-          <span className="stat-label">
-            of Singaporeans don&apos;t fully understand their insurance policy
-          </span>
-          <a
-            href="https://www.channelnewsasia.com/watch/singaporeans-lack-confidence-about-understanding-financial-products-survey-3577446"
-            target="_blank"
-            rel="noopener"
-            className="stat-source"
-          >
-            Source: CNA / Milieu poll
-          </a>
-        </div>
-        <div className="stat">
-          <span className="stat-num">$1.2B</span>
-          <span className="stat-label">
-            in insurance commissions paid in Singapore yearly
-          </span>
-          <a
-            href="https://www.moneysense.gov.sg/articles/2023/09/understanding-bancassurance"
-            target="_blank"
-            rel="noopener"
-            className="stat-source"
-          >
-            Source: MAS MoneySense
-          </a>
-        </div>
-        <div className="stat">
-          <span className="stat-num">Free</span>
-          <span className="stat-label">
-            to know what you&apos;re actually signing
-          </span>
         </div>
       </section>
 
       <section className="trust-badges">
         <span className="trust-badge">
           <Icon name="check" size={16} />
-          We earn nothing from your decision
+          No financial interest
         </span>
         <span className="trust-badge">
           <Icon name="file" size={16} />
           First report free
+        </span>
+        <span className="trust-badge">
+          <Icon name="shield" size={16} />
+          Privacy protected
         </span>
       </section>
 

@@ -101,6 +101,26 @@ const PATHS: Record<IconName, ReactElement> = {
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </>
   ),
+  users: (
+    <>
+      <path d="M17 21v-2a5 5 0 1 0-10 0 5 5 0 1 0 10 0" />
+      <path d="M3 11a5 5 0 1 0 10 0 5 5 0 1 0-10 0" />
+      <circle cx="9" cy="7" r="4" />
+      <circle cx="21" cy="7" r="4" />
+    </>
+  ),
+  "dollar-sign": (
+    <>
+      <line x1="12" y1="2" x2="12" y2="22" />
+      <path d="M17 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 1 0 7 0" />
+    </>
+  ),
+  "check-circle": (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <polyline points="9 12 11 14 15 10" />
+    </>
+  ),
   fee: (
     <>
       <line x1="12" y1="2" x2="12" y2="22" />
