@@ -39,10 +39,13 @@ export default function RootLayout({
                 About
               </Link>
               <Link href="/how" className="btn btn-ghost">
-                How this works
+                How This Works
+              </Link>
+              <Link href="/faq" className="btn btn-ghost">
+                FAQ
               </Link>
               <Link href="/login" className="btn btn-ghost">
-                Login
+                Log in
               </Link>
               <Link href="/login" className="btn">
                 Get started
