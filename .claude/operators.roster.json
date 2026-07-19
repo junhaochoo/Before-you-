@@ -1,0 +1,23 @@
+{
+  "$schema": "./operators.roster.schema.json",
+  "persons": {
+    "pid-aliciapang-2fbdddf3": {
+      "display_id": "aliciapang",
+      "role": "owner",
+      "github_login": "aliciapls",
+      "host_role": "human",
+      "keys": [
+        {
+          "type": "ssh",
+          "fingerprint": "SHA256:qUFH68g54sIL7vPH4cBI0I4F/448G0F9TPCRL9Q6Fks",
+          "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqxXOpzUSxQpMkKK8yCBAM6Czzg0NsjUSnoq0BlYnvs aliciapang@users.noreply.github.com"
+        }
+      ]
+    }
+  },
+  "genesis": {
+    "repo_owner": "aliciapls",
+    "repo_owner_kind": "user",
+    "root_commit": null
+  }
+}
