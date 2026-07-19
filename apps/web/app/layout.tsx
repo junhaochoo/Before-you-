@@ -35,10 +35,6 @@ export default function RootLayout({
               <span className="brand-text">Before You Sign</span>
             </Link>
             <div className="header-right">
-              <span className="badge">
-                <Icon name="check" size={15} />
-                We earn nothing from your decision
-              </span>
               <AccountBadge />
             </div>
           </div>

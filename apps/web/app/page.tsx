@@ -3,14 +3,14 @@ import Image from "next/image";
 import { Icon } from "./components/icons";
 import { StartIntake } from "./components/StartIntake";
 
-/**
- * Entry screen — upload-first. Clean and minimal.
- */
 export default function Home() {
   return (
     <main>
       <section className="hero">
         <div className="hero-content">
+          <p className="hero-pain">
+            Signed something you don&apos;t fully understand?
+          </p>
           <h1>Don&apos;t sign until you know.</h1>
           <p className="lede">Upload your document. Get the facts.</p>
         </div>
@@ -27,6 +27,17 @@ export default function Home() {
 
       <section className="start">
         <StartIntake />
+      </section>
+
+      <section className="trust-badges">
+        <span className="trust-badge">
+          <Icon name="check" size={16} />
+          We earn nothing from your decision
+        </span>
+        <span className="trust-badge">
+          <Icon name="file" size={16} />
+          First report free
+        </span>
       </section>
 
       <section className="paths">
