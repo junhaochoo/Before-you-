@@ -26,8 +26,6 @@ export default function Home() {
         </div>
       </section>
 
-      <PrivacyConsent />
-
       <section className="start">
         <StartIntake />
       </section>
@@ -90,6 +88,8 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      <PrivacyConsent />
     </main>
   );
 }
