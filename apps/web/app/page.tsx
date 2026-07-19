@@ -7,6 +7,54 @@ import { PrivacyConsent } from "./components/PrivacyConsent";
 export default function Home() {
   return (
     <main>
+      {/* Impact stats — first thing visitors see */}
+      <section className="big-stats">
+        <div className="big-stat">
+          <span className="big-stat-num">76%</span>
+          <span className="big-stat-label">
+            of Singaporeans lack confidence about financial products
+          </span>
+          <a
+            href="https://www.moneysense.gov.sg/articles/2023/10/are-singaporeans-confident-about-their-finances"
+            target="_blank"
+            rel="noopener"
+            className="big-stat-source"
+          >
+            MAS MoneySense survey →
+          </a>
+        </div>
+        <div className="big-stat-divider" />
+        <div className="big-stat">
+          <span className="big-stat-num">S$115k</span>
+          <span className="big-stat-label">
+            in fees eats ~36% of a S$100k ILP over 20 years
+          </span>
+          <a
+            href="https://www.lia.org.sg"
+            target="_blank"
+            rel="noopener"
+            className="big-stat-source"
+          >
+            LIA / industry data →
+          </a>
+        </div>
+        <div className="big-stat-divider" />
+        <div className="big-stat">
+          <span className="big-stat-num">+41%</span>
+          <span className="big-stat-label">
+            ILP sales surged in 2024 — fastest-growing segment
+          </span>
+          <a
+            href="https://www.lia.org.sg"
+            target="_blank"
+            rel="noopener"
+            className="big-stat-source"
+          >
+            LIA data →
+          </a>
+        </div>
+      </section>
+
       <section className="hero">
         <div className="hero-content">
           <p className="hero-pain">
@@ -23,39 +71,6 @@ export default function Home() {
             height={400}
             style={{ objectFit: "cover", borderRadius: "12px" }}
           />
-        </div>
-      </section>
-
-      <section className="stats">
-        <div className="stat">
-          <Icon name="users" size={28} className="stat-icon" />
-          <span className="stat-num">76%</span>
-          <span className="stat-label">
-            of Singaporeans don&apos;t understand financial docs
-          </span>
-          <a
-            href="https://www.moneysense.gov.sg/articles/2023/10/are-singaporeans-confident-about-their-finances"
-            target="_blank"
-            rel="noopener"
-            className="stat-source"
-          >
-            MAS MoneySense survey →
-          </a>
-        </div>
-        <div className="stat">
-          <Icon name="dollar-sign" size={28} className="stat-icon" />
-          <span className="stat-num">$1.2B</span>
-          <span className="stat-label">
-            insurance commissions paid yearly in SG
-          </span>
-          <a
-            href="https://www.moneysense.gov.sg"
-            target="_blank"
-            rel="noopener"
-            className="stat-source"
-          >
-            MAS MoneySense →
-          </a>
         </div>
       </section>
 

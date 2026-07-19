@@ -254,52 +254,63 @@ h2 {
   color: var(--warn);
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  padding: 2rem 0 2.5rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 2.5rem;
-  text-align: center;
+/* ---- Big impact stats (homepage hero band) -------------------------------- */
+.big-stats {
+  display: flex;
+  align-items: stretch;
+  background: var(--ink);
+  border-radius: var(--r-xl);
+  padding: 0;
+  margin: 0 0 2.5rem;
+  overflow: hidden;
+  box-shadow: var(--sh-lg);
 }
-.stat {
+.big-stat {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-}
-.stat-icon {
-  color: var(--accent);
-  opacity: 0.7;
-}
-.stat-num {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-}
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.4;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 2rem 1.5rem;
   text-align: center;
 }
-.stat-source {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--muted-2);
+.big-stat-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 1.5rem 0;
+}
+.big-stat-num {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.big-stat-label {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  max-width: 22ch;
+}
+.big-stat-source {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
   margin-top: 0.2rem;
 }
-.stat-source:hover {
-  text-decoration: underline;
+.big-stat-source:hover {
+  color: rgba(255, 255, 255, 0.7);
 }
 
-@media (max-width: 600px) {
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+@media (max-width: 640px) {
+  .big-stats {
+    flex-direction: column;
+  }
+  .big-stat-divider {
+    width: auto;
+    height: 1px;
+    margin: 0 1.5rem;
   }
 }
 
