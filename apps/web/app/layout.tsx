@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Icon } from "./components/icons";
-import { AccountBadge } from "./components/AccountBadge";
 import "./globals.css";
 
 const inter = Inter({
@@ -34,9 +33,14 @@ export default function RootLayout({
               </span>
               <span className="brand-text">Before You Sign</span>
             </Link>
-            <div className="header-right">
-              <AccountBadge />
-            </div>
+            <nav className="header-nav">
+              <Link href="/login" className="btn btn-ghost">
+                Login
+              </Link>
+              <Link href="/analyze" className="btn">
+                Get started
+              </Link>
+            </nav>
           </div>
         </header>
         {children}
