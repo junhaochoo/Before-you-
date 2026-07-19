@@ -29,7 +29,7 @@ export default function RootLayout({
           <div className="site-header-inner">
             <Link href="/" className="brand">
               <span className="brand-mark" aria-hidden>
-                <Icon name="logo" size={18} />
+                <Icon name="logo" size={26} />
               </span>
               <span className="brand-text">Before You Sign</span>
             </Link>
