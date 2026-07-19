@@ -125,6 +125,7 @@ export default function Home() {
               <p>Drop a PDF or paste text</p>
             </div>
           </div>
+          <span className="step-arrow">→</span>
           <div className="step">
             <div className="step-num">2</div>
             <div className="step-body">
@@ -132,6 +133,7 @@ export default function Home() {
               <p>Decode fees and terms</p>
             </div>
           </div>
+          <span className="step-arrow">→</span>
           <div className="step">
             <div className="step-num">3</div>
             <div className="step-body">
