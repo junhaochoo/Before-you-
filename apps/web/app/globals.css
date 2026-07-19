@@ -191,10 +191,97 @@ h2 {
 
 /* ---- Hero --------------------------------------------------------------- */
 .hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding: 3rem 0;
+}
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+}
+.hero-content .lede {
+  font-size: 1.25rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+.hero-image {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sh-lg);
+}
+
+.paths h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+}
+.path-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.path-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--card);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--sh-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.path-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sh-lg);
+}
+.path-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.path-card-content {
+  padding: 1.25rem;
+}
+.path-card-content svg {
+  color: var(--accent);
   margin-bottom: 0.5rem;
 }
-.hero .badge {
-  margin-top: 0.9rem;
+.path-card-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  color: var(--ink);
+}
+.path-card-content p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+  .hero-image {
+    order: -1;
+  }
+  .hero-content h1 {
+    font-size: 2.25rem;
+  }
+  .path-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 /* ---- Disclaimer & badge ------------------------------------------------- */
