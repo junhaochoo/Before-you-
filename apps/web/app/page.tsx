@@ -78,7 +78,8 @@ export default function Home() {
               style={{ objectFit: "cover" }}
             />
             <p>
-              Agents earn fat commissions — your confusion is their commission
+              Agents earn commissions on every sale — what you don&apos;t know
+              affects their payout
             </p>
           </div>
           <div className="pain-card">
@@ -89,7 +90,7 @@ export default function Home() {
               height={500}
               style={{ objectFit: "cover" }}
             />
-            <p>The real price hides in pages nobody reads</p>
+            <p>Key fees are buried in the fine print</p>
           </div>
           <div className="pain-card">
             <Image
@@ -99,7 +100,7 @@ export default function Home() {
               height={500}
               style={{ objectFit: "cover" }}
             />
-            <p>They want your signature before you think twice</p>
+            <p>You&apos;re asked to sign before you fully understand</p>
           </div>
           <div className="pain-card">
             <Image
@@ -109,7 +110,7 @@ export default function Home() {
               height={500}
               style={{ objectFit: "cover" }}
             />
-            <p>Every policy is a maze — compare and weep</p>
+            <p>Policies are complex and nearly impossible to compare</p>
           </div>
         </div>
       </section>
