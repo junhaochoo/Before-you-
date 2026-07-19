@@ -26,15 +26,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="trust-badges">
-        <span className="trust-badge">
-          <Icon name="check" size={16} />
-          We earn nothing from your decision
-        </span>
-        <span className="trust-badge">
-          <Icon name="file" size={16} />
-          First report free
-        </span>
+      <section className="pain-points">
+        <h2>Sound familiar?</h2>
+        <ul>
+          <li>
+            <Icon name="alert" size={16} />
+            Salespeople earn commissions — your interests come second
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            Policy documents are deliberately hard to compare
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            The real cost hides in the fine print
+          </li>
+          <li>
+            <Icon name="alert" size={16} />
+            You feel pressured to sign before you understand
+          </li>
+        </ul>
       </section>
 
       <section className="how-it-works">
@@ -67,28 +78,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="pain-points">
-        <h2>Sound familiar?</h2>
-        <ul>
-          <li>
-            <Icon name="alert" size={16} />
-            Salespeople earn commissions — your interests come second
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            Policy documents are deliberately hard to compare
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            The real cost hides in the fine print
-          </li>
-          <li>
-            <Icon name="alert" size={16} />
-            You feel pressured to sign before you understand
-          </li>
-        </ul>
       </section>
 
       <section className="stats">
@@ -126,6 +115,17 @@ export default function Home() {
             to know what you&apos;re actually signing
           </span>
         </div>
+      </section>
+
+      <section className="trust-badges">
+        <span className="trust-badge">
+          <Icon name="check" size={16} />
+          We earn nothing from your decision
+        </span>
+        <span className="trust-badge">
+          <Icon name="file" size={16} />
+          First report free
+        </span>
       </section>
 
       <section className="start">
