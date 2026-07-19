@@ -285,7 +285,7 @@ body {
   place-items: center;
   width: 42px;
   height: 42px;
-  color: var(--accent);
+  color: var(--ink);
 }
 .brand-text {
   font-size: 1.15rem;
