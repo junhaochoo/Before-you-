@@ -71,43 +71,45 @@ export default function Home() {
         <div className="pain-point-cards">
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&q=80"
-              alt="Salesperson"
+              src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=500&q=80"
+              alt="Commission-driven sales"
               width={400}
-              height={260}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              height={500}
+              style={{ objectFit: "cover" }}
             />
-            <p>Salespeople earn commissions</p>
+            <p>
+              Agents earn fat commissions — your confusion is their commission
+            </p>
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80"
-              alt="Complex documents"
+              src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&q=80"
+              alt="Complex insurance documents"
               width={400}
-              height={260}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              height={500}
+              style={{ objectFit: "cover" }}
             />
-            <p>Policies are hard to compare</p>
+            <p>Every policy is a maze — compare and weep</p>
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80"
+              src="https://images.unsplash.com/photo-1554224155-8d4a85fe58f5?w=500&q=80"
               alt="Fine print"
               width={400}
-              height={260}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              height={500}
+              style={{ objectFit: "cover" }}
             />
-            <p>Real cost hides in fine print</p>
+            <p>The real price hides in pages nobody reads</p>
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
-              alt="Time pressure"
+              src="https://images.unsplash.com/photo-1600880292203-757bb8d1c7cc?w=500&q=80"
+              alt="Pressure to sign"
               width={400}
-              height={260}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              height={500}
+              style={{ objectFit: "cover" }}
             />
-            <p>Pressure to sign fast</p>
+            <p>They want your signature before you think twice</p>
           </div>
         </div>
       </section>
