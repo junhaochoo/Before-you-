@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import { Icon } from "./components/icons";
 import "./globals.css";
 
-const inter = Inter({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={plusJakarta.variable}>
       <body>
         <header className="site-header">
           <div className="site-header-inner">
@@ -34,10 +35,13 @@ export default function RootLayout({
               <span className="brand-text">Before You Sign</span>
             </Link>
             <nav className="header-nav">
+              <Link href="/about" className="btn btn-ghost">
+                About
+              </Link>
               <Link href="/login" className="btn btn-ghost">
                 Login
               </Link>
-              <Link href="/analyze" className="btn">
+              <Link href="/login" className="btn">
                 Get started
               </Link>
             </nav>

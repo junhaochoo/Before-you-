@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "./components/icons";
-import { StartIntake } from "./components/StartIntake";
 import { PrivacyConsent } from "./components/PrivacyConsent";
 
 export default function Home() {
@@ -161,7 +160,37 @@ export default function Home() {
 
       <section className="start">
         <p className="start-label">Get started</p>
-        <StartIntake />
+        <div
+          className="form-card start-card"
+          style={{ textAlign: "center", padding: "2rem" }}
+        >
+          <p
+            style={{
+              margin: "0 0 1.25rem",
+              fontSize: "1.05rem",
+              color: "var(--ink-2)",
+            }}
+          >
+            Create your free account to get started.
+            <br />
+            Your first report is on us.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <Link href="/login" className="btn">
+              Sign up free
+            </Link>
+            <Link href="/login" className="btn ghost">
+              Log in
+            </Link>
+          </div>
+        </div>
       </section>
 
       <PrivacyConsent />
