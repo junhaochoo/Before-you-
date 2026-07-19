@@ -35,3 +35,5 @@ yarn-error.log*
 # MUST be tracked. Re-include it here (a deeper .gitignore overrides the parent).
 !/lib/
 !/lib/**
+.vercel
+.next/
