@@ -71,8 +71,8 @@ export default function Home() {
         <div className="pain-point-cards">
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=500&q=80"
-              alt="Commission-driven sales"
+              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&q=80"
+              alt="Stressed about financial products"
               width={400}
               height={500}
               style={{ objectFit: "cover" }}
@@ -83,18 +83,8 @@ export default function Home() {
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&q=80"
-              alt="Complex insurance documents"
-              width={400}
-              height={500}
-              style={{ objectFit: "cover" }}
-            />
-            <p>Every policy is a maze — compare and weep</p>
-          </div>
-          <div className="pain-card">
-            <Image
-              src="https://images.unsplash.com/photo-1554224155-8d4a85fe58f5?w=500&q=80"
-              alt="Fine print"
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80"
+              alt="Overwhelmed by fine print"
               width={400}
               height={500}
               style={{ objectFit: "cover" }}
@@ -103,13 +93,23 @@ export default function Home() {
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1600880292203-757bb8d1c7cc?w=500&q=80"
-              alt="Pressure to sign"
+              src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=500&q=80"
+              alt="Stressed about signing"
               width={400}
               height={500}
               style={{ objectFit: "cover" }}
             />
             <p>They want your signature before you think twice</p>
+          </div>
+          <div className="pain-card">
+            <Image
+              src="https://images.unsplash.com/photo-1517999144091-3d9dca6d1e43?w=500&q=80"
+              alt="Worried about financial decisions"
+              width={400}
+              height={500}
+              style={{ objectFit: "cover" }}
+            />
+            <p>Every policy is a maze — compare and weep</p>
           </div>
         </div>
       </section>
