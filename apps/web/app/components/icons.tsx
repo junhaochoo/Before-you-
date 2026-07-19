@@ -26,7 +26,8 @@ export type IconName =
   | "bulb"
   | "mail"
   | "arrow-left"
-  | "arrow-right";
+  | "arrow-right"
+  | "shield";
 
 export function Icon({
   name,
@@ -175,6 +176,12 @@ const PATHS: Record<IconName, ReactElement> = {
     <>
       <line x1="5" y1="12" x2="19" y2="12" />
       <polyline points="12 5 19 12 12 19" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 22s8-4 8-16V5l-4-4-4 4v11c0 12-8 16-8 16z" />
+      <polyline points="9 12 11 14 15 10" />
     </>
   ),
 };

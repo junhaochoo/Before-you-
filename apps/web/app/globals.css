@@ -243,6 +243,42 @@ h2 {
   color: var(--good);
 }
 
+.privacy-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--accent-soft);
+  border: 1px solid rgba(29, 78, 216, 0.2);
+  border-radius: var(--r);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.privacy-banner svg {
+  flex: none;
+  color: var(--accent);
+}
+.privacy-banner p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+.privacy-banner .consent-check {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.privacy-banner .consent-check input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
 .paths h2 {
   font-size: 1.5rem;
   font-weight: 700;

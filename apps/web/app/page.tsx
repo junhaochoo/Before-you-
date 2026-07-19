@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "./components/icons";
 import { StartIntake } from "./components/StartIntake";
+import { PrivacyConsent } from "./components/PrivacyConsent";
 
 export default function Home() {
   return (
@@ -24,6 +25,8 @@ export default function Home() {
           />
         </div>
       </section>
+
+      <PrivacyConsent />
 
       <section className="start">
         <StartIntake />
