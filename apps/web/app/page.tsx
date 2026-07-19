@@ -7,21 +7,32 @@ import { PrivacyConsent } from "./components/PrivacyConsent";
 export default function Home() {
   return (
     <main>
-      {/* Impact stats — first thing visitors see */}
+      <section className="hero">
+        <div className="hero-content">
+          <p className="hero-pain">
+            Signed something you don&apos;t fully understand?
+          </p>
+          <h1>Don&apos;t sign until you know.</h1>
+          <p className="lede">Upload your document. Get the facts.</p>
+        </div>
+        <div className="hero-image">
+          <Image
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80"
+            alt="Person signing document"
+            width={600}
+            height={400}
+            style={{ objectFit: "cover", borderRadius: "12px" }}
+          />
+        </div>
+      </section>
+
+      {/* Impact stats — shown after the introduction */}
       <section className="big-stats">
         <div className="big-stat">
           <span className="big-stat-num">76%</span>
           <span className="big-stat-label">
             of Singaporeans lack confidence about financial products
           </span>
-          <a
-            href="https://www.moneysense.gov.sg/articles/2023/10/are-singaporeans-confident-about-their-finances"
-            target="_blank"
-            rel="noopener"
-            className="big-stat-source"
-          >
-            MAS MoneySense survey →
-          </a>
         </div>
         <div className="big-stat-divider" />
         <div className="big-stat">
@@ -52,25 +63,6 @@ export default function Home() {
           >
             LIA data →
           </a>
-        </div>
-      </section>
-
-      <section className="hero">
-        <div className="hero-content">
-          <p className="hero-pain">
-            Signed something you don&apos;t fully understand?
-          </p>
-          <h1>Don&apos;t sign until you know.</h1>
-          <p className="lede">Upload your document. Get the facts.</p>
-        </div>
-        <div className="hero-image">
-          <Image
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80"
-            alt="Person signing document"
-            width={600}
-            height={400}
-            style={{ objectFit: "cover", borderRadius: "12px" }}
-          />
         </div>
       </section>
 
