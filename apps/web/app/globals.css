@@ -7,15 +7,15 @@
    ========================================================================== */
 
 :root {
-  /* Surfaces — warm amber / sunset palette */
-  --bg: #f5e6c8;
-  --bg-tint: #ede0c4;
-  --card: #fffdf5;
-  --card-soft: #faf4e8;
+  /* Surfaces — reference-matched palette */
+  --bg: #fffdf5;
+  --bg-tint: #f5e6c8;
+  --card: #ffffff;
+  --card-soft: #fffdf5;
 
   /* Ink — warm dark browns */
-  --ink: #1e110a;
-  --ink-2: #2d1810;
+  --ink: #2d1810;
+  --ink-2: #3d2820;
   --muted: #8b7355;
   --muted-2: #a89070;
 
@@ -66,12 +66,166 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Soft, premium background: subtle warm radial wash. */
+  /* Clean white background */
   background-color: var(--bg);
-  background-image:
-    radial-gradient(900px 500px at 12% -8%, rgba(199, 91, 30, 0.08), transparent 60%),
-    radial-gradient(700px 400px at 100% 0%, rgba(74, 124, 89, 0.06), transparent 55%);
   background-attachment: fixed;
+}
+
+/* ---- How it works page ------------------------------------------------- */
+.how-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+.how-step-reverse {
+  direction: rtl;
+}
+.how-step-reverse > * {
+  direction: ltr;
+}
+.how-step-visual img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: var(--sh-lg);
+  display: block;
+}
+.how-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.how-step-num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: var(--sh-md);
+  flex: none;
+}
+.how-step-content h2 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+.how-step-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.how-step-content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.how-step-content ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.how-step-content ul li::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+/* PDPA section */
+.how-pdpa {
+  background: var(--accent-soft);
+  border: 1px solid rgba(199, 91, 30, 0.15);
+  border-radius: var(--r-xl);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin: 4rem 0;
+}
+.how-pdpa-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  flex: none;
+}
+.how-pdpa-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.how-pdpa-content p {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.how-pdpa-content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.how-pdpa-content ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.how-pdpa-content ul li::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+@media (max-width: 768px) {
+  .how-step {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .how-step-reverse {
+    direction: ltr;
+  }
+  .how-step-visual img {
+    height: 220px;
+  }
+  .how-pdpa {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .how-pdpa-icon {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* ---- Site chrome -------------------------------------------------------- */
