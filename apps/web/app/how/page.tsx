@@ -34,8 +34,8 @@ export default function HowPage() {
       <div className="how-step">
         <div className="how-step-visual">
           <Image
-            src="https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?w=700&q=80"
-            alt="Uploading a document"
+            src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=80"
+            alt="Document analysis"
             width={700}
             height={460}
             style={{ objectFit: "cover", borderRadius: "12px" }}
