@@ -9,7 +9,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
@@ -18,36 +17,8 @@ export default function LoginPage() {
     // Simulate auth — wire to your auth provider (Auth0, Supabase, etc.)
     setTimeout(() => {
       setLoading(false);
-      setSubmitted(true);
-    }, 1000);
-  }
-
-  if (submitted) {
-    return (
-      <main
-        style={{ maxWidth: "440px", margin: "0 auto", padding: "4rem 1.25rem" }}
-      >
-        <div
-          className="lens"
-          style={{ textAlign: "center", padding: "3rem 2rem" }}
-        >
-          <div style={{ marginBottom: "1rem" }}>
-            <Icon name="check" size={40} />
-          </div>
-          <h2 style={{ margin: "0 0 0.75rem" }}>
-            {isSignUp ? "Check your email!" : "You're logged in!"}
-          </h2>
-          <p style={{ color: "var(--muted)", margin: "0 0 1.5rem" }}>
-            {isSignUp
-              ? "We sent a sign-in link to your email address."
-              : "Welcome back. Head to your dashboard to get started."}
-          </p>
-          <Link href="/" className="btn">
-            Go to home
-          </Link>
-        </div>
-      </main>
-    );
+      window.location.href = "/dashboard";
+    }, 800);
   }
 
   return (

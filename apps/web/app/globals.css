@@ -253,6 +253,210 @@ body {
   }
 }
 
+/* ---- Dashboard ---------------------------------------------------------- */
+.dash-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.dash-welcome-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
+}
+.dash-welcome-sub {
+  color: var(--muted);
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+}
+
+.dash-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.dash-action-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--sh-sm);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.dash-action-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px);
+}
+.dash-action-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.2rem;
+}
+.dash-action-card p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+.dash-action-card > :last-child {
+  margin-left: auto;
+  color: var(--muted-2);
+  flex: none;
+}
+.dash-action-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  flex: none;
+}
+
+.dash-section {
+  margin-bottom: 2.5rem;
+}
+.dash-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.dash-section-head h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.dash-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 0.4rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.dash-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  background: var(--card-soft);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-lg);
+}
+.dash-empty p {
+  margin: 0;
+}
+
+.dash-reports {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.dash-report-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  gap: 1rem;
+}
+.dash-report-row:last-child {
+  border-bottom: none;
+}
+.dash-report-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  margin: 0 0 0.2rem;
+}
+.dash-report-date {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+.dash-report-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.dash-report-actions .btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.dash-account {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.dash-account-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+.dash-account-row .muted {
+  color: var(--muted);
+}
+.dash-plan-full {
+  color: var(--good);
+  font-weight: 600;
+}
+.dash-plan-free {
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .dash-welcome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .dash-actions {
+    grid-template-columns: 1fr;
+  }
+  .dash-action-card > :last-child {
+    display: none;
+  }
+}
+
 /* ---- Demo page ---------------------------------------------------------- */
 .demo-tabs {
   display: flex;
@@ -1051,7 +1255,7 @@ h2 {
   align-items: center;
   gap: 0.3rem;
   background: var(--card-soft);
-  border: 1px solid var(--line-strong);
+  border: 1px solid transparent;
   border-radius: var(--r-sm);
   padding: 0.45rem 0.6rem;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;

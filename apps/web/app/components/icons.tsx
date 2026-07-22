@@ -32,7 +32,8 @@ export type IconName =
   | "shield"
   | "users"
   | "dollar-sign"
-  | "check-circle";
+  | "check-circle"
+  | "user";
 
 export function Icon({
   name,
@@ -220,6 +221,12 @@ const PATHS: Record<IconName, ReactElement> = {
     <>
       <path d="M12 22s8-4 8-16V5l-4-4-4 4v11c0 12-8 16-8 16z" />
       <polyline points="9 12 11 14 15 10" />
+    </>
+  ),
+  user: (
+    <>
+      <path d="M20 21v-2a4 4 0 0 0-8 0v2" />
+      <circle cx="12" cy="7" r="4" />
     </>
   ),
 };

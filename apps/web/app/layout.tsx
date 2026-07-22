@@ -48,7 +48,7 @@ export default function RootLayout({
                 FAQ
               </Link>
               <Link href="/login" className="btn btn-ghost">
-                Log in
+                <Icon name="user" size={16} /> Log in
               </Link>
               <Link href="/login" className="btn">
                 Get started
