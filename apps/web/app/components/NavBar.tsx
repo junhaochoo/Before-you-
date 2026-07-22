@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { Icon } from "./icons";
 
 export function NavBar() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -36,34 +35,51 @@ export function NavBar() {
       <div className="site-header-inner">
         <Link href={loggedIn ? "/dashboard" : "/"} className="brand">
           <span className="brand-mark" aria-hidden>
-            <Icon name="logo" size={26} />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
           </span>
           <span className="brand-text">Before You Sign</span>
         </Link>
         <nav className="header-nav">
           {loggedIn ? (
             <>
-              <Link href="/analyze" className="btn btn-ghost">
+              <Link href="/analyze" className="ghost-link">
                 Analyze
               </Link>
-              <Link href="/compare" className="btn btn-ghost">
+              <Link href="/compare" className="ghost-link">
                 Compare Funds
               </Link>
-              <Link href="/needs" className="btn btn-ghost">
+              <Link href="/needs" className="ghost-link">
                 My Goals
               </Link>
               <div ref={menuRef} style={{ position: "relative" }}>
                 <button
                   type="button"
-                  className="btn btn-ghost"
                   onClick={() => setMenuOpen(!menuOpen)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "0.4rem",
+                  }}
                 >
                   <img
                     src="/images/user-icon.png"
                     alt="Account"
-                    width={16}
-                    height={16}
-                    className="nav-user-icon"
+                    width={20}
+                    height={20}
+                    style={{ display: "block" }}
                   />
                 </button>
                 {menuOpen && (
@@ -91,25 +107,25 @@ export function NavBar() {
             </>
           ) : (
             <>
-              <Link href="/about" className="btn btn-ghost">
+              <Link href="/about" className="ghost-link">
                 About
               </Link>
-              <Link href="/how" className="btn btn-ghost">
+              <Link href="/how" className="ghost-link">
                 How This Works
               </Link>
-              <Link href="/demo" className="btn btn-ghost">
+              <Link href="/demo" className="ghost-link">
                 Demo
               </Link>
-              <Link href="/faq" className="btn btn-ghost">
+              <Link href="/faq" className="ghost-link">
                 FAQ
               </Link>
-              <Link href="/login" className="btn btn-ghost">
+              <Link href="/login" style={{ padding: "0.4rem" }}>
                 <img
                   src="/images/user-icon.png"
                   alt="Log in"
-                  width={16}
-                  height={16}
-                  className="nav-user-icon"
+                  width={20}
+                  height={20}
+                  style={{ display: "block" }}
                 />
               </Link>
             </>

@@ -2256,6 +2256,24 @@ h2 {
 }
 
 /* ---- Header navigation -------------------------------------------------- */
+.ghost-link {
+  background: none;
+  border: none;
+  color: var(--ink-2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.ghost-link:hover {
+  background: var(--bg-tint);
+  color: var(--ink);
+}
+
 .nav-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
