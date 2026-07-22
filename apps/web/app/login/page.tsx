@@ -14,7 +14,6 @@ export default function LoginPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    // Simulate auth — wire to your auth provider (Auth0, Supabase, etc.)
     setTimeout(() => {
       setLoading(false);
       window.location.href = "/dashboard";
@@ -38,11 +37,7 @@ export default function LoginPage() {
           : "Sign in to access your reports."}
       </p>
 
-      <form
-        className="form-card"
-        onSubmit={handleSubmit}
-        style={{ padding: "1.75rem" }}
-      >
+      <form onSubmit={handleSubmit}>
         {isSignUp && (
           <div className="field" style={{ marginBottom: "1rem" }}>
             <label htmlFor="name">Full name</label>
