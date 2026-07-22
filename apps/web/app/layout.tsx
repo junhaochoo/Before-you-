@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import Link from "next/link";
+import { NavBar } from "./components/NavBar";
 import { Icon } from "./components/icons";
 import "./globals.css";
 
@@ -26,46 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakarta.variable}>
       <body>
-        <header className="site-header">
-          <div className="site-header-inner">
-            <Link href="/" className="brand">
-              <span className="brand-mark" aria-hidden>
-                <Icon name="logo" size={26} />
-              </span>
-              <span className="brand-text">Before You Sign</span>
-            </Link>
-            <nav className="header-nav">
-              <Link href="/about" className="btn btn-ghost">
-                About
-              </Link>
-              <Link href="/how" className="btn btn-ghost">
-                How This Works
-              </Link>
-              <Link href="/demo" className="btn btn-ghost">
-                Demo
-              </Link>
-              <Link href="/faq" className="btn btn-ghost">
-                FAQ
-              </Link>
-              <Link
-                href="/login"
-                className="btn btn-ghost"
-                style={{ color: "var(--ink)" }}
-              >
-                <img
-                  src="/images/user-icon.png"
-                  alt="Log in"
-                  width={16}
-                  height={16}
-                  style={{ display: "block" }}
-                />
-              </Link>
-              <Link href="/login" className="btn">
-                Get started
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <NavBar />
         {children}
         <footer className="site-footer">
           <p>
