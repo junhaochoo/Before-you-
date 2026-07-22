@@ -2256,6 +2256,37 @@ h2 {
 }
 
 /* ---- Header navigation -------------------------------------------------- */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg);
+  min-width: 160px;
+  z-index: 100;
+  overflow: hidden;
+}
+.nav-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.nav-dropdown-item:hover {
+  background: var(--bg-tint);
+  color: var(--ink);
+}
+
 .header-nav {
   display: flex;
   align-items: center;

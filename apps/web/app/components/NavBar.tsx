@@ -1,15 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { Icon } from "./icons";
 
 export function NavBar() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLoggedIn(localStorage.getItem("bys_logged_in") === "1");
   }, []);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    if (menuOpen) {
+      document.addEventListener("click", handleClick);
+    }
+    return () => document.removeEventListener("click", handleClick);
+  }, [menuOpen]);
 
   function signOut() {
     localStorage.removeItem("bys_logged_in");
@@ -38,15 +52,42 @@ export function NavBar() {
               <Link href="/needs" className="btn btn-ghost">
                 My Goals
               </Link>
-              <button type="button" className="btn btn-ghost" onClick={signOut}>
-                <img
-                  src="/images/user-icon.png"
-                  alt="Sign out"
-                  width={16}
-                  height={16}
-                  style={{ display: "block" }}
-                />
-              </button>
+              <div ref={menuRef} style={{ position: "relative" }}>
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  <img
+                    src="/images/user-icon.png"
+                    alt="Account"
+                    width={16}
+                    height={16}
+                    style={{ display: "block" }}
+                  />
+                </button>
+                {menuOpen && (
+                  <div className="nav-dropdown">
+                    <Link
+                      href="/dashboard"
+                      className="nav-dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      type="button"
+                      className="nav-dropdown-item"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        signOut();
+                      }}
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>
