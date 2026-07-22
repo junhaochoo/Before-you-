@@ -1254,15 +1254,12 @@ h2 {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background: var(--card-soft);
-  border: 1px solid transparent;
+  background: #fff;
   border-radius: var(--r-sm);
   padding: 0.45rem 0.6rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: box-shadow 0.15s ease;
 }
 .field-input:focus-within {
-  border-color: var(--accent);
-  background: #fff;
   box-shadow: 0 0 0 3px var(--accent-ring);
 }
 .field-input input[type="number"],
