@@ -33,6 +33,21 @@ export default function LoginPage() {
         {isSignUp ? "Create account" : "Welcome back"}
       </h1>
 
+      {!isSignUp && (
+        <button
+          type="button"
+          onClick={() => setIsSignUp(true)}
+          className="btn"
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginBottom: "1.5rem",
+          }}
+        >
+          Get started — it's free
+        </button>
+      )}
+
       <form onSubmit={handleSubmit}>
         {isSignUp && (
           <div className="login-field">
