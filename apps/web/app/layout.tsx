@@ -53,7 +53,11 @@ export default function RootLayout({
                   alt="Log in"
                   width={16}
                   height={16}
-                  style={{ display: "block" }}
+                  style={{
+                    display: "block",
+                    filter:
+                      "invert(13%) sepia(90%) saturate(2100%) hue-rotate(210deg) brightness(85%) contrast(90%)",
+                  }}
                 />
               </Link>
               <Link href="/login" className="btn">

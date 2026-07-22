@@ -1257,9 +1257,11 @@ h2 {
   background: #fff;
   border-radius: var(--r-sm);
   padding: 0.45rem 0.6rem;
-  transition: box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid var(--line);
 }
 .field-input:focus-within {
+  border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-ring);
 }
 .field-input input[type="number"],
