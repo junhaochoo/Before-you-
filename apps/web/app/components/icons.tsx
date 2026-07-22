@@ -225,8 +225,8 @@ const PATHS: Record<IconName, ReactElement> = {
   ),
   user: (
     <>
-      <path d="M20 21v-2a4 4 0 0 0-8 0v2" />
-      <circle cx="12" cy="7" r="4" />
+      <circle cx="12" cy="8" r="4" />
+      <path d="M20 21v-1a6 6 0 0 0-12 0v1" />
     </>
   ),
 };
