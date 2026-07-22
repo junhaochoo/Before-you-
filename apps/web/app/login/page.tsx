@@ -22,72 +22,62 @@ export default function LoginPage() {
 
   return (
     <main
-      style={{ maxWidth: "440px", margin: "0 auto", padding: "3rem 1.25rem" }}
+      style={{ maxWidth: "400px", margin: "0 auto", padding: "4rem 1.25rem" }}
     >
       <Link href="/" className="back">
         <Icon name="arrow-left" size={15} /> Back
       </Link>
 
-      <h1 style={{ marginTop: "0.5rem", marginBottom: "0.25rem" }}>
-        {isSignUp ? "Create your account" : "Welcome back"}
+      <h1 style={{ marginTop: "0.5rem", marginBottom: "2rem" }}>
+        {isSignUp ? "Create account" : "Welcome back"}
       </h1>
-      <p style={{ color: "var(--muted)", margin: "0 0 2rem" }}>
-        {isSignUp
-          ? "First report free. No credit card needed."
-          : "Sign in to access your reports."}
-      </p>
 
       <form onSubmit={handleSubmit}>
         {isSignUp && (
-          <div className="field" style={{ marginBottom: "1rem" }}>
-            <label htmlFor="name">Full name</label>
-            <div className="field-input">
-              <input
-                id="name"
-                type="text"
-                placeholder="Jane Tan"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
+          <div className="login-field">
+            <label>Full name</label>
+            <input
+              type="text"
+              placeholder="Jane Tan"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
         )}
 
-        <div className="field" style={{ marginBottom: "1rem" }}>
-          <label htmlFor="email">Email address</label>
-          <div className="field-input">
-            <input
-              id="email"
-              type="email"
-              placeholder="jane@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+        <div className="login-field">
+          <label>Email address</label>
+          <input
+            type="email"
+            placeholder="jane@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
 
-        <div className="field" style={{ marginBottom: "1.5rem" }}>
-          <label htmlFor="password">Password</label>
-          <div className="field-input">
-            <input
-              id="password"
-              type="password"
-              placeholder={isSignUp ? "Min. 8 characters" : "Your password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={isSignUp ? 8 : 1}
-            />
-          </div>
+        <div className="login-field">
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder={isSignUp ? "Min. 8 characters" : "Your password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={isSignUp ? 8 : 1}
+          />
         </div>
 
         <button
           type="submit"
           className="btn"
           disabled={loading}
-          style={{ width: "100%", justifyContent: "center" }}
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginTop: "1.5rem",
+          }}
         >
           {loading ? "Please wait…" : isSignUp ? "Create account" : "Sign in"}
         </button>

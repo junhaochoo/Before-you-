@@ -1250,6 +1250,35 @@ h2 {
   font-weight: 500;
   color: var(--muted);
 }
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+.login-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.login-field input {
+  border: none;
+  border-bottom: 1.5px solid var(--line-strong);
+  background: transparent;
+  padding: 0.5rem 0;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.login-field input::placeholder {
+  color: var(--muted-2);
+}
+.login-field input:focus {
+  border-bottom-color: var(--accent);
+}
 .field-input {
   display: flex;
   align-items: center;
