@@ -48,7 +48,13 @@ export default function RootLayout({
                 FAQ
               </Link>
               <Link href="/login" className="btn btn-ghost">
-                <Icon name="user" size={16} />
+                <img
+                  src="/images/user-icon.png"
+                  alt="Log in"
+                  width={16}
+                  height={16}
+                  style={{ display: "block" }}
+                />
               </Link>
               <Link href="/login" className="btn">
                 Get started
