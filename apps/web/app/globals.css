@@ -1262,7 +1262,6 @@ h2 {
 }
 .field-input:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-ring);
 }
 .field-input input[type="number"],
 .field-input select {

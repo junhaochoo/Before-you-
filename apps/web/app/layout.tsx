@@ -48,17 +48,7 @@ export default function RootLayout({
                 FAQ
               </Link>
               <Link href="/login" className="btn btn-ghost">
-                <img
-                  src="/images/user-icon.png"
-                  alt="Log in"
-                  width={16}
-                  height={16}
-                  style={{
-                    display: "block",
-                    filter:
-                      "invert(13%) sepia(90%) saturate(2100%) hue-rotate(210deg) brightness(85%) contrast(90%)",
-                  }}
-                />
+                <Icon name="user" size={16} style={{ color: "var(--ink)" }} />
               </Link>
               <Link href="/login" className="btn">
                 Get started
