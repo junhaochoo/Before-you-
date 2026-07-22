@@ -1254,16 +1254,13 @@ h2 {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background: transparent;
   padding: 0.2rem 0;
-  transition: none;
 }
 .field-input:focus-within {
-  border: none;
+  outline: none;
 }
 .field-input input[type="number"],
 .field-input select {
-  border: none;
   background: transparent;
   font: inherit;
   font-size: 1rem;
