@@ -42,7 +42,10 @@ jobs:
           grep -vE '^\s*(#|$)' "$ALLOWLIST" | sort > /tmp/allowed.txt
 
           # Find all .claude/ files containing src/kailash/ (py SDK contamination)
-          grep -rl "src/kailash/" .claude/ 2>/dev/null | sort > /tmp/found.txt || true
+          # Use find+grep | sort so output always ends with a newline (grep to comm
+          # can lose the trailing newline on the last line, breaking comm -23)
+          find .claude/ -type f \( -name "*.md" -o -name "*.mjs" -o -name "*.js" \) \
+            -exec grep -l "src/kailash/" {} + 2>/dev/null | sort > /tmp/found.txt || true
 
           # Compute: found \ allowed (files with contamination not on allowlist)
           contamination=$(comm -23 /tmp/found.txt /tmp/allowed.txt)
