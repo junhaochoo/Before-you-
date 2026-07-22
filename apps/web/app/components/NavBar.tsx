@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { Icon } from "./icons";
 
 export function NavBar() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -35,19 +36,7 @@ export function NavBar() {
       <div className="site-header-inner">
         <Link href={loggedIn ? "/dashboard" : "/"} className="brand">
           <span className="brand-mark" aria-hidden>
-            <svg
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-            </svg>
+            <Icon name="logo" size={26} />
           </span>
           <span className="brand-text">Before You Sign</span>
         </Link>
