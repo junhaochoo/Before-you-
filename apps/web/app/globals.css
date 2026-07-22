@@ -2304,6 +2304,14 @@ h2 {
   background: var(--bg-tint);
   color: var(--ink);
 }
+.nav-dropdown-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 0.25rem 0;
+}
+.nav-dropdown-item.danger {
+  color: var(--danger);
+}
 .nav-user-icon {
   filter: invert(20%) sepia(85%) saturate(1800%) hue-rotate(210deg) brightness(90%);
 }

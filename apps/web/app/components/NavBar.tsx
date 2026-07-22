@@ -98,9 +98,17 @@ export function NavBar() {
                     >
                       FAQ
                     </Link>
+                    <div className="nav-dropdown-divider" />
+                    <Link
+                      href="/login"
+                      className="nav-dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Account settings
+                    </Link>
                     <button
                       type="button"
-                      className="nav-dropdown-item"
+                      className="nav-dropdown-item danger"
                       onClick={() => {
                         setMenuOpen(false);
                         signOut();
