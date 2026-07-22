@@ -15,9 +15,10 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      setLoading(false);
+      localStorage.setItem("bys_logged_in", "1");
+      localStorage.setItem("bys_email", email);
       window.location.href = "/dashboard";
-    }, 800);
+    }, 600);
   }
 
   return (
