@@ -63,7 +63,7 @@ export function NavBar() {
                     alt="Account"
                     width={16}
                     height={16}
-                    style={{ display: "block" }}
+                    className="nav-user-icon"
                   />
                 </button>
                 {menuOpen && (
@@ -109,7 +109,7 @@ export function NavBar() {
                   alt="Log in"
                   width={16}
                   height={16}
-                  style={{ display: "block" }}
+                  className="nav-user-icon"
                 />
               </Link>
             </>

@@ -2286,7 +2286,9 @@ h2 {
   background: var(--bg-tint);
   color: var(--ink);
 }
-
+.nav-user-icon {
+  filter: invert(20%) sepia(85%) saturate(1800%) hue-rotate(210deg) brightness(90%);
+}
 .header-nav {
   display: flex;
   align-items: center;
