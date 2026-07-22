@@ -91,6 +91,13 @@ export function NavBar() {
                     >
                       Dashboard
                     </Link>
+                    <Link
+                      href="/faq"
+                      className="nav-dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      FAQ
+                    </Link>
                     <button
                       type="button"
                       className="nav-dropdown-item"
