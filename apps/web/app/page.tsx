@@ -19,7 +19,11 @@ export default function Home() {
             alt="Person signing document"
             width={600}
             height={400}
-            style={{ objectFit: "cover", borderRadius: "12px" }}
+            style={{
+              objectFit: "cover",
+              objectPosition: "70% 50%",
+              borderRadius: "12px",
+            }}
           />
         </div>
       </section>
