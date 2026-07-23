@@ -89,7 +89,7 @@ export function NavBar() {
                     </Link>
                     <div className="nav-dropdown-divider" />
                     <Link
-                      href="/login"
+                      href="/account"
                       className="nav-dropdown-item"
                       onClick={() => setMenuOpen(false)}
                     >
