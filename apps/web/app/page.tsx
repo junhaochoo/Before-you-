@@ -89,7 +89,7 @@ export default function Home() {
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1517999144091-3d9dca6d1e43?w=500&q=80"
+              src="/images/pain-decisions.jpg"
               alt="Worried about financial decisions"
               width={400}
               height={500}
