@@ -18,7 +18,7 @@ export default function PricingPage() {
           fontSize: "1.05rem",
         }}
       >
-        Before You Sign is free to use. No credit card, no catch.
+        Free for everyone. Unlimited. No catches.
       </p>
 
       {/* Pricing card */}
@@ -32,20 +32,6 @@ export default function PricingPage() {
           marginBottom: "3rem",
         }}
       >
-        <div
-          style={{
-            display: "inline-block",
-            background: "var(--accent)",
-            color: "#fff",
-            padding: "0.25rem 0.75rem",
-            borderRadius: "2rem",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            marginBottom: "1rem",
-          }}
-        >
-          Free
-        </div>
         <h2
           style={{
             fontSize: "2.5rem",
@@ -57,7 +43,7 @@ export default function PricingPage() {
           $0
         </h2>
         <p style={{ color: "var(--muted)", marginBottom: "2rem" }}>
-          Forever. No trial period.
+          Free. For everyone. Unlimited.
         </p>
 
         <ul
@@ -72,11 +58,11 @@ export default function PricingPage() {
           }}
         >
           {[
-            "Unlimited product analyses",
+            "Unlimited document analyses",
             "Side-by-side fund comparisons",
             "Personalized question checklists",
+            "Plain-English breakdowns",
             "PDF report generation",
-            "Save up to 10 reports",
           ].map((feature) => (
             <li
               key={feature}
@@ -115,15 +101,28 @@ export default function PricingPage() {
             marginBottom: "1rem",
           }}
         >
-          We believe everyone deserves to understand what they're signing —
-          especially for large, complex financial products where the stakes are
-          high and the jargon is thick.
+          We are independently funded — by founders, friends, and family who
+          believe in this mission. We don&apos;t sell data, serve ads, or earn
+          referral fees from any financial product. Our goal is simple: help
+          Singaporeans make smarter financial decisions with better information.
         </p>
         <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-          Before You Sign is an independent tool. We don't sell financial
-          products, accept referral fees, or earn commissions from any product
-          we analyze. Our goal is transparency — so you can make confident
-          decisions with your money.
+          3 in 4 Singaporeans can&apos;t read insurance terms. We want to change
+          that.
+        </p>
+      </section>
+
+      {/* Secure & private */}
+      <section style={{ marginBottom: "3rem" }}>
+        <h3
+          style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}
+        >
+          Secure and private
+        </h3>
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+          Your documents are stored only on your device. We never access, share,
+          or monetise your personal data. Before You Sign is built for your
+          privacy — because what you analyse is nobody else&apos;s business.
         </p>
       </section>
 
