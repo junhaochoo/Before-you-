@@ -201,7 +201,7 @@ export default function Home() {
           }}
         >
           <Image
-            src="/images/hero-main.jpg"
+            src="/images/demo-preview.jpg"
             alt="Demo preview"
             width={500}
             height={333}
