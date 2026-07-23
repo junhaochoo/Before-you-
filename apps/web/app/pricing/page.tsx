@@ -11,13 +11,21 @@ const tiers = [
     price: "Free",
     period: "",
     description: "For anyone who wants to understand what they're signing.",
-    features: [
+    included: [
       "Unlimited document analyses",
       "Side-by-side fund comparisons",
       "Personalized question checklists",
       "Plain-English breakdowns",
       "PDF report generation",
       "Share & export reports",
+    ],
+    excluded: [
+      "Client management",
+      "Branded reports",
+      "Team management",
+      "Compliance-ready reports",
+      "Dedicated account manager",
+      "Custom integrations",
     ],
     cta: "Get started free",
     href: "/login?mode=signup",
@@ -29,11 +37,17 @@ const tiers = [
     period: "/month",
     description:
       "For advisors who want to serve clients with clarity and confidence.",
-    features: [
+    included: [
       "Everything in Free",
       "Client management",
       "Branded reports",
       "Priority support",
+    ],
+    excluded: [
+      "Team management",
+      "Compliance-ready reports",
+      "Dedicated account manager",
+      "Custom integrations",
     ],
     cta: "Get started",
     href: "/login?mode=signup",
@@ -45,13 +59,14 @@ const tiers = [
     period: "/month",
     description:
       "For teams onboarding staff and managing employee financial benefits.",
-    features: [
+    included: [
       "Everything in Financial Advisors",
       "Team management",
       "Compliance-ready reports",
       "Dedicated account manager",
       "Custom integrations",
     ],
+    excluded: ["On-premise deployment", "Custom SLA"],
     cta: "Get started",
     href: "/login?mode=signup",
     highlight: false,
@@ -62,12 +77,13 @@ const tiers = [
     period: "",
     description:
       "For organisations with custom security and integration needs.",
-    features: [
+    included: [
       "Everything in HR & Compliance",
       "Custom integrations",
       "SLA & dedicated support",
       "On-premise available",
     ],
+    excluded: [],
     cta: "Contact us",
     href: "mailto:hello@beforeyousign.sg",
     highlight: false,
@@ -155,30 +171,55 @@ export default function PricingPage() {
               style={{
                 listStyle: "none",
                 padding: 0,
-                margin: "0 0 1.5rem",
+                margin: "0 0 0.75rem",
                 flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.5rem",
+                gap: "0.4rem",
               }}
             >
-              {tier.features.map((f) => (
+              {tier.included.map((f) => (
                 <li
                   key={f}
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "0.5rem",
-                    fontSize: "0.85rem",
+                    gap: "0.4rem",
+                    fontSize: "0.82rem",
                   }}
                 >
                   <Icon
                     name="check-circle"
-                    size={14}
+                    size={13}
                     style={{
                       color: tier.highlight
                         ? "rgba(255,255,255,0.8)"
                         : "var(--accent)",
+                      flexShrink: 0,
+                      marginTop: "2px",
+                    }}
+                  />
+                  <span>{f}</span>
+                </li>
+              ))}
+              {tier.excluded.map((f) => (
+                <li
+                  key={f}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "0.4rem",
+                    fontSize: "0.82rem",
+                    color: "var(--muted-2, #8a96a8)",
+                    textDecoration: "line-through",
+                    opacity: 0.65,
+                  }}
+                >
+                  <Icon
+                    name="alert"
+                    size={13}
+                    style={{
+                      color: "var(--muted-2, #8a96a8)",
                       flexShrink: 0,
                       marginTop: "2px",
                     }}

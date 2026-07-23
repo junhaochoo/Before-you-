@@ -655,6 +655,78 @@ body {
     padding: 0.4rem 0.75rem;
     font-size: 0.8rem;
   }
+  /* Hide desktop nav links on mobile */
+  .nav-desktop {
+    display: none !important;
+  }
+  /* Hamburger button — hidden on desktop, shown on mobile */
+  .nav-hamburger {
+    display: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .nav-hamburger {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.4rem;
+      cursor: pointer;
+      color: var(--ink);
+      transition: background 0.15s;
+    }
+    .nav-hamburger:hover {
+      background: var(--bg-tint);
+    }
+  }
+  /* Mobile overlay menu */
+  .nav-mobile-overlay {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 2rem;
+  }
+  .nav-mobile-link {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .nav-mobile-link:hover {
+    background: var(--bg-tint);
+  }
+  .nav-mobile-link.accent {
+    background: var(--accent);
+    color: #fff;
+  }
+  .nav-mobile-link.accent:hover {
+    background: var(--accent-hover);
+  }
+  .nav-mobile-divider {
+    width: 100%;
+    max-width: 280px;
+    height: 1px;
+    background: var(--line);
+    margin: 0.5rem 0;
+  }
 }
 .brand {
   display: inline-flex;
