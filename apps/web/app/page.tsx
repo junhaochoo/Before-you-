@@ -111,6 +111,16 @@ export default function Home() {
             />
             <p>Policies are complex and nearly impossible to compare</p>
           </div>
+          <div className="pain-card">
+            <Image
+              src="/images/pain-questions.jpg"
+              alt="You don't know what questions to ask"
+              width={400}
+              height={500}
+              style={{ objectFit: "cover" }}
+            />
+            <p>You don&apos;t know what questions to ask</p>
+          </div>
         </div>
       </section>
 
