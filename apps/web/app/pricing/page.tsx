@@ -40,8 +40,9 @@ const tiers = [
   {
     name: "Premium",
     popular: true,
-    price: "S$7",
-    period: "/month",
+    price: "S$60",
+    period: "/year",
+    options: ["S$1.50/week", "S$7/month"],
     description: "For when you need repeated analyses and saved data.",
     included: [
       "Everything in Paid Report",
@@ -172,6 +173,23 @@ export default function PricingPage() {
                 </span>
               )}
             </div>
+            {tier.options && (
+              <div style={{ marginBottom: "1rem" }}>
+                {tier.options.map((opt) => (
+                  <p
+                    key={opt}
+                    style={{
+                      fontSize: "0.8rem",
+                      opacity: tier.popular ? 0.65 : 0.55,
+                      margin: "0 0 0.15rem",
+                      color: tier.popular ? "#fff" : "var(--ink)",
+                    }}
+                  >
+                    {opt}
+                  </p>
+                ))}
+              </div>
+            )}
 
             <p
               style={{
@@ -269,6 +287,7 @@ export default function PricingPage() {
                 fontSize: "0.88rem",
                 textDecoration: "none",
                 transition: "opacity 0.15s",
+                marginTop: "auto",
               }}
             >
               {tier.cta}
