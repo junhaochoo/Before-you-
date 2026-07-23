@@ -146,8 +146,8 @@ export default function Home() {
           <div className="step">
             <div className="step-num">3</div>
             <div className="step-body">
-              <h3>See what&apos;s inside</h3>
-              <p>You make better informed choices</p>
+              <h3>You understand</h3>
+              <p>Make informed choices</p>
             </div>
           </div>
         </div>
