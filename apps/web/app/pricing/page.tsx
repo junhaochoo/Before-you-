@@ -7,175 +7,193 @@ export const metadata = {
 
 const tiers = [
   {
-    name: "For Everyone",
+    name: "Starter",
     price: "Free",
     period: "",
-    description: "For anyone who wants to understand what they're signing.",
-    included: [
-      "Unlimited document analyses",
-      "Side-by-side fund comparisons",
-      "Personalized question checklists",
-      "Plain-English breakdowns",
-      "PDF report generation",
-      "Share & export reports",
-    ],
+    description: "For anyone curious about a financial product.",
+    included: ["1 document analysis/month", "Basic Q&A", "Community support"],
     excluded: [
-      "Client management",
-      "Branded reports",
-      "Team management",
-      "Compliance-ready reports",
-      "Dedicated account manager",
-      "Custom integrations",
+      "Unlimited documents",
+      "Personalized Q&A",
+      "Plain-English breakdowns",
+      "AI adviser questions",
+      "Priority support",
+      "White-labelled reports",
     ],
     cta: "Get started free",
     href: "/login?mode=signup",
-    highlight: false,
   },
   {
-    name: "For Financial Advisors",
-    price: "$49",
+    name: "Pro",
+    price: "$9",
     period: "/month",
-    description:
-      "For advisors who want to serve clients with clarity and confidence.",
+    description: "For people who want full clarity before they sign.",
     included: [
-      "Everything in Free",
-      "Client management",
-      "Branded reports",
+      "Unlimited documents",
+      "Personalized Q&A",
+      "Plain-English breakdowns",
+      "AI adviser questions",
       "Priority support",
     ],
     excluded: [
-      "Team management",
-      "Compliance-ready reports",
+      "White-labelled reports",
       "Dedicated account manager",
-      "Custom integrations",
+      "Custom integration",
     ],
     cta: "Get started",
     href: "/login?mode=signup",
-    highlight: false,
+    popular: true,
   },
   {
-    name: "For HR & Compliance",
-    price: "$149",
-    period: "/month",
-    description:
-      "For teams onboarding staff and managing employee financial benefits.",
-    included: [
-      "Everything in Financial Advisors",
-      "Team management",
-      "Compliance-ready reports",
-      "Dedicated account manager",
-      "Custom integrations",
-    ],
-    excluded: ["On-premise deployment", "Custom SLA"],
-    cta: "Get started",
-    href: "/login?mode=signup",
-    highlight: false,
-  },
-  {
-    name: "Enterprise",
+    name: "Advisor",
     price: "Custom",
     period: "",
-    description:
-      "For organisations with custom security and integration needs.",
+    description: "For advisers who want to serve clients with clarity.",
     included: [
-      "Everything in HR & Compliance",
-      "Custom integrations",
-      "SLA & dedicated support",
-      "On-premise available",
+      "Everything in Pro",
+      "White-labelled reports",
+      "Dedicated account manager",
+      "Custom integration",
     ],
     excluded: [],
     cta: "Contact us",
     href: "mailto:hello@beforeyousign.sg",
-    highlight: false,
   },
 ];
 
 export default function PricingPage() {
   return (
     <main
-      style={{ maxWidth: "960px", margin: "0 auto", padding: "2.5rem 1.25rem" }}
+      style={{ maxWidth: "960px", margin: "0 auto", padding: "3rem 1.25rem" }}
     >
       <h1 style={{ marginBottom: "0.5rem" }}>Pricing</h1>
       <p
         style={{
           color: "var(--muted)",
-          marginBottom: "2.5rem",
           fontSize: "1.05rem",
+          marginBottom: "3rem",
+          lineHeight: 1.6,
         }}
-      ></p>
+      >
+        No hidden fees. No surprises. Cancel anytime.
+      </p>
 
       {/* Tier cards */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1rem",
-          marginBottom: "3rem",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: "1.25rem",
+          marginBottom: "3.5rem",
+          alignItems: "start",
         }}
       >
         {tiers.map((tier) => (
           <div
             key={tier.name}
-            data-tier={tier.name === "For HR & Compliance" ? "hr" : undefined}
             style={{
-              background: tier.highlight ? "var(--ink)" : "#fff",
-              color: tier.highlight ? "#fff" : "var(--ink)",
-              border: tier.highlight ? "none" : "1px solid var(--line)",
-              borderRadius: "1rem",
-              padding: "1.75rem",
+              background: tier.popular ? "var(--ink)" : "#fff",
+              color: tier.popular ? "#fff" : "var(--ink)",
+              border: tier.popular ? "none" : "1px solid var(--line)",
+              borderRadius: "1.25rem",
+              padding: "2rem",
               display: "flex",
               flexDirection: "column",
               gap: "0",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              position: "relative",
+              boxShadow: tier.popular ? "var(--sh-lg)" : "none",
             }}
           >
+            {tier.popular && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-14px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "var(--accent)",
+                  color: "#fff",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  padding: "0.3rem 0.9rem",
+                  borderRadius: "999px",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Most popular
+              </div>
+            )}
+
             <p
               style={{
-                fontSize: "0.8rem",
+                fontSize: "0.78rem",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                margin: "0 0 0.5rem",
-                opacity: tier.highlight ? 0.7 : 1,
+                letterSpacing: "0.06em",
+                margin: "0 0 0.75rem",
+                opacity: tier.popular ? 0.7 : 1,
               }}
             >
               {tier.name}
             </p>
-            <div style={{ marginBottom: "0.5rem" }}>
+
+            <div
+              style={{
+                marginBottom: "0.5rem",
+                display: "flex",
+                alignItems: "baseline",
+                gap: "0.25rem",
+              }}
+            >
               <span
                 style={{
-                  fontSize: "2rem",
+                  fontSize: "2.5rem",
                   fontWeight: 800,
-                  color: tier.highlight ? "#fff" : "var(--ink)",
+                  color: tier.popular ? "#fff" : "var(--ink)",
+                  lineHeight: 1,
                 }}
               >
                 {tier.price}
               </span>
               {tier.period && (
-                <span style={{ fontSize: "0.9rem", opacity: 0.7 }}>
+                <span style={{ fontSize: "0.85rem", opacity: 0.6 }}>
                   {tier.period}
                 </span>
               )}
             </div>
+
             <p
               style={{
-                fontSize: "0.85rem",
+                fontSize: "0.82rem",
                 opacity: 0.7,
-                margin: "0 0 1.25rem",
+                margin: "0 0 1.5rem",
                 lineHeight: 1.5,
               }}
             >
               {tier.description}
             </p>
+
+            <div
+              style={{
+                height: "1px",
+                background: tier.popular
+                  ? "rgba(255,255,255,0.15)"
+                  : "var(--line)",
+                marginBottom: "1.25rem",
+              }}
+            />
+
             <ul
               style={{
                 listStyle: "none",
                 padding: 0,
-                margin: "0 0 0.75rem",
+                margin: "0 0 1.75rem",
                 flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.4rem",
+                gap: "0.6rem",
               }}
             >
               {tier.included.map((f) => (
@@ -184,16 +202,16 @@ export default function PricingPage() {
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "0.4rem",
-                    fontSize: "0.82rem",
+                    gap: "0.5rem",
+                    fontSize: "0.85rem",
                   }}
                 >
                   <Icon
                     name="check-circle"
-                    size={13}
+                    size={14}
                     style={{
-                      color: tier.highlight
-                        ? "rgba(255,255,255,0.8)"
+                      color: tier.popular
+                        ? "rgba(255,255,255,0.9)"
                         : "var(--accent)",
                       flexShrink: 0,
                       marginTop: "2px",
@@ -208,36 +226,40 @@ export default function PricingPage() {
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "0.4rem",
+                    gap: "0.5rem",
                     fontSize: "0.82rem",
-                    color: "var(--muted-2, #8a96a8)",
-                    textDecoration: "line-through",
-                    opacity: 0.65,
+                    opacity: 0.45,
                   }}
                 >
                   <Icon
                     name="alert"
-                    size={13}
+                    size={14}
                     style={{
-                      color: "var(--muted-2, #8a96a8)",
+                      color: tier.popular ? "rgba(255,255,255,0.6)" : "#8a96a8",
                       flexShrink: 0,
                       marginTop: "2px",
                     }}
                   />
-                  <span>{f}</span>
+                  <span style={{ textDecoration: "line-through" }}>{f}</span>
                 </li>
               ))}
             </ul>
+
             <Link
               href={tier.href}
-              className="btn"
               style={{
-                background: tier.highlight ? "var(--accent)" : "transparent",
-                border: tier.highlight ? "none" : "1px solid var(--line)",
-                color: tier.highlight ? "#fff" : "var(--ink)",
+                display: "block",
+                background: tier.popular ? "var(--accent)" : "transparent",
+                border: tier.popular ? "none" : "1px solid var(--line)",
+                color: tier.popular ? "#fff" : "var(--ink)",
                 textAlign: "center",
                 justifyContent: "center",
-                fontSize: "0.85rem",
+                padding: "0.7rem 1rem",
+                borderRadius: "0.75rem",
+                fontWeight: 600,
+                fontSize: "0.88rem",
+                textDecoration: "none",
+                transition: "opacity 0.15s",
               }}
             >
               {tier.cta}
@@ -246,28 +268,13 @@ export default function PricingPage() {
         ))}
       </div>
 
-      {/* Why free */}
-      <section style={{ marginBottom: "2.5rem" }}>
-        <h3
-          style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}
-        >
-          Why is the individual plan free?
-        </h3>
-        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-          We are independently funded — by founders, friends, and family who
-          believe in this mission. We don&apos;t sell data, serve ads, or earn
-          referral fees from any financial product. Our goal is simple: help
-          Singaporeans make smarter financial decisions with better information.
-        </p>
-      </section>
-
       {/* Secure & private */}
       <section style={{ marginBottom: "2.5rem" }}>
-        <h3
+        <h2
           style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}
         >
           Secure and private
-        </h3>
+        </h2>
         <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
           Your documents are stored only on your device. We never access, share,
           or monetise your personal data. Before You Sign is built for your
@@ -293,7 +300,7 @@ export default function PricingPage() {
           style={{ color: "var(--accent)", flexShrink: 0 }}
         />
         <div>
-          <p style={{ fontWeight: 600, marginBottom: "0.25rem" }}>
+          <p style={{ fontWeight: 600, margin: "0 0 0.25rem" }}>
             Questions or feedback?
           </p>
           <p style={{ color: "var(--muted)", fontSize: "0.9rem", margin: 0 }}>
