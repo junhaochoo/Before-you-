@@ -137,7 +137,7 @@ export default function Home() {
             <div className="step-num">3</div>
             <div className="step-body">
               <h3>You see costs</h3>
-              <p>Plain-English report</p>
+              <p>You make better informed choices</p>
             </div>
           </div>
         </div>
