@@ -91,8 +91,8 @@ export default function PricingPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "1.25rem",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "1rem",
           marginBottom: "3.5rem",
           alignItems: "start",
         }}
