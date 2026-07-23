@@ -15,7 +15,7 @@ export default function Home() {
         </div>
         <div className="hero-image">
           <Image
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80"
+            src="/images/hero-main.jpg"
             alt="Person signing document"
             width={600}
             height={400}
