@@ -789,6 +789,12 @@ h2 {
   margin: 0;
   line-height: 1.5;
 }
+.hero-content .hero-sub {
+  font-size: 0.9rem;
+  color: var(--muted-2);
+  margin: 0.5rem 0 0;
+  line-height: 1.4;
+}
 .hero-image {
   border-radius: 16px;
   overflow: hidden;
@@ -2806,4 +2812,12 @@ h2 {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+/* HR & Compliance pricing card — interactive hover pop */
+[data-tier="hr"]:hover,
+[data-tier="hr"]:active {
+  transform: scale(1.04) !important;
+  box-shadow: 0 8px 24px rgba(40, 63, 109, 0.18) !important;
+  cursor: pointer;
 }

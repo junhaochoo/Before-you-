@@ -86,8 +86,7 @@ export default function PricingPage() {
           marginBottom: "2.5rem",
           fontSize: "1.05rem",
         }}
-      >
-      </p>
+      ></p>
 
       {/* Tier cards */}
       <div
@@ -101,8 +100,9 @@ export default function PricingPage() {
         {tiers.map((tier) => (
           <div
             key={tier.name}
+            data-tier={tier.name === "For HR & Compliance" ? "hr" : undefined}
             style={{
-              background: tier.highlight ? "var(--ink)" : "var(--surface)",
+              background: tier.highlight ? "var(--ink)" : "#fff",
               color: tier.highlight ? "#fff" : "var(--ink)",
               border: tier.highlight ? "none" : "1px solid var(--line)",
               borderRadius: "1rem",
@@ -110,6 +110,7 @@ export default function PricingPage() {
               display: "flex",
               flexDirection: "column",
               gap: "0",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
             }}
           >
             <p

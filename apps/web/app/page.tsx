@@ -12,6 +12,16 @@ export default function Home() {
           </p>
           <h1>Don&apos;t sign until you know.</h1>
           <p className="lede">Upload your document. Get the facts.</p>
+          <p
+            className="hero-sub"
+            style={{
+              fontSize: "0.95rem",
+              color: "#8a96a8",
+              marginTop: "0.5rem",
+            }}
+          >
+            Insurance policies, investment plans, retirement schemes &amp; more.
+          </p>
         </div>
         <div className="hero-image">
           <Image
@@ -19,9 +29,9 @@ export default function Home() {
             alt="Person signing document"
             width={600}
             height={400}
+            unoptimized={true}
             style={{
               objectFit: "cover",
-              objectPosition: "10% 50%",
               borderRadius: "12px",
             }}
           />
