@@ -664,7 +664,7 @@ body {
   color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.01em;
-  padding-left: 1.25rem;
+  padding-left: 2rem;
 }
 .brand-mark {
   display: grid;
