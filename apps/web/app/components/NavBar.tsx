@@ -81,6 +81,13 @@ export function NavBar() {
                       Dashboard
                     </Link>
                     <Link
+                      href="/guide"
+                      className="nav-dropdown-item"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      User Guide
+                    </Link>
+                    <Link
                       href="/faq"
                       className="nav-dropdown-item"
                       onClick={() => setMenuOpen(false)}
