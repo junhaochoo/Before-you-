@@ -124,9 +124,6 @@ export function NavBar() {
               <Link href="/how" className="ghost-link">
                 How This Works
               </Link>
-              <Link href="/demo" className="ghost-link">
-                Demo
-              </Link>
               <Link href="/faq" className="ghost-link">
                 FAQ
               </Link>

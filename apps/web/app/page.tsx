@@ -146,10 +146,67 @@ export default function Home() {
           <div className="step">
             <div className="step-num">3</div>
             <div className="step-body">
-              <h3>You see costs</h3>
+              <h3>See what&apos;s inside</h3>
               <p>You make better informed choices</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Demo section */}
+      <section
+        style={{
+          background: "var(--bg-tint)",
+          borderRadius: "var(--r-xl)",
+          padding: "3rem 2rem",
+          marginBottom: "2.5rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "2.5rem",
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <h2
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              marginBottom: "0.75rem",
+              color: "var(--ink)",
+            }}
+          >
+            See it in action
+          </h2>
+          <p
+            style={{
+              color: "var(--muted)",
+              fontSize: "1rem",
+              lineHeight: 1.6,
+              marginBottom: "1.5rem",
+            }}
+          >
+            Try a live demo with sample documents — ILP, fund factsheet, or
+            savings plan. See exactly what your report looks like before you
+            sign up.
+          </p>
+          <Link href="/demo" className="btn">
+            View demo
+          </Link>
+        </div>
+        <div
+          style={{
+            flex: 1,
+            borderRadius: "var(--r-lg)",
+            overflow: "hidden",
+            boxShadow: "var(--sh-lg)",
+          }}
+        >
+          <Image
+            src="/images/hero-main.jpg"
+            alt="Demo preview"
+            width={500}
+            height={333}
+            style={{ objectFit: "cover", display: "block" }}
+          />
         </div>
       </section>
 
