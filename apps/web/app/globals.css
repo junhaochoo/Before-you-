@@ -818,6 +818,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+  align-items: stretch;
 }
 .pain-card {
   display: flex;
@@ -826,10 +827,10 @@ h2 {
 }
 .pain-card img {
   width: 100%;
-  height: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   display: block;
+  flex-shrink: 0;
 }
 .pain-card p {
   font-size: 0.9rem;
@@ -837,6 +838,7 @@ h2 {
   margin: 0;
   line-height: 1.4;
   text-align: center;
+  min-height: 3em;
 }
 
 @media (max-width: 768px) {
@@ -2420,6 +2422,9 @@ h2 {
   }
   .pain-point-cards {
     gap: 0.75rem;
+  }
+  .pain-card p {
+    min-height: 3em;
   }
   .start-cta {
     padding: 2rem 1rem;
