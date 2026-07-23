@@ -130,6 +130,9 @@ export function NavBar() {
               <Link href="/faq" className="ghost-link">
                 FAQ
               </Link>
+              <Link href="/pricing" className="ghost-link">
+                Pricing
+              </Link>
               <Link
                 href="/login?mode=signup"
                 className="btn"
