@@ -954,6 +954,17 @@ h2 {
   box-shadow: var(--sh-md);
   flex-shrink: 0;
 }
+.step-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--sh-md);
+  flex-shrink: 0;
+}
 .step-body h3 {
   font-size: 1.1rem;
   font-weight: 700;

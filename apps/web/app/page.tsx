@@ -128,7 +128,9 @@ export default function Home() {
         <h2>How it works</h2>
         <div className="steps">
           <div className="step">
-            <div className="step-num">1</div>
+            <div className="step-icon">
+              <Icon name="upload" size={26} />
+            </div>
             <div className="step-body">
               <h3>Upload</h3>
               <p>Drop a PDF or paste text</p>
@@ -136,7 +138,9 @@ export default function Home() {
           </div>
           <span className="step-arrow">→</span>
           <div className="step">
-            <div className="step-num">2</div>
+            <div className="step-icon">
+              <Icon name="search" size={26} />
+            </div>
             <div className="step-body">
               <h3>We analyze</h3>
               <p>Decode fees and terms</p>
@@ -144,7 +148,9 @@ export default function Home() {
           </div>
           <span className="step-arrow">→</span>
           <div className="step">
-            <div className="step-num">3</div>
+            <div className="step-icon">
+              <Icon name="bulb" size={26} />
+            </div>
             <div className="step-body">
               <h3>You understand</h3>
               <p>Make informed choices</p>
@@ -205,7 +211,6 @@ export default function Home() {
             alt="Demo preview"
             width={500}
             height={333}
-            style={{ objectFit: "cover", display: "block" }}
           />
         </div>
       </section>
