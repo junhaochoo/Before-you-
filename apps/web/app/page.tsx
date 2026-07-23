@@ -69,19 +69,6 @@ export default function Home() {
         <div className="pain-point-cards">
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&q=80"
-              alt="Stressed about financial products"
-              width={400}
-              height={500}
-              style={{ objectFit: "cover" }}
-            />
-            <p>
-              Agents earn commissions on every sale — what you don&apos;t know
-              affects their payout
-            </p>
-          </div>
-          <div className="pain-card">
-            <Image
               src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80"
               alt="Overwhelmed by fine print"
               width={400}
@@ -98,7 +85,7 @@ export default function Home() {
               height={500}
               style={{ objectFit: "cover" }}
             />
-            <p>You&apos;re asked to sign before you fully understand</p>
+            <p>You&apos;re pressured to sign before you fully understand</p>
           </div>
           <div className="pain-card">
             <Image
