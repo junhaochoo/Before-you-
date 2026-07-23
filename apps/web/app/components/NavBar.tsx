@@ -118,34 +118,29 @@ export function NavBar() {
             </>
           ) : (
             <>
-              {/* Desktop nav — hidden on mobile */}
-              <Link href="/about" className="ghost-link nav-desktop">
+              <Link href="/about" className="ghost-link">
                 About
               </Link>
-              <Link href="/how" className="ghost-link nav-desktop">
+              <Link href="/how" className="ghost-link">
                 How This Works
               </Link>
-              <Link href="/demo" className="ghost-link nav-desktop">
+              <Link href="/demo" className="ghost-link">
                 Demo
               </Link>
-              <Link href="/faq" className="ghost-link nav-desktop">
+              <Link href="/faq" className="ghost-link">
                 FAQ
               </Link>
-              <Link href="/pricing" className="ghost-link nav-desktop">
+              <Link href="/pricing" className="ghost-link">
                 Pricing
               </Link>
               <Link
                 href="/login?mode=signup"
-                className="btn nav-desktop"
+                className="btn"
                 style={{ marginRight: "0.5rem" }}
               >
                 Get started
               </Link>
-              <Link
-                href="/login"
-                style={{ padding: "0.4rem" }}
-                className="nav-desktop"
-              >
+              <Link href="/login" style={{ padding: "0.4rem" }}>
                 <img
                   src="/images/user-icon.png"
                   alt="Log in"
@@ -154,97 +149,6 @@ export function NavBar() {
                   style={{ display: "block" }}
                 />
               </Link>
-              {/* Mobile hamburger */}
-              <button
-                type="button"
-                className="nav-hamburger"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Open menu"
-              >
-                {menuOpen ? (
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                  >
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                ) : (
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                  >
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </svg>
-                )}
-              </button>
-              {/* Mobile menu overlay */}
-              {menuOpen && (
-                <div className="nav-mobile-overlay">
-                  <Link
-                    href="/about"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    About
-                  </Link>
-                  <Link
-                    href="/how"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    How This Works
-                  </Link>
-                  <Link
-                    href="/demo"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Demo
-                  </Link>
-                  <Link
-                    href="/faq"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    FAQ
-                  </Link>
-                  <Link
-                    href="/pricing"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Pricing
-                  </Link>
-                  <div className="nav-mobile-divider" />
-                  <Link
-                    href="/login?mode=signup"
-                    className="nav-mobile-link accent"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Get started free
-                  </Link>
-                  <Link
-                    href="/login"
-                    className="nav-mobile-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Log in
-                  </Link>
-                </div>
-              )}
             </>
           )}
         </nav>
