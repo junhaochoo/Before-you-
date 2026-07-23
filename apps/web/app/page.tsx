@@ -79,7 +79,7 @@ export default function Home() {
           </div>
           <div className="pain-card">
             <Image
-              src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=500&q=80"
+              src="/images/pain-pressure.jpg"
               alt="Stressed about signing"
               width={400}
               height={500}
