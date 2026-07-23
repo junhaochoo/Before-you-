@@ -54,7 +54,7 @@ const tiers = [
     ],
     cta: "Get started",
     href: "/login?mode=signup",
-    highlight: true,
+    highlight: false,
   },
   {
     name: "Enterprise",
@@ -87,7 +87,6 @@ export default function PricingPage() {
           fontSize: "1.05rem",
         }}
       >
-        Free for individuals. Paid plans for teams and organisations.
       </p>
 
       {/* Tier cards */}
