@@ -842,7 +842,7 @@ h2 {
 .big-stats {
   display: flex;
   align-items: stretch;
-  background: var(--ink);
+  background: var(--accent);
   border-radius: var(--r-xl);
   padding: 0;
   margin: 0 0 2.5rem;
