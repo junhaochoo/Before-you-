@@ -827,10 +827,10 @@ h2 {
 }
 .pain-card img {
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   display: block;
-  flex-shrink: 0;
 }
 .pain-card p {
   font-size: 0.9rem;
