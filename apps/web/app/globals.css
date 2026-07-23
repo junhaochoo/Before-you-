@@ -645,7 +645,7 @@ body {
   }
   .brand {
     justify-content: center;
-    padding-left: 0;
+    padding-left: 0 !important;
   }
   .header-nav {
     justify-content: center;
