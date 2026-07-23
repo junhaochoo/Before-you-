@@ -645,6 +645,7 @@ body {
   }
   .brand {
     justify-content: center;
+    padding-left: 0;
   }
   .header-nav {
     justify-content: center;
@@ -815,7 +816,7 @@ h2 {
 }
 .pain-point-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 .pain-card {
@@ -841,6 +842,9 @@ h2 {
 @media (max-width: 768px) {
   .pain-point-cards {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .pain-card {
+    flex-direction: column-reverse;
   }
 }
 
