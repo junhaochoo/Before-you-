@@ -151,7 +151,7 @@ export default function Home() {
           <p className="start-cta-body">
             Your first report is free. No credit card needed.
           </p>
-          <Link href="/login" className="btn">
+          <Link href="/login?mode=signup" className="btn">
             Get started
           </Link>
         </div>

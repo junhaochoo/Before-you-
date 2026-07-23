@@ -124,7 +124,7 @@ export function NavBar() {
                 FAQ
               </Link>
               <Link
-                href="/login"
+                href="/login?mode=signup"
                 className="btn"
                 style={{ marginRight: "0.5rem" }}
               >
