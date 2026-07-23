@@ -95,7 +95,7 @@ export default function PricingPage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "1rem",
           marginBottom: "3.5rem",
-          alignItems: "start",
+          alignItems: "stretch",
         }}
       >
         {tiers.map((tier) => (
