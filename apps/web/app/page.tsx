@@ -21,7 +21,7 @@ export default function Home() {
             height={400}
             style={{
               objectFit: "cover",
-              objectPosition: "90% 50%",
+              objectPosition: "10% 50%",
               borderRadius: "12px",
             }}
           />
