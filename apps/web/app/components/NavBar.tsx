@@ -123,6 +123,13 @@ export function NavBar() {
               <Link href="/faq" className="ghost-link">
                 FAQ
               </Link>
+              <Link
+                href="/login"
+                className="btn"
+                style={{ marginRight: "0.5rem" }}
+              >
+                Get started
+              </Link>
               <Link href="/login" style={{ padding: "0.4rem" }}>
                 <img
                   src="/images/user-icon.png"
