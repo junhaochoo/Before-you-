@@ -5,10 +5,79 @@ export const metadata = {
   title: "Pricing — Before You Sign",
 };
 
+const tiers = [
+  {
+    name: "For Everyone",
+    price: "Free",
+    period: "",
+    description: "For anyone who wants to understand what they're signing.",
+    features: [
+      "Unlimited document analyses",
+      "Side-by-side fund comparisons",
+      "Personalized question checklists",
+      "Plain-English breakdowns",
+      "PDF report generation",
+      "Share & export reports",
+    ],
+    cta: "Get started free",
+    href: "/login?mode=signup",
+    highlight: false,
+  },
+  {
+    name: "For Financial Advisors",
+    price: "$49",
+    period: "/month",
+    description:
+      "For advisors who want to serve clients with clarity and confidence.",
+    features: [
+      "Everything in Free",
+      "Client management",
+      "Branded reports",
+      "Priority support",
+    ],
+    cta: "Get started",
+    href: "/login?mode=signup",
+    highlight: false,
+  },
+  {
+    name: "For HR & Compliance",
+    price: "$149",
+    period: "/month",
+    description:
+      "For teams onboarding staff and managing employee financial benefits.",
+    features: [
+      "Everything in Financial Advisors",
+      "Team management",
+      "Compliance-ready reports",
+      "Dedicated account manager",
+      "Custom integrations",
+    ],
+    cta: "Get started",
+    href: "/login?mode=signup",
+    highlight: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    period: "",
+    description:
+      "For organisations with custom security and integration needs.",
+    features: [
+      "Everything in HR & Compliance",
+      "Custom integrations",
+      "SLA & dedicated support",
+      "On-premise available",
+    ],
+    cta: "Contact us",
+    href: "mailto:hello@beforeyousign.sg",
+    highlight: false,
+  },
+];
+
 export default function PricingPage() {
   return (
     <main
-      style={{ maxWidth: "720px", margin: "0 auto", padding: "2.5rem 1.25rem" }}
+      style={{ maxWidth: "960px", margin: "0 auto", padding: "2.5rem 1.25rem" }}
     >
       <h1 style={{ marginBottom: "0.5rem" }}>Pricing</h1>
       <p
@@ -18,104 +87,143 @@ export default function PricingPage() {
           fontSize: "1.05rem",
         }}
       >
-        Free for everyone. Unlimited. No catches.
+        Free for individuals. Paid plans for teams and organisations.
       </p>
 
-      {/* Pricing card */}
+      {/* Tier cards */}
       <div
         style={{
-          background: "var(--surface)",
-          border: "2px solid var(--accent)",
-          borderRadius: "1rem",
-          padding: "2.5rem",
-          textAlign: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "1rem",
           marginBottom: "3rem",
         }}
       >
-        <h2
-          style={{
-            fontSize: "2.5rem",
-            fontWeight: 800,
-            margin: "0 0 0.5rem",
-            color: "var(--ink)",
-          }}
-        >
-          $0
-        </h2>
-        <p style={{ color: "var(--muted)", marginBottom: "2rem" }}>
-          Free. For everyone. Unlimited.
-        </p>
-
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: "0 0 2rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.75rem",
-            textAlign: "left",
-          }}
-        >
-          {[
-            "Unlimited document analyses",
-            "Side-by-side fund comparisons",
-            "Personalized question checklists",
-            "Plain-English breakdowns",
-            "PDF report generation",
-          ].map((feature) => (
-            <li
-              key={feature}
-              style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}
+        {tiers.map((tier) => (
+          <div
+            key={tier.name}
+            style={{
+              background: tier.highlight ? "var(--ink)" : "var(--surface)",
+              color: tier.highlight ? "#fff" : "var(--ink)",
+              border: tier.highlight ? "none" : "1px solid var(--line)",
+              borderRadius: "1rem",
+              padding: "1.75rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                margin: "0 0 0.5rem",
+                opacity: tier.highlight ? 0.7 : 1,
+              }}
             >
-              <Icon
-                name="check-circle"
-                size={18}
-                style={{ color: "var(--accent)", flexShrink: 0 }}
-              />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
-
-        <Link
-          href="/login?mode=signup"
-          className="btn"
-          style={{ fontSize: "1rem", padding: "0.75rem 2rem" }}
-        >
-          Get started — it's free
-        </Link>
+              {tier.name}
+            </p>
+            <div style={{ marginBottom: "0.5rem" }}>
+              <span
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: 800,
+                  color: tier.highlight ? "#fff" : "var(--ink)",
+                }}
+              >
+                {tier.price}
+              </span>
+              {tier.period && (
+                <span style={{ fontSize: "0.9rem", opacity: 0.7 }}>
+                  {tier.period}
+                </span>
+              )}
+            </div>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                opacity: 0.7,
+                margin: "0 0 1.25rem",
+                lineHeight: 1.5,
+              }}
+            >
+              {tier.description}
+            </p>
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: "0 0 1.5rem",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              {tier.features.map((f) => (
+                <li
+                  key={f}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "0.5rem",
+                    fontSize: "0.85rem",
+                  }}
+                >
+                  <Icon
+                    name="check-circle"
+                    size={14}
+                    style={{
+                      color: tier.highlight
+                        ? "rgba(255,255,255,0.8)"
+                        : "var(--accent)",
+                      flexShrink: 0,
+                      marginTop: "2px",
+                    }}
+                  />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={tier.href}
+              className="btn"
+              style={{
+                background: tier.highlight ? "var(--accent)" : "transparent",
+                border: tier.highlight ? "none" : "1px solid var(--line)",
+                color: tier.highlight ? "#fff" : "var(--ink)",
+                textAlign: "center",
+                justifyContent: "center",
+                fontSize: "0.85rem",
+              }}
+            >
+              {tier.cta}
+            </Link>
+          </div>
+        ))}
       </div>
 
       {/* Why free */}
-      <section style={{ marginBottom: "3rem" }}>
+      <section style={{ marginBottom: "2.5rem" }}>
         <h3
-          style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}
+          style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}
         >
-          Why is it free?
+          Why is the individual plan free?
         </h3>
-        <p
-          style={{
-            color: "var(--muted)",
-            lineHeight: 1.7,
-            marginBottom: "1rem",
-          }}
-        >
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
           We are independently funded — by founders, friends, and family who
           believe in this mission. We don&apos;t sell data, serve ads, or earn
           referral fees from any financial product. Our goal is simple: help
           Singaporeans make smarter financial decisions with better information.
         </p>
-        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-          3 in 4 Singaporeans can&apos;t read insurance terms. We want to change
-          that.
-        </p>
       </section>
 
       {/* Secure & private */}
-      <section style={{ marginBottom: "3rem" }}>
+      <section style={{ marginBottom: "2.5rem" }}>
         <h3
-          style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}
+          style={{ fontSize: "1rem", fontWeight: 700, marginBottom: "0.75rem" }}
         >
           Secure and private
         </h3>
