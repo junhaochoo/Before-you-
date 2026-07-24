@@ -1930,8 +1930,8 @@ h2 {
 
 /* ---- Confirm gate ------------------------------------------------------- */
 .confirm-gate {
-  background: var(--warn-soft);
-  border: 1px solid var(--warn-line);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
   border-radius: var(--r-lg);
   padding: 1.3rem 1.4rem;
   margin: 1rem 0;
@@ -1943,7 +1943,7 @@ h2 {
 }
 .verify-list {
   font-size: 0.88rem;
-  color: var(--warn);
+  color: var(--accent-hover);
 }
 
 /* ---- Consent (PDPA) ----------------------------------------------------- */
@@ -2109,8 +2109,8 @@ h2 {
   color: var(--good);
 }
 .cost-chip.high {
-  background: var(--warn-soft);
-  color: var(--warn);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 .fund-results {
   display: grid;

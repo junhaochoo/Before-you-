@@ -330,7 +330,7 @@ export default function AnalyzePage() {
       <a href="/" className="back">
         <Icon name="arrow-left" size={16} /> Back
       </a>
-      <h1>Analyze a product</h1>
+      <h1>Analyze A Product</h1>
       <p className="page-scope">
         For <strong>insurance &amp; investment-linked products</strong> — fees,
         a surrender period, a guarantee, or a free-look window. Comparing plain
